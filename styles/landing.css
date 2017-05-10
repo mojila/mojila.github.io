@@ -1,0 +1,546 @@
+/*CANVAS*/
+#gmap_canvas img { 
+    max-width:none !important;
+    background:none!important
+}
+/* Landing Page CSS */
+body { margin: 0; padding: 0; font-family: 'openSans'; overflow-x: hidden; overflow-y: scroll;}
+
+body > #app {
+    width: 100vw;
+    height: 532vh;
+    padding: 0;
+    margin: 0;
+}
+body > #app > .about-wrapper {
+    width: 100vw;
+    height: 150vh;
+    background: url('../images/background.svg') center no-repeat;
+    background-size: cover;
+    /*border-bottom: 0.1em solid #424242;*/
+}
+body > #app > .lecturer-wrapper {
+    width: 100vw;
+    height: 60vh;
+    /*background-color: #0086FC;*/
+}
+body > #app > .lecturer-wrapper > .frame {
+    width: 72vw;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+body > #app > .lecturer-wrapper > .frame > .photo {
+    float: left;
+    width: 28vw;
+    height: 50vh;
+    background: url('../images/quote.svg') center no-repeat;
+    background-size: contain;
+}
+body > #app > .lecturer-wrapper > .frame > .text {
+    float: right;
+    width: 40vw;
+    height: 50vh;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .title {
+    width: 40vw;
+    height: 10vh;
+    line-height: 10vh;
+    color: #424242;
+    margin-top: 10vh;
+    font-size: 2em;
+    font-weight: bold;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .paragraph {
+    width: 40vw;
+    height: 20vh;
+    color: #606060;
+}
+body > #app > .footer {
+    width: 100vw;
+    height: 40vh;
+    background: url('../images/footer.svg') top no-repeat;
+    background-size: cover;
+}
+body > #app > .footer > .frame {
+    float: left;
+    width: 72vw;
+    height: 36vh;
+    margin-left: 14vw;
+    margin-top: 1vw;
+}
+body > #app > .footer > .frame > .content {
+    width: 72vw;
+    height: 30vh;
+}
+body > #app > .footer > .frame > .sitemap {
+    width: 72vw;
+    height: 5vh;
+    margin-top: 1vh;
+}
+body > #app > .footer > .frame > .sitemap > .link {
+    float: left;
+    width: 9vw;
+    height: 5vh;
+    margin-left: 1vw;
+    line-height: 5vh;
+    color: #424242;
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+}
+body > #app > .footer > .frame > .content > .big-card {
+    float: left;
+    width: 40vw;
+    height: 30vh;
+    border-radius: 0.2em; 
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+}
+body > #app > .footer > .frame > .content > .mid-card {
+    float: left;
+    width: 30vw;
+    height: 30vh;
+    margin-left: 2vw;
+    background: url('../images/newsletter.svg') center no-repeat;
+    background-size: cover; 
+    border-radius: 0.2em; 
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+}
+body > #app > .footer > .frame > .content > .mid-card > .image {
+    width: 30vw;
+    height: 22vh;
+}
+body > #app > .footer > .frame > .content > .mid-card > .form {
+    width: 30vw;
+    height: 8vh;
+}
+body > #app > .footer > .frame > .content > .mid-card > .form > .input {
+    float: left;
+    width: 23vw;
+    height: 8vh;
+    background-color: #f1f1f1;
+    text-align: center;
+    line-height: 8vh;
+}
+body > #app > .footer > .frame > .content > .mid-card > .form > .input > input {
+    border: none;
+    background-color: transparent;   
+}
+body > #app > .footer > .frame > .content > .mid-card > .form > .button {
+    float: left;
+    text-align: center;
+    line-height: 10vh;
+    width: 7vw;
+    height: 8vh;
+    background-color: #e3e3e3;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .lecturer-selector {
+    width: 40vw;
+    height: 10vh;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .lecturer-selector > .item {
+    float: left;
+    width: 4.25vw;
+    height: 8vh;
+    border-radius: 50%;
+    background-color: #fff;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .lecturer-selector > .item:nth-child(n+2) {
+    margin-left: 1vw;
+}
+body > #app > .lecturer-wrapper > .frame > .text > .lecturer-selector > .active {
+    border: 0.2em solid #0086FC;
+}
+body > #app > .about-wrapper > .navigator {
+    width: 72vw;
+    height: 10vh;
+    margin-left: 14vw;
+    float: left;
+    margin-top: 2vh;
+}
+body > #app > .about-wrapper > .navigator > .title {
+    color: #908D8C;
+    font-size: 0.9em;
+    height: 10vh;
+    padding-right: 2vw;
+    line-height: 10vh;
+}
+body > #app > .about-wrapper > .item-frame {
+    width: 72vw;
+    height: 32vh;
+    margin-left: 14vw;
+    float: left;
+    margin-top: 2vh;
+    /*background-color: #fff;*/
+}
+body > #app > .about-wrapper > .item-frame > .item {
+    float: left;
+    width: 13vw;
+    height: 29vh;
+    background-color: #fff;
+    border-radius: 0.2em; 
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+}
+body > #app > .about-wrapper > .item-frame > .item > .image {
+    width: 10vw;
+    height: 20vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #0086FC;
+    margin-top: 3vh;
+}
+body > #app > .about-wrapper > .item-frame > .item > .text {
+    width: 10vw;
+    height: 6vh;
+    line-height: 6vh;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    font-size: .8em;
+    color: #424242;
+}
+body > #app > .about-wrapper > .statistic-frame {
+    float: left;
+    width: 72vw;
+    height: 32vh;
+    /*background-color: #fff;*/
+    margin-left: 14vw;
+    margin-top: 1vh;
+}
+body > #app > .about-wrapper > .statistic-frame > .item {
+    float: left;
+    width: 17vw;
+    height: 32vh;
+    background-color: #fff;
+}
+body > #app > .about-wrapper > .statistic-frame > .item > .text {
+    float: left;
+    width: 17vw;
+    height: 16vh;
+    margin-top: 16vh;
+}
+body > #app > .about-wrapper > .statistic-frame > .item > .text > .title {
+    width: 17vw;
+    height: 8vh;
+    /*background-color: #fff;*/
+    text-align: center;
+    font-weight: bold;
+    line-height: 8vh;
+    font-size: 1.5em;
+}
+body > #app > .about-wrapper > .statistic-frame > .item > .text > .description {
+    text-align: center;
+    font-size: 0.9em;
+}
+body > #app > .about-wrapper > .big-card {
+    float: left;
+    width: 72vw;
+    height: 64vh;
+    /*background-color: #fff;*/
+    margin-left: 14vw;
+    margin-top: 4vh;
+}
+body > #app > .about-wrapper > .big-card > .item {
+    float: left;
+    width: 34vw;
+    height: 64vh;
+    background-color: #fff;
+    border-radius: 0.2em; 
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+}
+body > #app > .about-wrapper > .big-card > .item > .image {
+    width: 12vw;
+    height: 20vh;
+    background-color: #0086FC;
+    margin-left: 2vw;
+    margin-top: 2vw;
+}
+body > #app > .about-wrapper > .big-card > .item > .title {
+    width: 30vw;
+    height: 10vh;
+    line-height: 10vh;
+    margin-left: 2vw;
+    font-size: 2em;
+    font-weight: bold;
+    color: #424242;
+}
+body > #app > .about-wrapper > .big-card > .item > .paragraph {
+    width: 30vw;
+    height: 28vh;
+    margin-left: 2vw;
+}
+body > #app > nav {
+    width: 100vw;
+    height: 12vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+}
+body > #app > nav > .nav-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 72vw;
+    height: 12vh;
+}
+body > #app > nav > .nav-wrapper > .nav-logo {
+    float: left;
+    height: 8vh;
+    width: 18vw;
+    background: url('../images/logo-it.svg') center;
+    background-size: cover;
+    margin-top: 2vh;
+    cursor: pointer;
+}
+body > #app > nav > .nav-wrapper > .nav-menu {
+    float: left;
+    height: 12vh;
+    min-width: 5vw;
+    padding-left: 0.2em;
+    padding-right: 0.2em;    
+    line-height: 12vh;
+    color: #424242;
+    font-size: 0.75em;
+    font-weight: 700;
+    cursor: pointer;
+}
+body > #app > nav > .nav-wrapper > .nav-login-button {
+    float: right;
+    width: 10vw;
+    height: 5vh;
+    cursor: pointer;
+    margin-top: 3vh;
+    text-align: center;
+    line-height: 5vh;
+    font-weight: bold;
+    border: 0.1em solid #00E197;
+    color: #00E197;
+    border-radius: 2em;
+    font-size: 0.75em;
+}
+body > #app > nav > .nav-wrapper > .nav-login-button:hover {
+    background-color: #00E197;
+    color: #fff;
+}
+body > #app > #wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: #8AE0F9;
+}
+body > #app > #wrapper > header {
+    margin-left: auto;
+    margin-right: auto;
+    width: 72vw;
+    height: 50vh;
+    margin-top: 12vh;
+    background: url('../images/slide1.svg') right no-repeat;
+    background-size: contain;
+}
+body > #app > #wrapper > header > .slide > .slide-text {
+    float: left;
+    width: 28vw;
+    height: 50vh;
+}
+body > #app > #wrapper > header > .slide > .slide-text > .slide-title {
+    color: #fff;
+    font-size: 2em;
+    font-weight: bold;
+    float: left;
+    margin-top: 16vh;
+}
+body > #app > #wrapper > header > .slide > .slide-text > .slide-description {
+    float: left;
+    margin-top: 1vh;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+}
+body > #app > #wrapper > header > .slide > .slide-text > .slide-description > .button {
+    margin-top: 4vh;
+    border: none;
+    width: 12vw;
+    height: 7vh;
+    background-color: #fff;
+    border-radius: 2em;
+    color: #00C34C;
+    font-weight: bold;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+    text-align: center;
+    line-height: 7vh;
+    cursor: pointer;
+}
+body > #app > #wrapper > .slide-navigator {
+    width: 72vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: 3vh;
+    margin-top: 4vh; 
+}
+body > #app > #wrapper > .slide-navigator > .navigator-frame {
+    width: 10vw;
+    height: 3vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+body > #app > #wrapper > .slide-navigator > .navigator-frame > .bullets {
+    width: 1vw;
+    height: 1vh;
+    background-color: #B6F0F7;
+    margin-left: 1vw;
+    margin-right: 0vw;
+    float: left;
+    border-radius: 1em;
+    cursor: pointer;
+}
+body > #app > #wrapper > .slide-navigator > .navigator-frame > .active {
+    background-color: #fff;
+}
+body > #app > #wrapper > .card-frame {
+    width: 100vw;
+    height: 40vh;
+    background: url('../images/card-bg.svg') center;
+    background-size: contain;
+}
+body > #app > #wrapper > .card-frame > .content {
+    width: 72vw;
+    height: 40vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+body > #app > #wrapper > .card-frame > .content > .card-item {
+    width: 17vw;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+    height: 32vh;
+    background-color: #fff;
+    float: left;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #bdbdbd;
+    border-radius: 0.25em;
+}
+body > #app > #wrapper > .card-frame > .content > .card-item > .image {
+    width: 12vw;
+    height: 20vh;
+    background: #0086FC;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+}
+body > #app > #wrapper > .card-frame > .content > .card-item > .text {
+    width: 12vw;
+    height: 8vh;
+    margin-left: auto;
+    margin-right: auto;
+    color: #424242;
+    text-align: center;
+    line-height: 8vh;
+    font-weight: bold;
+    font-size: .8em;
+    cursor: pointer;
+}
+body > #app > #wrapper > .sepparator {
+    width: 100vw;
+    height: 3vh;
+    background-color: #fff;
+}
+body > #app > #wrapper > .sepparator > .line {
+    margin-left: auto;
+    margin-right: auto;
+    width: 72vw;
+    height: 5vh;
+    background: url('../images/sepparator.svg') center no-repeat;
+    background-size: cover;
+}
+body > #app > .about-item-left {
+    margin-left: auto;
+    margin-right: auto;
+    width: 72vw;
+    height: 50vh;
+    /*background-color: #8AE0F9;*/
+}   
+body > #app > .about-item-left > .picture {
+    float: left;
+    width: 20vw;
+    margin-left: 5vw;
+    margin-top: 6vh;
+    height: 36vh;
+    background-color: #fff;
+}
+body > #app > .about-item-left > .text {
+    float: left;
+    margin-left: 2vw;
+    margin-top: 6vh;
+    width: 40vw;
+    height: 36vh;
+    color: #424242;
+    /*background-color: #fff;*/
+}
+body > #app > .about-item-left > .text > .title {
+    width: 40vw;
+    height: 10vh;
+    font-size: 2em;
+    line-height: 10vh;
+    color: #424242;
+    /*background-color: #fff;    */
+}
+body > #app > .about-item-left > .text > .content {
+    width: 40vw;
+    height: 20vh;
+    font-size: 1.25em;
+    color: #626262;
+    /*background-color: #fff;*/
+}
+body > #app > .about-item-left > .text > .link {
+    width: 40vw;
+    height: 6vh;
+    line-height: 6vh;
+    font-size: 1.25em;
+    color: #0086FC;
+    /*background-color: #0086FC;*/
+}
+body > #app > .about-item-right {
+    margin-left: auto;
+    margin-right: auto;
+    width: 72vw;
+    height: 50vh;
+    /*background-color: #8AE0F9;*/
+}   
+body > #app > .about-item-right > .picture {
+    float: right;
+    width: 20vw;
+    margin-right: 5vw;
+    margin-top: 6vh;
+    height: 36vh;
+    background-color: #fff;
+}
+body > #app > .about-item-right > .text {
+    float: right;
+    margin-right: 2vw;
+    margin-top: 6vh;
+    width: 40vw;
+    height: 36vh;
+    /*background-color: #fff;*/
+}
+body > #app > .about-item-right > .text > .title {
+    width: 40vw;
+    height: 10vh;
+    font-size: 2em;
+    line-height: 10vh;
+    color: #424242;
+    /*background-color: #fff;    */
+}
+body > #app > .about-item-right > .text > .content {
+    width: 40vw;
+    height: 20vh;
+    font-size: 1.25em;
+    color: #626262;
+    /*background-color: #fff;*/
+}
+body > #app > .about-item-right > .text > .link {
+    width: 40vw;
+    height: 6vh;
+    line-height: 6vh;
+    font-size: 1.25em;
+    color: #0086FC;
+    /*background-color: #0086FC;*/
+}

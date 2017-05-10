@@ -1,0 +1,151 @@
+body {
+    font-family: 'openSans';
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+body > #app {
+    width: 100vw;
+}
+
+body > #app > nav {
+    width: 100vw;
+    height: 10vh;
+    background-color: #fff;
+    border-bottom: 0.2em solid #f1f1f1;
+}
+
+body > #app > nav > .frame {
+    width: 80vw;
+    height: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body > #app > nav > .frame > .logo {
+    width: 5vw;
+    height: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+body > #app > .wrapper {
+    margin-top: 5vh;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #f1f1f1;
+}
+
+body > #app > aside {
+    display: inline-block;
+    width: 19vw;
+    height: 20vh;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+    background-color: #fff;
+    margin-left: 1vw;
+    margin-top: 5vh;
+}
+
+body > #app > .wrapper > .article {
+    float: left;
+    width: 60vw;
+    padding: 1vh 0;
+    margin-top: 5vh;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;    
+}
+body > #app > .wrapper > .article > .frame {
+    width: 58vw;
+    margin-top: 2vh;
+}
+body > #app > .wrapper > .article > .frame > .pagination {
+    display: block;
+    width: 58vw;
+    height: 5vh;
+    margin-top: 2vh;
+    margin-left: 1vw;
+}
+body > #app > .wrapper > .article > .frame > .pagination > .item {
+    display: inline-block;
+    width: 4vw;
+    height: 5vh;
+    line-height: 5vh;
+    background-color: #e3e3e3;
+    border-radius: 0.25em;
+    text-align: center;
+    color: #424242;
+}
+body > #app > .wrapper > .article > .frame > .item {
+    display: block;
+    width: 58vw;
+    height: 30vh;
+    margin-left: 1vw;
+}
+body > #app > .wrapper > .article > .frame > .item:nth-child(n+2) {
+    margin-top: 1vh;
+}
+body > #app > .wrapper > .article > .frame > .item > .photo {
+    display: inline-block;
+    width: 16vw;
+    height: 30vh;
+    background-color: #424242;
+}
+body > #app > .wrapper > .article > .frame > .item > .text {
+    display: inline-block;
+    width: 38vw;
+    height: 30vh;
+    margin-left: 1vw;
+}
+
+body > #app > .wrapper > .article > .frame > .item > .text > .title {
+    float: left;
+    width: 38vw;
+    height: 8vh;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+body > #app > .wrapper > .article > .frame > .item > .text > .paragraph {
+    float: left;
+    width: 38vw;
+    height: 20vw;
+    word-wrap: break-word;
+}
+body > #app > .wrapper > .article > .menu {
+    width: 60vw;
+    height: 5vh;    
+}
+body > #app > .wrapper > .article > .menu > .item {
+    display: inline-block;
+    padding: 0 1vw;
+    height: 5vh;
+    line-height: 5vh;
+    font-size: .8em;
+}
+body > #app > .wrapper > .article > .menu > .item > span {
+    padding: 0 1vw;
+    height: 5vh;
+    background-color: #e3e3e3;
+    color: #424242;
+    border-radius: 0.2em;
+}
+body > #app > .wrapper > .article > .menu > .item > i {
+    margin-left: 0.5vw;
+    font-size: 1em;
+}
+body > #app > .wrapper > .header {
+    width: 80vw;
+    height: 50vh;
+}
+body > #app > .wrapper > .header > .photo {
+    float: left;
+    width: 11vw;
+    height: 20vh;
+    border: 1em solid #fff;
+    background-color: #f1f1f1;
+    margin-left: 34vw;
+    margin-top: 10vh;
+    border-radius: 10vh;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>D4 Teknik Informatika | Dozen</title>
+        <style>
+            @font-face {
+                src: url('fonts/Open_Sans/OpenSans-Regular.ttf');
+                font-family: 'OpenSans';
+            }
+        </style>
+        <link rel='stylesheet' href='../styles/dozen.css'>
+        <link rel='stylesheet' href='styles/ionicons.min.css'>
+    </head>
+    <body onload="searchFocus()">
+        <div id='app'>
+            <nav>
+                <div class='logo'>
+                    IT Dozen
+                </div>
+                <div class='search-frame'>
+                    <input id='pencarian' type='text' placeholder='Nama Dosen'>
+                </div> 
+                <div class='back' onclick="window.location='../index.html';">
+                    <i class='ion ion-android-arrow-back'></i> Home
+                </div> 
+            </nav>
+            <aside>
+                <div class='menu-frame'>
+                    <div class='item active'>
+                        Biodata
+                    </div>
+                    <div class='item'>
+                        Prestasi
+                    </div>
+                </div>
+                <div class='biodata-frame'>
+                    <div class='content'>
+                        <div class='name'>
+                           Ira Prasetyaningrum
+                        </div> 
+                        <div class='text'>
+                            <p>Nama : Ira Prasetyaningrum</p>
+                            <p>NIP : 2110161022</p>
+                            <p>Masa Kerja Tahun : 3 </p>
+                            <p>Masa Kerja Bulan : 1 </p>
+                            <p>Jurusan : Teknik Informatika </p>
+                            <p>Staff : Dosen </p>
+                            <p>Status : Aktif </p>
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class='photo-frame'>
+                <div class='item' style='margin-left: 0vw;background: url("../images/dosen2.jpg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Ira Prasetyaningrum
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/dosen3.jpg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Moch. Aji Laksono
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/dosen4.jpg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Nadila WIrdatul Hidayah
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/dosen5.jpg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                      Guskoro Pradipta
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/dosen1.jpg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        M. Fadli Farham
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/bunana.png") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Nana Ramadijanti
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function searchFocus(){
+                document.getElementById('pencarian').focus();
+            }
+        </script>
+    </body>
+</html>

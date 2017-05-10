@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="300"
+   viewBox="0 0 132.29167 79.375002"
+   version="1.1"
+   id="svg4602"
+   inkscape:version="0.92.1 unknown"
+   sodipodi:docname="newsletter.svg">
+  <defs
+     id="defs4596" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="413.21603"
+     inkscape:cy="-53.896369"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1280"
+     inkscape:window-height="733"
+     inkscape:window-x="1366"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4599">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-217.62498)">
+    <rect
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.26458332"
+       id="rect5195"
+       width="166.6875"
+       height="100.54166"
+       x="-17.008928"
+       y="213.84525" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.45058849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 54.892809,32.76087 64.95016,22.886137 75.518897,32.912795 Z"
+       id="path5156"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.45058849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 54.892804,16.35361 20.626093,0.303839 V 32.912796 L 54.892804,32.760868 Z"
+       id="path5153"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 3">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.45058849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 54.892809,22.886137 5.966224,3.949897 4.091127,-3.949897 4.43205,3.949897 6.13669,-3.797979 -3e-6,-6.380606 -20.626088,-0.303843 z"
+       id="path5159"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Layer 4">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.45058849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 66.825258,19.695834 -9.54596,0.303837 v -0.607677 l 9.54596,-0.911511 z"
+       id="path5162"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.10211849px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17755297"
+       x="37.91954"
+       y="42.282585"
+       id="text5189"
+       transform="scale(1.0592768,0.94404031)"><tspan
+         sodipodi:role="line"
+         id="tspan5187"
+         x="37.91954"
+         y="42.282585"
+         style="stroke-width:0.17755297">Berlangganan</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.10211849px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17755297"
+       x="34.267029"
+       y="48.826683"
+       id="text5193"
+       transform="scale(1.0592768,0.94404031)"><tspan
+         sodipodi:role="line"
+         id="tspan5191"
+         x="34.267029"
+         y="48.826683"
+         style="font-size:3.31432247px;stroke-width:0.17755297">Terima Kabar Terbaru Tentang Kami</tspan></text>
+    <path
+       style="fill:#1e90ff;fill-opacity:1;stroke:none;stroke-width:0.45516315;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.6627451"
+       d="M 57.859883,24.533962 55.147824,22.707536 V 19.670084 16.63264 l 5.463075,0.141691 c 3.004693,0.07793 7.506709,0.141691 10.004484,0.141691 h 4.541403 v 2.964953 2.964952 l -2.59152,1.614421 c -1.425337,0.887926 -2.738637,1.692722 -2.918446,1.788433 -0.228585,0.121672 -0.997464,-0.421109 -2.55634,-1.804613 l -2.229416,-1.978635 -2.019782,1.951862 c -1.110873,1.073527 -2.07593,1.949865 -2.144562,1.947427 -0.06867,-0.0025 -1.345204,-0.826331 -2.836837,-1.83086 z m 9.040197,-4.513893 c 0.178066,-0.04891 0.301334,-0.449263 0.301334,-0.978766 v -0.896055 l -1.145086,0.119335 c -0.629801,0.06564 -2.962177,0.291689 -5.183048,0.502351 l -4.037955,0.383016 v 0.604018 0.60403 l 4.881706,-0.127616 c 2.684933,-0.07019 5.017308,-0.164827 5.183049,-0.210313 z"
+       id="path5166"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

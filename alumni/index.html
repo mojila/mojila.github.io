@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>D4 Teknik Informatika | Dozen</title>
+        <style>
+            @font-face {
+                src: url('fonts/Open_Sans/OpenSans-Regular.ttf');
+                font-family: 'OpenSans';
+            }
+        </style>
+        <link rel='stylesheet' href='../styles/alumni.css'>
+        <link rel='stylesheet' href='styles/ionicons.min.css'>
+    </head>
+    <body onload="searchFocus()">
+        <div id='app'>
+            <nav>
+                <div class='logo'>
+                    IT Alumni
+                </div>
+                <div class='search-frame'>
+                    <input id='pencarian' type='text' placeholder='Nama Alumni'>
+                </div> 
+                <div class='back' onclick="window.location='../index.html';">
+                    <i class='ion ion-android-arrow-back'></i> Home
+                </div> 
+            </nav>
+            <aside>
+                <div class='menu-frame'>
+                    <div class='item active'>
+                        Bio
+                    </div>
+                    <div class='item'>
+                        Rekam Jejak
+                    </div>
+                </div>
+                <div class='biodata-frame'>
+                    <div class='content'>
+                        <div class='name'>
+                           Nasrulloh Muhyiddin
+                        </div> 
+                        <div class='text'>
+                            <p>Nama : Nasrulloh Muhyiddin</p>
+                            <p>NIP : 2110161022</p>
+                            <p>Masa Kuliah : 3 Tahun</p>
+                            <p>Kelas : D4 Informatika A </p>
+                            <p>Tgl Lahir : 22 Maret 1998</p>
+                            <p>Pekerjaan : Programmer </p>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class='photo-frame'>
+                <div class='item' style='margin-left: 0vw;background: url("../images/najong.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Nasrulloh Muhyiddin
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/nia.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Nia Shafira
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/fahmi.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Fahmi Kurniawan
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/aji.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                      M. Aji Laksono
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/rudi.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        MFatkul Nur Khoirudin
+                    </div>
+                </div>
+                <div class='item' style='margin-left: 0vw;background: url("../images/al.jpeg") center no-repeat;background-size: cover;'>
+                    <div class='name'>
+                        Hamzah Al Farisi
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function searchFocus(){
+                document.getElementById('pencarian').focus();
+            }
+        </script>
+    </body>
+</html>

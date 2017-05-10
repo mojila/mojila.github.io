@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'openSans';
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #e3e3e3;
+}
+body > #app > nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;   
+    background-color: #fff;
+}
+body > #app > nav > .back {
+    float: right;
+    width: 10vw;
+    height: 10vh;
+    background-color: #607d8b;
+    text-align: center;
+    line-height: 10vh;
+    color: #fff;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+body > #app > nav > .back:hover {
+    background-color: #263238;
+    transition: 1s; 
+}
+body > #app > .photo-frame {
+    margin-top: 10vh;
+    width: 70vw;
+    padding-bottom: 0.1vh;
+}
+body > #app > .photo-frame > .item {
+    float: left;
+    width: 23.3vw;
+    height: 60vh;
+    background-color: #fff;
+    cursor: pointer;
+}
+body > #app > .photo-frame > .item > .name {
+    width: 23.3vw;
+    height: 10vh;
+    background-color: #444;
+    line-height: 10vh;
+    text-align: center;
+    margin-top: 50vh;
+    color: #fff;
+    font-weight: bold;
+    opacity: 0.5;
+}
+body > #app > .photo-frame > .item:hover .name {
+    transition: 1s;
+    opacity: 1;
+}
+body > #app > nav > .logo {
+    float: left;
+    width: 15vw;
+    height: 10vh;
+    font-weight: bold;
+    line-height: 10vh;
+    text-align: center;
+}
+body > #app > nav > .search-frame {
+    float: left;
+    width: 30vw;
+    height: 6vh;
+    margin-top: 2vh;
+    margin-right: 1vw;
+    border-bottom: 0.2em solid #f1f1f1;
+}
+body > #app > nav > .search-frame > input {
+    margin-top: 1vh;
+    font-size: 1.25em;
+    border: none;
+    background-color: transparent;
+    width: 30vw;
+}
+body > #app > aside {
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    width: 30vw;
+    height: 90vh;
+    background-color: #fff;    
+}
+body > #app > aside > .menu-frame > .item {
+    float: left;
+    width: 15vw;
+    height: 10vh;
+    line-height: 10vh;
+    text-align: center;
+    font-size: .8em;
+    cursor: pointer;
+}
+body > #app > aside > .menu-frame > .item:hover {
+    background-color: #f1f1f1;
+}
+body > #app > aside > .menu-frame > .active {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+body > #app > aside > .biodata-frame {
+    display: flex;
+    position: relative;
+    height: 70vh;
+    width: 30vw;
+    padding-top: 5vh;
+}
+body > #app > aside > .biodata-frame > .content {
+    width: 24vw;
+    height: 60vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10vh;
+}
+body > #app > aside > .biodata-frame > .content > .name {
+    font-weight: bold;
+    color: #424242;
+}
+body > #app > aside > .biodata-frame > .content > .text {
+    color: #999;
+    margin-top: 5vh;
+}

@@ -1,0 +1,232 @@
+body {
+    font-family: 'openSans';
+    margin: 0;
+    padding: 0;
+    background-color: #2C6399;
+    overflow-x: hidden;
+}
+
+body > #app {
+    position: absolute;
+    width: 92vw;
+    height: 90vh;
+    padding-bottom: 1vh;
+    top: 10vh;
+    left: 4vw;
+    border-radius: 0.25em;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em #285A8B;
+    background-color: #fff;
+    bottom: 10vh;
+}
+
+body > footer {
+    position: absolute;
+    width: 100vw;
+    height: 10vh;
+    margin-top: 100vh;
+}
+
+body > #app > aside {
+    float: right;
+    width: 28vw;
+    height: 60vh;
+    background-color: #f1f1f1;
+    margin-top: 4vh;
+}
+
+body > #app > aside > .item {
+    float: left;
+    width: 20vw;
+    margin-left: 4vw;
+    height: 20vh;
+    background-color: #fff;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;    
+}
+
+body > #app > aside > .paging-frame {
+    float: left;
+    width: 20vw;
+    height: 5vh;
+    margin-left: 4vw;
+    margin-top: 1vh;
+}
+
+body > #app > aside > .paging-frame > .item {
+    float: left;
+    width: 2vw;
+    font-size: .8em;
+    height: 5vh;
+    background-color: #fff;
+    line-height: 5vh;
+    text-align: center;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;        
+    cursor: pointer;
+}
+
+body > #app > aside > .item > .text {
+    float: left;
+    width: 20vw;
+    height: 5vh;
+    line-height: 5vh;
+    text-align: center;
+    margin-top: 15vh;
+    background-color: #f1f1f1;
+    color: #424242;
+}
+
+body > #app > aside > .item > .text > span {
+    font-size: 0.8em;
+    padding: 0.2vh 0.5vw;
+    height: 4vh;
+    border-radius: 0.2em;
+    background-color: #424242;
+    color: #fff;
+}
+
+body > #app > aside > .title {
+    float: left;
+    width: 24vw;
+    height: 10vh;
+    line-height: 10vh;
+    margin-left: 2vw;
+    font-weight: bold;
+}
+body > #app > aside > .item:nth-child(3) {
+    margin-top: 2vh;
+}
+
+body > #app > aside > .frame {
+    float: left;
+    width: 24vw;
+    padding-bottom: 2vh;
+}
+
+body > #app > .article-frame {
+    float: left;
+    width: 60vw;
+    margin-top: 2vh;
+    margin-left: 2vw;   
+    height: 50vh;
+}
+body > #app > .article-frame > .title {
+    float: left;
+    width: 60vw;
+    height: 10vh;
+    line-height: 10vh;
+    margin-left: 1.2vw;
+    font-weight: bold;  
+    font-size: 1em;
+}
+
+body > #app > .article-frame > .item {
+    float: left;
+    width: 24vw;
+    margin-left: 1vw;
+    height: 18vh;
+    background-color: #fff;
+    box-shadow: 0.05em 0.05em 0.05em 0.05em #999;
+}
+body > #app > .paging-frame {
+    float: left;
+    margin-left: 3vw;
+    padding-right: 5vw;
+    height: 6vh;
+}
+body > #app > .paging-frame > .item {
+    float: left;
+    width: 3vw;
+    height: 6vh;
+    line-height: 6vh;
+    text-align: center;
+    color: #424242;
+    border-radius: 0.2em;
+    background-color: #f1f1f1;
+}
+body > #app > .article-frame > .item:nth-child(n+4) {
+    margin-top: 2vh;
+}
+
+body > #app > .article-frame > .item > .image {
+    float: left;
+    width: 8vw;
+    height: 16vh;
+    margin-left: 1vw;
+    margin-top: 1vh;
+}
+
+body > #app > .article-frame > .item > .text {
+    float: left;
+    width: 14vw;
+    height: 14vh;
+    margin-left: 1vw;
+    margin-top: 1vh;
+}
+
+body > #app > .article-frame > .item > .text > .title {
+    width: 13vw;
+    height: 4vh;
+    word-wrap: break-word;    
+    line-height: 4vh;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+body > #app > .article-frame > .item > .text > .paragraph {
+    margin-top: 1vh;
+    width: 13vw;
+    height: 9vh;
+    word-wrap: break-word;
+    font-size: .8em;
+}
+
+body > #app > nav {
+    width: 92vw;
+    height: 10vh;
+    margin-top: 5vh;
+}
+
+body > #app > nav > .menu {
+    float: left;
+    padding: 0 2vw;
+    height: 10vh;
+    line-height: 10vh;
+    text-align: center;
+    cursor: pointer;
+}
+body > #app > nav > .active {
+    background-color: #f1f1f1;
+    border-radius: 0.2em;   
+}
+body > #app > nav > .menu:hover {
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+body > #app > nav > .logo {
+    float: left;
+    width: 10vw;
+    height: 10vh;
+    background: url('../images/logo.svg') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+}
+
+body > #app > nav > .search-frame {
+    float: right;
+    width: 28vw;
+    height: 10vh;
+    background-color: #f1f1f1;
+    text-align: center;
+    line-height: 10vh;
+}
+body > #app > nav > .search-frame >  input  {
+    width: 20vw;
+    border: none;
+    background-color: transparent;
+}
+body > #app > nav > .search-frame > i {
+    float: left;
+    font-size: 2em;
+    margin-left: 2vw;
+    margin-top: 3vh;
+}

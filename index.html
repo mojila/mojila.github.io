@@ -2,47 +2,311 @@
 <html>
     <head>
         <meta charset='utf-8'>
-        <meta content=''>
-        <title>Coinesia - Digital Currency Trader Site Info</title>
+        <title>D4 Teknik Informatika | Home</title>
 
-        <!--Icon-->
-        <link rel="icon" href="images/coin.svg">
-        <!--Import Google Icon Font-->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">    
-        <style>
-            body { background-color: #f1f1f1;}
-        </style>
+        <link rel='stylesheet' href='styles/main.css'>
+        <link rel='stylesheet' href='styles/landing.css'>
+        <link rel='stylesheet' href='styles/ionicons.min.css'>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
     </head>
     <body>
-        <div class="row" style="margin-left: 2em; margin-top: 2em;">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">I'll Online!</span>
-              <p>Situs Coinesia menyediakan infromasi teraktual tentang cryptocurrency (Bitcon, Altcoin, etc) dengan memanfaatkan API Newsfeed atau Tweets
-              Dari halaman media sosial / fanspage Mata Uang digital dari yang terkenal sampai yang paling baru. juga menampilkan indikator Count untuk jumlah tweet tiap cryptocurrency yang terupdate per harinya (24/7)</p>
+        <div id="app">
+            <nav>
+                <div class='nav-wrapper'>
+                    <div class='nav-logo' onclick="window.location='index.html';"></div>
+                    <div class='nav-menu' onclick="window.location='http://pens.ac.id';">PENS</div>
+                    <div class='nav-menu' onclick="window.location='news/index.html';">News</div>
+                    <div class='nav-menu' onclick="window.location='alumni/index.html';">Alumni</div>
+                    <div class='nav-menu' onclick="window.location='dozen/index.html';">Dosen</div>
+                    <div class='nav-menu' onclick="window.location='organization/index.html';">Organisasi</div>
+                    <div class='nav-login-button'>Login</div>
+                </div>
+            </nav>
+            <div id="wrapper">
+                <header>
+                    <div class='slide'>
+                        <div class='slide-text'>
+                            <div class='slide-title'>
+                                Selamat Datang
+                            </div>
+                            <div class='slide-description'>
+                                Di Website D4 Teknik Informatika PENS<br>
+                                <div class='button'>Mulai Tur</div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class='slide-navigator'>
+                    <div class='navigator-frame'>
+                        <div class='bullets active'></div>
+                        <div class='bullets'></div>
+                        <div class='bullets'></div>
+                        <div class='bullets'></div>
+                    </div>
+                </div>
+                <div class='card-frame'>
+                    <div class='content'>
+                        <div class='card-item'>
+                            <div class='image' style='background:url("images/event1.jpg") center no-repeat; background-size: cover;'></div>
+                            <div class='text' onclick="window.location='news/index.html';">
+                                Berita dan Event
+                            </div>
+                        </div>
+                        <div class='card-item'>
+                            <div class='image' style='background:url("images/ormawa.png") center no-repeat; background-size: cover;'></div>
+                            <div class='text' onclick="window.location='dozen/index.html';">
+                                Dosen
+                            </div>
+                        </div>
+                        <div class='card-item'>
+                            <div class='image' style='background:url("images/galeri1.png") center no-repeat; background-size: cover;'></div>
+                            <div class='text' onclick="window.location='organization/index.html';">
+                                Galeri
+                            </div>
+                        </div>
+                        <div class='card-item'>
+                            <div class='image' style='background:url("images/alumni.jpg") center no-repeat; background-size: cover;'></div>
+                            <div class='text' onclick="window.location='alumni/index.html';">
+                                Alumni
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='sepparator'>
+                    <div class='line'></div>
+                </div>
             </div>
-            <div class="card-action">
-              <a href="#">Home</a>
-              <a href="#">About</a>
+            <div class='about-item-left' style='margin-top: 2vh;'>
+                <div class='picture' style="background: url('images/event.png') center; background-size: cover;"></div>
+                <div class='text'>
+                    <div class='title'>
+                        Berita dan Event
+                    </div>
+                    <div class='content'>
+                       Menyediakan berita seputar <br> 
+                       kegiatan departemen kami dan<br>
+                        memperbarui berita terkini tentang event<br>
+                        oleh mahasiswa D4 Informatika.<br>
+                    </div>
+                    <div class='link'>
+                        <i class='ion ion-arrow-right-c'></i> Telusuri
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class='about-item-right'>
+                <div class='picture' style="background: url('images/ormawa2.png') center; background-size: cover;"></div>
+                <div class='text'>
+                    <div class='title'>
+                        Ormawa dan Komunitas
+                    </div>
+                    <div class='content'>
+                        Menyediakan berita seputar <br> 
+                        kegiatan Himpunan<br>
+                        Mahasiswa Informatika (HIMIT).<br>
+                    </div>
+                    <div class='link'>
+                        <i class='ion ion-arrow-right-c'></i> Telusuri
+                    </div>
+                </div>
+            </div>
+            <div class='about-item-left'>
+                <div class='picture' style="background: url('images/galeri.png') center; background-size: cover;"></div>
+                <div class='text'>
+                    <div class='title'>
+                        Galeri
+                    </div>
+                    <div class='content'>
+                        Menyediakan gambar-gambar <br> 
+                        ataupun dokumentasi berupa video<br>
+                        dari berbagai kegiatan Mahasiswa.<br>
+                    </div>
+                    <div class='link'>
+                        <i class='ion ion-arrow-right-c'></i> Telusuri
+                    </div>
+                </div>
+            </div>
+            <div class='about-item-right'>
+                <div class='picture' style="background: url('images/alumni.png') center; background-size: cover;"></div>
+                <div class='text'>
+                    <div class='title'>
+                        Statistika Rekam Jejak Alumni
+                    </div>
+                    <div class='content'>
+                        Menyediakan informasi mengenai <br> 
+                        profesi semua alumni yang ditunjukkan<br>
+                        berupa diagram statistika.<br>
+                    </div> 
+                    <div class='link'>
+                        <i class='ion ion-arrow-right-c'></i> Telusuri
+                    </div>
+                </div>
+            </div>
+            <div class='about-wrapper'>
+                <div class='navigator'>
+                    <div class='title'>
+                        Organisasi dan Komunitas
+                    </div>
+                </div>
+                <div class='item-frame'>
+                    <div class='item' style='margin-left: 0vw;'>
+                        <div class='image' style='background:url("images/himit.png") center no-repeat; background-size: cover;'></div>
+                        <div class='text'>
+                            HIMIT
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;'>
+                        <div class='image' style='background:url("images/webdev.jpg") center no-repeat; background-size: cover;'></div>
+                        <div class='text'>
+                            WebDev
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;'>
+                        <div class='image' style='background:url("images/osc.png") center no-repeat; background-size: cover;'></div>
+                        <div class='text'>
+                            OSC
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;'>
+                        <div class='image' style='background:url("images/android.jpg") center no-repeat; background-size: cover;'></div>
+                        <div class='text'>
+                            Advinity
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;'>
+                        <div class='image' style='background:url("images/game.jpg") center no-repeat; background-size: cover;'></div>
+                        <div class='text'>
+                            Gamekita
+                        </div>
+                    </div>
+                </div>
+                <div class='statistic-frame'>
+                    <div class='item' style='margin-left: 0.5vw;background: url(images/graduate.svg) center no-repeat;background-size: cover;'>
+                        <div class='text'>
+                            <div class='title'>
+                                5000+
+                            </div>
+                            <div class='description'>
+                                Lulusan D4 dan <D3></D3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;background: url(images/throphy.svg) center no-repeat;background-size: cover;'>
+                        <div class='text'>
+                            <div class='title'>
+                                450+
+                            </div>
+                            <div class='description'>
+                                Prestasi Internasional
+                            </div>
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;background: url(images/ribbon.svg) center no-repeat;background-size: cover;'>
+                        <div class='text'>
+                            <div class='title'>
+                                'A'
+                            </div>
+                            <div class='description'>
+                                Akreditasi BAN-PT
+                            </div>
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 1vw;background: url(images/book.svg) center no-repeat;background-size: cover;'>
+                        <div class='text'>
+                            <div class='title'>
+                                100000+
+                            </div>
+                            <div class='description'>
+                                Mahasiswa Terdaftar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='big-card'>
+                    <div class='item' style='margin-left: 1vw;'>
+                        <div class='image' style="background: url('images/objective.png') center no-repeat; background-size: cover;"></div>
+                        <div class='title'>
+                            Visi
+                        </div>
+                        <div class='paragraph'>
+                            Menjadi sebuah pusat unggulan pendidii=kan<br>
+                           professional bidang Teknik Informatika<br>
+                            untuk menghasilkan lulusan yang siap bersaing<br>
+                            di pasar global <br>
+                        </div>
+                    </div>
+                    <div class='item' style='margin-left: 2vw;'>
+                        <div class='image' style="background: url('images/misi.png') center no-repeat; background-size: cover;"></div>
+                        <div class='title'>
+                            Misi
+                        </div>
+                        <div class='paragraph'>
+                           Mengenalkan dan memberi informasi tentang <br>
+                            prodi d4 Teknik Informatika Politeknik <br>
+                            Elektronika Negeri Surabaya<br>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+            <div class='lecturer-wrapper'>
+                <div class='frame'>
+                    <div class='photo'>
+                        
+                    </div>
+                    <div class='text'>
+                        <div class='title'>
+                            Testimoni
+                        </div>
+                        <div class='paragraph'>
+                            Prodi D4 Teknik Informatika Politeknik<br>
+                            Elektronika Negeri Surabaya adalah<br>
+                            pilihan yang terbaik untuk mencetak programmer handal.<br>
+                        </div>
+                        <div class='lecturer-selector'>
+                            <div class='item active' style="background: url('images/bunana.png') center no-repeat; background-size: cover;"></div>
+                             <div class='item' style="background: url('images/dosen1.jpg') center no-repeat; background-size: cover;"></div>
+                             <div class='item' style="background: url('images/dosen2.jpg') center no-repeat; background-size: cover;"></div>
+                             <div class='item' style="background: url('images/dosen3.jpg') center no-repeat; background-size: cover;"></div>
+                             <div class='item' style="background: url('images/dosen4.jpg') center no-repeat; background-size: cover;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='footer'>
+                <div class='frame'>
+                    <div class='content'>
+                        <div id='gmap_canvas' class='big-card'></div>
+                        <div class='mid-card'>
+                           <div class='image'></div>
+                           <div class='form'>
+                                <div class='input'>
+                                    <input placeholder="contoh@email.com">
+                                </div>
+                                <div class='button'>
+                                    <i class='ion ion-paper-airplane' style='font-size: 2em;color: #999;'></i>
+                                </div>
+                            </div>                
+                        </div>
+                    </div>
+                    <div class='sitemap'>
+                        <div class='link'>
+                            <i class='ion ion-help-buoy'></i> Tentang Kami
+                        </div>
+                        <div class='link'>
+                            <i class='ion ion-headphone'></i> Hubungi Kami
+                        </div>
+                        <div class='link'>
+                            <i class='ion ion-earth'></i> PENS
+                        </div>
+                        <div class='link' style='float: right; text-align: right;'>
+                            <i class='ion ion-social-twitter'></i> Twitter
+                        </div>
+                        <div class='link' style='float: right; text-align: right;'>
+                            <i class='ion ion-social-facebook'></i> Facebook
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-      </div>
-
-        <footer class="page-footer" style="margin-top: 42.8vh;">
-            <div class="footer-copyright">
-            <div class="container">
-            © 2017 Mojila
-            <a class="grey-text text-lighten-4 right" href="#!">About</a>
-            </div>
-            </div>
-        </footer>
-            
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src='js/gmaps.js'></script>
     </body>
 </html>
