@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b648b12d.chunk.css",
+    "main.js": "/static/js/main.887fa5ae.chunk.js",
+    "main.js.map": "/static/js/main.887fa5ae.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.266e55a5.chunk.css": "/static/css/2.266e55a5.chunk.css",
+    "static/js/2.6e1f52e9.chunk.js": "/static/js/2.6e1f52e9.chunk.js",
+    "static/js/2.6e1f52e9.chunk.js.map": "/static/js/2.6e1f52e9.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.1bd7bb8dae9a6fc39c4cdfb4867a5272.js": "/precache-manifest.1bd7bb8dae9a6fc39c4cdfb4867a5272.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.266e55a5.chunk.css.map": "/static/css/2.266e55a5.chunk.css.map",
+    "static/css/main.b648b12d.chunk.css.map": "/static/css/main.b648b12d.chunk.css.map",
+    "static/media/ellipse.svg": "/static/media/ellipse.98452179.svg",
+    "static/media/superhero.svg": "/static/media/superhero.0fb39731.svg"
+  }
+}
