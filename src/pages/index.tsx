@@ -2,8 +2,8 @@ import * as React from 'react'
 
 const IndexPage = () => {
   return <main>
-    <h1>Welcome to my Gatsby site!</h1>
-    <p>I'm making this by following the Gatsby Tutorial.</p>
+    <h1>Hello, World! My name is Mojila, I am a Software Engineer.</h1>
+    <p>Early blog development</p>
   </main>
 }
 
