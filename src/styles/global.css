@@ -7,8 +7,21 @@
     background-color: #D9D9D9;
 }
 
-.header-logo {
+.header > .header-logo {
     height: 32px;
     width: 32px;
     background-color: #B9B7B7;
+}
+
+.article {
+    height: 240px;
+    background-color: #D9D9D9;
+}
+
+.text-primary {
+    color: #000000;
+}
+
+.text-secondary {
+    color: #535252;
 }
