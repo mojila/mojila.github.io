@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+    height: 64px;
+    background-color: #D9D9D9;
+}
+
+.header-logo {
+    height: 32px;
+    width: 32px;
+    background-color: #B9B7B7;
+}
