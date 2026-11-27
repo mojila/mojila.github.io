@@ -610,7 +610,7 @@
       <div class="idr-cell">
         <div class="k">Next payment</div>
         <div class="v" id="idxNext">Jan 2027</div>
-        <div class="s" id="idxNextSub">BBRI interim · ~Rp4.93m gross</div>
+        <div class="s" id="idxNextSub">BBRI interim 137/sh · ~Rp4.89m gross</div>
       </div>
     </div>
 
@@ -631,7 +631,7 @@
           </tr>
         </thead>
         <tbody id="idxBody">
-          <tr data-sym="BBRI" data-dps="346" data-pays="1:138,5:208">
+          <tr data-sym="BBRI" data-dps="346" data-pays="1:137,5:209">
             <td><span class="sym">BBRI</span><span class="sub-name">Bank Rakyat Indonesia</span></td>
             <td><input class="editable lots" type="number" min="0" step="1" value="357" inputmode="numeric" aria-label="BBRI lots"></td>
             <td><input class="editable wide price" type="number" min="0" step="10" value="3100" inputmode="numeric" aria-label="BBRI price in rupiah"></td>
@@ -736,7 +736,7 @@
     </div>
 
     <div class="ex-note">
-      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its Rp346 into a January interim and a May final; the other five pay once a year in the month shown. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one.</p>
+      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its declared Rp346 into Rp137 paid in January and Rp209 paid in May; the other five pay once a year in the month shown. BRI has not yet declared an FY2026 interim, so the January figure is the last cycle's Rp137 carried forward, not an announcement. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one.</p>
     </div>
 
     <div class="ex-note warn">
@@ -1312,11 +1312,11 @@
   const rp  = n => "Rp" + nf(n);
   const MN  = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const TAX = 0.10;   /* final withholding, resident individual */
-  const KEY = "pluang-idx-assump-v1";
+  const KEY = "pluang-idx-assump-v2";
 
   /* Defaults: last declared cycle. Weight = share of the annual DPS paid in that month. */
   const DEFAULTS = {
-    BBRI: { dps:346, w:{"1":138/346, "5":208/346} },
+    BBRI: { dps:346, w:{"1":137/346, "5":209/346} },
     BIRD: { dps:166, w:{"7":1} },
     CITA: { dps:351, w:{"6":1} },
     CUAN: { dps:3,   w:{"5":1} },
