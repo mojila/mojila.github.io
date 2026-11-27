@@ -371,8 +371,8 @@
         <dd><span class="val" id="kpiAnnual">–</span><span class="sub" id="kpiAnnualSub"></span></dd>
       </div>
       <div class="mini">
-        <dt>Yield on invested</dt>
-        <dd><span class="val" id="kpiYield">–</span><span class="sub">on market value</span></dd>
+        <dt>Yield on market value</dt>
+        <dd><span class="val" id="kpiYield">–</span><span class="sub">income ÷ current value</span></dd>
       </div>
       <div class="mini">
         <dt>Idle cash · 3.38% p.a.</dt>
@@ -396,8 +396,8 @@
     <div class="combined-top">
       <div class="total-block">
         <div class="k">Forecast income, next 12 months, both sleeves</div>
-        <div class="big" id="cbTotal">Rp14,164,946</div>
-        <div class="s" id="cbSub">≈ $771.93 at Rp18,350 · average Rp1,180,412 / month</div>
+        <div class="big" id="cbTotal">Rp18,514,585</div>
+        <div class="s" id="cbSub">≈ $1,008.97 at Rp18,350 · average Rp1,542,882 / month</div>
       </div>
       <div class="fx-box">
         <label for="fxRate">USD/IDR rate</label>
@@ -477,7 +477,7 @@
             <th>Market value</th>
             <th>Yield</th>
             <th>Pays in month</th>
-            <th>Per payment</th>
+            <th>Avg per payment</th>
             <th>Month income</th>
           </tr>
         </thead>
@@ -598,14 +598,14 @@
         <div class="s">last prices, 27 Nov 2026</div>
       </div>
       <div class="idr-cell">
-        <div class="k">Trailing 12m DPS income</div>
+        <div class="k">Income / yr at declared DPS</div>
         <div class="v" id="idxGross">Rp16,701,800</div>
         <div class="s" id="idxNet">Rp15,031,620 after 10% tax</div>
       </div>
       <div class="idr-cell">
-        <div class="k">Blended trailing yield</div>
+        <div class="k">Blended yield</div>
         <div class="v" id="idxYield">11.33%</div>
-        <div class="s">gross, on today's market value</div>
+        <div class="s">gross, at declared DPS on today's value</div>
       </div>
       <div class="idr-cell">
         <div class="k">Next payment</div>
@@ -835,12 +835,12 @@
       <div>
         <h3>The 3.38% hurdle</h3>
         <p>Your USD cash yields ~3.38% p.a. Every dollar moved into equities has to beat that after fees and tax. This plan's blended distribution yield is shown above — income alone may clear the hurdle, but price risk is the reason to keep contributions modest and regular.</p>
-        <p>Ticket friction is real: a $500 ticket at ~0.3% all-in costs about $1.50, or roughly two weeks of that money's cash interest.</p>
+        <p>Ticket friction is real: a $500 ticket at ~0.3% all-in costs about $1.50 — roughly a month of that money's cash interest ($500 at 3.38% earns about $0.05 a day).</p>
       </div>
     </div>
 
     <footer>
-      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: BBRI 357, BIRD 110, CITA 25, CUAN 7, LPPF 60, PANI 3, MBMA 17, SIDO 57 (user-supplied). Prices (Rp3,100 / 1,460 / 2,780 / 368 / 1,650 / 3,430 / 352 / 336) are Pluang MCP last-session data as of 27 Nov 2026. Trailing DPS follows the last declared payment for each name — BBRI Rp137 interim + Rp209 final, BIRD Rp166, CITA Rp351, LPPF Rp250, PANI Rp5, SIDO Rp10 interim (Nov 2026) + Rp15 final (May 2026) — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration, and MBMA, which has never paid a dividend. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
+      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: BBRI 357, BIRD 110, CITA 25, CUAN 7, LPPF 60, PANI 3, MBMA 17, SIDO 57 (user-supplied). Prices (Rp3,100 / 1,460 / 2,780 / 368 / 1,650 / 3,430 / 352 / 336) are Pluang MCP last-session data as of 27 Nov 2026. DPS carried forward follows the last declared payment for each name — BBRI Rp137 interim + Rp209 final, BIRD Rp166, CITA Rp351, LPPF Rp250, PANI Rp5, SIDO Rp10 interim (Nov 2026) + Rp15 final (May 2026) — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration, and MBMA, which has never paid a dividend. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
     </footer>
   </section>
 
@@ -959,9 +959,25 @@
   /* Annual income per holding; each payment month carries a share of it,
      which lets JPIN's lumpy December quarter be modelled honestly. */
   function annualIncome(h){ return h.qty * h.price * (h.yld/100); }
+  /* Weights are hand-entered and need not sum to exactly 1. Normalising them
+     keeps a full year of payments equal to the annual income figure, instead of
+     silently dropping a fraction of a cent when the weights are rounded. */
+  function weightShare(h, month){
+    if(!h.weights) return 0;
+    /* Only months currently switched on share the annual figure, so a month
+       that is off hands its share to the others rather than losing it. */
+    const active = (h.payMonths && h.payMonths.length) ? h.payMonths : Object.keys(h.weights);
+    const sum = active.reduce((a,m)=> a + Number(h.weights[m] || 0), 0);
+    return sum ? Number(h.weights[month] || 0) / sum : 0;
+  }
   function perPayment(h, month){
     if(!h.yld || !h.weights) return 0;
-    return annualIncome(h) * (h.weights[month] || 0);
+    return annualIncome(h) * weightShare(h, month);
+  }
+  /* Size of a single typical distribution, used by the "per payment" column. */
+  function avgPayment(h){
+    const n = h.freq || Object.keys(h.weights || {}).length;
+    return n ? annualIncome(h) / n : 0;
   }
   function incomeInMonth(h, month){ return h.payMonths.includes(month) ? perPayment(h, month) : 0; }
 
@@ -1028,6 +1044,7 @@
       const value = h.qty*h.price;
       const pays = h.payMonths.includes(selected.month);
       const pp = perPayment(h, selected.month);
+      const avg = avgPayment(h);
       const inc = pays ? pp : 0;
       return '<tr>' +
         '<td><span class="sym">'+h.sym+'</span><span class="sub-name">'+h.name+'</span><span class="sub-name" style="color:var(--faint)">'+h.next+'</span></td>' +
@@ -1036,7 +1053,7 @@
         '<td class="num">'+usd.format(value)+'</td>' +
         '<td class="num">'+(h.yld?pct(h.yld,2):"—")+'</td>' +
         '<td class="'+(pays?'pay-yes':'pay-no')+'">'+(pays?'Yes':'No')+' <span class="freq-tag">'+(h.freq===12?'monthly':h.freq===4?'quarterly':"")+'</span></td>' +
-        '<td class="num">'+(pp?usd.format(pp):"—")+'</td>' +
+        '<td class="num">'+(avg?usd.format(avg):"—")+'</td>' +
         '<td class="num" style="font-weight:700">'+(inc?usd.format(inc):"—")+'</td>' +
         '</tr>';
     }).join("");
@@ -1300,13 +1317,20 @@
     if(!btn) return;
     const i = Number(btn.dataset.i), m = Number(btn.dataset.m);
     const h = state[i];
+
+    /* Toggling a month moves income in time; it must never add or remove any.
+       The weight is kept while the month is off, so switching it back on
+       restores the original shape exactly, and the 12-month total never moves. */
     if(h.payMonths.includes(m)){
-      h.payMonths = h.payMonths.filter(x=>x!==m);
+      if(h.payMonths.length > 1) h.payMonths = h.payMonths.filter(x=>x!==m);
     }else{
+      if(!(h.weights[m] > 0)){
+        const others = h.payMonths.filter(x=>h.weights[x] > 0);
+        h.weights[m] = others.length
+          ? others.reduce((a,x)=>a+h.weights[x], 0) / others.length
+          : 1;
+      }
       h.payMonths = h.payMonths.concat(m).sort((a,b)=>a-b);
-      const shares = h.payMonths.map(x=>h.weights[x]||0);
-      const avg = shares.reduce((s,x)=>s+x,0) / (shares.length || 1);
-      h.weights[m] = avg || (h.freq === 12 ? 1/12 : 0.25);
     }
     persist();
     renderAll();
@@ -1359,11 +1383,12 @@
 
   const persist = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
 
-  function renormalise(sym){
+  /* Share of the annual DPS that lands in `m`. Weights are normalised at
+     render time, so an inactive month's weight is remembered but not paid. */
+  function weightShare(sym, m){
     const w = S[sym].w, months = Object.keys(w);
-    const sum = months.reduce((a,m) => a + w[m], 0);
-    if(!sum || !months.length) return;
-    months.forEach(m => { w[m] = w[m] / sum; });
+    const sum = months.reduce((a,k) => a + w[k], 0);
+    return sum ? (w[m] || 0) / sum : 0;
   }
 
   const rows = () => Array.from(body.querySelectorAll("tr"));
@@ -1393,7 +1418,7 @@
       tLots += lots; tShares += shares; tMv += mv; tGross += gross;
 
       Object.keys(st.w).forEach(m => {
-        byMonth[m] = (byMonth[m] || 0) + gross * st.w[m];
+        byMonth[m] = (byMonth[m] || 0) + gross * weightShare(sym, m);
       });
     });
 
@@ -1486,14 +1511,21 @@
       const btn = e.target.closest(".idr-mbtn");
       if(!btn) return;
       const sym = btn.dataset.isym, m = btn.dataset.im;
-      const w = S[sym].w;
-      if(w[m]){
-        delete w[m];
+      const st = S[sym];
+      if(!st.saved) st.saved = {};
+      if(st.w[m]){
+        /* Keep the weight so switching the month back on restores it. */
+        st.saved[m] = st.w[m];
+        delete st.w[m];
+        if(!Object.keys(st.w).length){ st.w[m] = st.saved[m]; delete st.saved[m]; }
       }else{
-        const n = Object.keys(w).length;
-        w[m] = n ? 1 / (n + 1) : 1;
+        st.w[m] = st.saved[m] || (() => {
+          const others = Object.keys(st.w);
+          const sum = others.reduce((a,k)=>a + st.w[k], 0);
+          return others.length ? sum / others.length : 1;
+        })();
+        delete st.saved[m];
       }
-      renormalise(sym);
       persist();
       render();
     });
