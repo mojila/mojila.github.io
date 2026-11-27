@@ -85,6 +85,22 @@
   }
   .principle{padding:20px 22px;border-right:1px solid var(--line)}
   .principle:last-child{border-right:0}
+
+  .totals{
+    border:1px solid var(--line-strong);background:var(--sheet);margin:26px 0 8px;
+    display:grid;grid-template-columns:1.35fr 1fr 1fr;
+  }
+  .totals > div{padding:20px 22px;border-right:1px solid var(--line)}
+  .totals > div:last-child{border-right:0}
+  .totals .k{
+    font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:8px;
+  }
+  .totals .v{font-family:var(--serif);font-size:28px;line-height:1.1;letter-spacing:-.01em}
+  .totals .v.small{font-size:19px}
+  .totals .s{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+  .totals .main{background:#f7f5f0}
+  .totals-note{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.6}
   .principle dt{
     font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--faint);margin-bottom:8px;
@@ -109,6 +125,9 @@
     .principles{grid-template-columns:1fr}
     .principle{border-right:0;border-bottom:1px solid var(--line)}
     .principle:last-child{border-bottom:0}
+    .totals{grid-template-columns:1fr}
+    .totals > div{border-right:0;border-bottom:1px solid var(--line)}
+    .totals > div:last-child{border-bottom:0}
   }
 </style>
 <script src="assets/gate.js"></script>
@@ -132,6 +151,29 @@
     A conservative, income-first book needs a different question from a growth one:
     <em>what does the safe alternative pay?</em> These are the notes and tools that keep
     that number in view.
+  </p>
+
+  <div class="totals">
+    <div class="main">
+      <div class="k">Total assets · 27 Nov 2026</div>
+      <div class="v">Rp461.1m</div>
+      <div class="s">≈ $25,129 at Rp18,350/USD · two currencies, one translated total</div>
+    </div>
+    <div>
+      <div class="k">USD book</div>
+      <div class="v small">$15,572.67</div>
+      <div class="s">Pluang cash + four ETFs<br>≈ Rp285.8m · 62%</div>
+    </div>
+    <div>
+      <div class="k">IDR book</div>
+      <div class="v small">Rp175.4m</div>
+      <div class="s">IDX sleeve + money market<br>≈ $9,557 · 38%</div>
+    </div>
+  </div>
+  <p class="totals-note">
+    The two books are never added in their own currencies. The rupiah total is a translation
+    at the stated rate, so it moves when the currency moves even on a day nothing is bought
+    or sold. Balances are dated snapshots, not live.
   </p>
 
   <h2 class="sec">Tools</h2>
@@ -210,7 +252,7 @@
     <strong>Informational only — not financial advice.</strong> Snapshots are dated and go stale;
     prices, balances and rates move. Nothing here places, quotes or schedules an order, and no
     trading is available from this site.
-    <br>Data captured 2026-11-27 pre-market via Pluang MCP.
+    <br>USD figures captured 2026-11-27 via Pluang MCP; IDR sleeve and money market balances user-reported the same day.
   </footer>
 
 </div>
