@@ -227,6 +227,13 @@
   .mbtn:hover{border-color:var(--ink)}
   .assump-table td{padding:9px 8px}
   .assump-table .editable{width:72px}
+  .idr-mbtn{
+    width:22px;height:22px;border:1px solid var(--line-strong);background:transparent;border-radius:2px;
+    font-family:var(--mono);font-size:10px;color:var(--faint);cursor:pointer;padding:0;line-height:1;
+  }
+  .idr-mbtn.on{background:var(--amber);border-color:var(--amber);color:#fff}
+  .idr-mbtn:hover{border-color:var(--ink)}
+  .assump-table tr.idr-start td{border-top:1px solid var(--line-strong);padding-top:14px}
 
   /* ---------- notes ---------- */
   .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;padding-top:6px}
@@ -722,7 +729,7 @@
     <details class="assumptions" id="assumptions">
       <summary>Distribution assumptions &amp; payment months</summary>
       <div class="assump-body">
-        <p>Yields are annualised and applied to each holding's current market value. Each payment month carries a share of that annual figure — equal for the S&amp;P 500 funds and JEPQ, but deliberately December-weighted for JPIN, whose final quarter is its largest distribution. Toggle a month to change when cash lands; a month added back keeps an average share of the annual payout.</p>
+        <p>For the USD sleeve, yields are annualised and applied to each holding's current market value. Each payment month carries a share of that annual figure — equal for the S&amp;P 500 funds and JEPQ, but deliberately December-weighted for JPIN, whose final quarter is its largest distribution. Toggle a month to change when cash lands; a month added back keeps an average share of the annual payout.</p>
         <div class="table-scroll">
           <table class="assump-table">
             <thead>
@@ -734,6 +741,22 @@
               </tr>
             </thead>
             <tbody id="assumpBody"></tbody>
+          </table>
+        </div>
+
+        <p style="margin-top:24px"><strong>Indonesia sleeve (IDR).</strong> Rupiah names carry a <strong>declared amount per share</strong>, not a percentage, so the editable column is annual DPS in rupiah rather than a yield. Toggling a payment month moves the timing without changing the annual total. Lots and prices are edited in the sleeve table above; the yield column here is derived from those.</p>
+        <div class="table-scroll">
+          <table class="assump-table" id="assumpIdrTable">
+            <thead>
+              <tr>
+                <th>Holding</th>
+                <th>Annual DPS (IDR)</th>
+                <th>Yield at today's price</th>
+                <th>Frequency</th>
+                <th>Payment months</th>
+              </tr>
+            </thead>
+            <tbody id="assumpIdrBody"></tbody>
           </table>
         </div>
       </div>
@@ -1251,7 +1274,8 @@
 })();
 </script>
 <script>
-/* IDX (IDR) sleeve — independent of the USD model above. */
+/* IDX (IDR) sleeve — independent of the USD model above, but its
+   assumptions live in the same Assumptions panel. */
 (function(){
   "use strict";
   const body = document.getElementById("idxBody");
@@ -1261,30 +1285,62 @@
   const rp  = n => "Rp" + nf(n);
   const MN  = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const TAX = 0.10;   /* final withholding, resident individual */
+  const KEY = "pluang-idx-assump-v1";
+
+  /* Defaults: last declared cycle. Weight = share of the annual DPS paid in that month. */
+  const DEFAULTS = {
+    BBRI: { dps:346, w:{"1":138/346, "5":208/346} },
+    BIRD: { dps:166, w:{"7":1} },
+    CITA: { dps:351, w:{"6":1} },
+    CUAN: { dps:3,   w:{"5":1} },
+    LPPF: { dps:250, w:{"5":1} },
+    PANI: { dps:5,   w:{"7":1} }
+  };
+
+  const clone = o => JSON.parse(JSON.stringify(o));
+  let S = clone(DEFAULTS);
+  try{
+    const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+    if(saved) Object.keys(DEFAULTS).forEach(k => { if(saved[k]) S[k] = saved[k]; });
+  }catch(e){}
+
+  const persist = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
+
+  function renormalise(sym){
+    const w = S[sym].w, months = Object.keys(w);
+    const sum = months.reduce((a,m) => a + w[m], 0);
+    if(!sum || !months.length) return;
+    months.forEach(m => { w[m] = w[m] / sum; });
+  }
+
+  const rows = () => Array.from(body.querySelectorAll("tr"));
+
+  function priceOf(tr){ return Math.max(0, Number(tr.querySelector(".price").value) || 0); }
 
   function render(){
     let tLots = 0, tShares = 0, tMv = 0, tGross = 0;
     const byMonth = {};   /* month 1..12 → gross IDR */
 
-    Array.from(body.querySelectorAll("tr")).forEach(tr => {
-      const lots  = Math.max(0, Number(tr.querySelector(".lots").value)  || 0);
-      const price = Math.max(0, Number(tr.querySelector(".price").value) || 0);
-      const dps   = Number(tr.dataset.dps) || 0;
+    rows().forEach(tr => {
+      const sym   = tr.dataset.sym;
+      const lots  = Math.max(0, Number(tr.querySelector(".lots").value) || 0);
+      const price = priceOf(tr);
+      const st    = S[sym] || {dps:0, w:{}};
       const shares = lots * 100;
       const mv = shares * price;
-      const gross = shares * dps;
+      const gross = shares * st.dps;
 
       tr.querySelector(".shares").textContent = nf(shares);
       tr.querySelector(".mv").textContent     = nf(mv);
-      tr.querySelector(".yld").textContent    = price ? ((dps / price) * 100).toFixed(2) + "%" : "–";
+      tr.querySelector(".dps").textContent    = nf(st.dps);
+      tr.querySelector(".yld").textContent    = price ? ((st.dps / price) * 100).toFixed(2) + "%" : "–";
       tr.querySelector(".gross").textContent  = nf(gross);
       tr.querySelector(".net").textContent    = nf(gross * (1 - TAX));
 
       tLots += lots; tShares += shares; tMv += mv; tGross += gross;
 
-      (tr.dataset.pays || "").split(",").filter(Boolean).forEach(p => {
-        const [m, d] = p.split(":").map(Number);
-        byMonth[m] = (byMonth[m] || 0) + shares * d;
+      Object.keys(st.w).forEach(m => {
+        byMonth[m] = (byMonth[m] || 0) + gross * st.w[m];
       });
     });
 
@@ -1303,9 +1359,8 @@
 
     /* Monthly calendar, January → December of the next cycle. */
     const names = {};
-    Array.from(body.querySelectorAll("tr")).forEach(tr => {
-      (tr.dataset.pays || "").split(",").filter(Boolean).forEach(p => {
-        const m = Number(p.split(":")[0]);
+    rows().forEach(tr => {
+      Object.keys(S[tr.dataset.sym].w).forEach(m => {
         (names[m] = names[m] || []).push(tr.dataset.sym);
       });
     });
@@ -1329,14 +1384,75 @@
         names[first].join(" · ") + " · ~" + rp(byMonth[first]) + " gross";
     }
 
+    renderAssumptions();
+
     /* Feed the combined trend below. */
     window.IDR_INCOME = byMonth;
     window.dispatchEvent(new Event("idr-updated"));
   }
 
+  function renderAssumptions(){
+    const tb = document.getElementById("assumpIdrBody");
+    if(!tb) return;
+    const MONTH_TAGS = ["J","F","M","A","M","J","J","A","S","O","N","D"];
+
+    tb.innerHTML = rows().map((tr, i) => {
+      const sym = tr.dataset.sym;
+      const st  = S[sym];
+      const price = priceOf(tr);
+      const freq = Object.keys(st.w).length;
+      const yld = price ? ((st.dps / price) * 100).toFixed(2) + "%" : "–";
+      return '<tr' + (i === 0 ? ' class="idr-start"' : '') + '>' +
+        '<td><span class="sym">' + sym + '</span></td>' +
+        '<td><input class="editable" data-isym="' + sym + '" type="number" min="0" step="1" value="' + Math.round(st.dps) + '" aria-label="' + sym + ' annual DPS in rupiah"></td>' +
+        '<td class="num">' + yld + '</td>' +
+        '<td class="num" style="font-family:var(--sans);font-size:12px">' + freq + '&times; / yr</td>' +
+        '<td><div class="months">' + MONTH_TAGS.map((tag, mi) => {
+          const on = !!st.w[mi + 1];
+          return '<button type="button" class="idr-mbtn' + (on ? ' on' : '') + '" data-isym="' + sym + '" data-im="' + (mi + 1) + '" aria-pressed="' + on + '" title="' + MN[mi] + '">' + tag + '</button>';
+        }).join("") + '</div></td>' +
+        '</tr>';
+    }).join("");
+  }
+
   body.addEventListener("input", e => {
     if(e.target.matches(".lots,.price")) render();
   });
+
+  const assump = document.getElementById("assumpIdrBody");
+  if(assump){
+    assump.addEventListener("input", e => {
+      const sym = e.target.dataset.isym;
+      if(!sym) return;
+      S[sym].dps = Math.max(0, Number(e.target.value) || 0);
+      persist();
+      render();
+    });
+
+    assump.addEventListener("click", e => {
+      const btn = e.target.closest(".idr-mbtn");
+      if(!btn) return;
+      const sym = btn.dataset.isym, m = btn.dataset.im;
+      const w = S[sym].w;
+      if(w[m]){
+        delete w[m];
+      }else{
+        const n = Object.keys(w).length;
+        w[m] = n ? 1 / (n + 1) : 1;
+      }
+      renormalise(sym);
+      persist();
+      render();
+    });
+  }
+
+  const resetBtn = document.getElementById("resetBtn");
+  if(resetBtn) resetBtn.addEventListener("click", () => {
+    S = clone(DEFAULTS);
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    render();
+  });
+
   render();
 })();
 </script>
