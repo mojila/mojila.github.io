@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insights — Mojila</title>
+<meta name="description" content="Working notes and small tools for a conservative, income-first portfolio: dividend forecasting, allocation, and the cost of moving cash into risk.">
+<style>
+  :root{
+    --paper:#fbfaf7;
+    --sheet:#ffffff;
+    --ink:#15171b;
+    --muted:#6b7078;
+    --faint:#9aa0a8;
+    --line:#e2ded4;
+    --line-strong:#cfc9bb;
+    --green:#0b6b4f;
+    --green-soft:#e6f0ea;
+    --amber:#8a5700;
+    --amber-soft:#f8eeda;
+    --blue:#1e4c74;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{
+    margin:0;color:var(--ink);background:var(--paper);
+    font-family:var(--sans);font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:0 28px 72px}
+  a{color:var(--blue);text-underline-offset:2px}
+
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;
+    padding:40px 0 26px;border-bottom:1px solid var(--line-strong);flex-wrap:wrap;
+  }
+  .brand{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--green);margin-bottom:14px;
+  }
+  h1{font-family:var(--serif);font-weight:normal;font-size:48px;line-height:1.05;margin:0;letter-spacing:-.015em}
+  .mast-meta{font-size:12px;color:var(--muted);text-align:right;line-height:1.7;padding-top:4px}
+  .mast-meta strong{color:var(--ink);font-weight:600}
+
+  .lede{
+    font-family:var(--serif);font-size:20px;line-height:1.55;color:#2c2f35;
+    max-width:620px;margin:30px 0 8px;
+  }
+  .lede em{font-style:italic;color:var(--green)}
+
+  h2.sec{
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:44px 0 0;padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .entry{
+    display:grid;grid-template-columns:132px 1fr;gap:26px;
+    padding:24px 0 26px;border-bottom:1px solid var(--line);
+  }
+  .entry:last-of-type{border-bottom:0}
+  .entry-meta{font-size:12px;color:var(--muted);line-height:1.7}
+  .entry-meta .tag{
+    display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;padding:2px 7px;margin-bottom:8px;border-radius:2px;
+    background:var(--green-soft);color:var(--green);
+  }
+  .entry-meta .tag.note{background:var(--amber-soft);color:var(--amber)}
+  .entry h3{font-family:var(--serif);font-weight:normal;font-size:26px;line-height:1.25;margin:-3px 0 7px}
+  .entry h3 a{color:var(--ink);text-decoration:none}
+  .entry h3 a:hover{color:var(--green)}
+  .entry p{margin:0;color:#4a4f57;max-width:560px}
+  .entry .go{
+    display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.06em;color:var(--green);text-decoration:none;
+  }
+  .entry .go:hover{text-decoration:underline}
+
+  .principles{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border:1px solid var(--line);background:var(--sheet);margin-top:16px;
+  }
+  .principle{padding:20px 22px;border-right:1px solid var(--line)}
+  .principle:last-child{border-right:0}
+  .principle dt{
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:8px;
+  }
+  .principle dd{margin:0;font-size:13.5px;color:#3a3f46;line-height:1.55}
+  .principle dd strong{color:var(--ink);font-weight:600}
+
+  footer{
+    margin-top:56px;padding-top:22px;border-top:1px solid var(--line-strong);
+    font-size:12px;color:var(--muted);line-height:1.7;
+  }
+  footer strong{color:var(--ink);font-weight:600}
+
+  @media (max-width:640px){
+    .wrap{padding:0 20px 56px}
+    h1{font-size:38px}
+    .mast-meta{text-align:left;padding-top:0}
+    .lede{font-size:18px}
+    .entry{grid-template-columns:1fr;gap:8px}
+    .entry-meta{display:flex;align-items:center;gap:10px}
+    .entry-meta .tag{margin-bottom:0}
+    .principles{grid-template-columns:1fr}
+    .principle{border-right:0;border-bottom:1px solid var(--line)}
+    .principle:last-child{border-bottom:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <div class="brand">Mojila · Income Desk</div>
+      <h1>Insights</h1>
+    </div>
+    <div class="mast-meta">
+      <div>Working notes &amp; small tools</div>
+      <div>Snapshot <strong>27 November 2026</strong></div>
+      <div>USD · cash basis</div>
+    </div>
+  </header>
+
+  <p class="lede">
+    A conservative, income-first book needs a different question from a growth one:
+    <em>what does the safe alternative pay?</em> These are the notes and tools that keep
+    that number in view.
+  </p>
+
+  <h2 class="sec">Tools</h2>
+
+  <article class="entry">
+    <div class="entry-meta">
+      <span class="tag">Interactive</span>
+      <div>Nov 2026</div>
+      <div>Updates live</div>
+    </div>
+    <div>
+      <h3><a href="dividend-planner.html">Dividend forecast &amp; DCA plan</a></h3>
+      <p>
+        A twelve-month income calendar built from current quantities and editable yield
+        assumptions, the ex-dividend dates that decide whether a distribution is actually
+        yours, and where the next contribution does the most work. Edits stay in your browser.
+      </p>
+      <a class="go" href="dividend-planner.html">Open the planner →</a>
+    </div>
+  </article>
+
+  <h2 class="sec">Notes</h2>
+
+  <article class="entry">
+    <div class="entry-meta">
+      <span class="tag note">Note</span>
+      <div>27 Nov 2026</div>
+      <div>rev. 2</div>
+    </div>
+    <div>
+      <h3><a href="notes/cash-plus-book.html">The cash-plus book</a></h3>
+      <p>
+        Why an overwhelming cash position is the portfolio's engine rather than a failure
+        to invest, what the 3.38% hurdle rate implies for every dollar moved into risk, and
+        the four flags that make the equity sleeve look like a hobby allocation.
+      </p>
+      <a class="go" href="notes/cash-plus-book.html">Read the note →</a>
+    </div>
+  </article>
+
+  <h2 class="sec">Principles</h2>
+
+  <dl class="principles">
+    <div class="principle">
+      <dt>Hurdle</dt>
+      <dd><strong>3.38%</strong> is the bar. Cash pays it without drawdown; any risk asset must beat it net of fees and tax to have been worth the move.</dd>
+    </div>
+    <div class="principle">
+      <dt>Structure</dt>
+      <dd>Capital preservation first, with a <strong>small growth kicker</strong>. Judge the book against that stance, not against a growth benchmark it was never sized for.</dd>
+    </div>
+    <div class="principle">
+      <dt>Friction</dt>
+      <dd>Small tickets cost roughly <strong>0.3–0.4%</strong> all-in. Batch purchases; a ticket can spend a month of the money's yield before it earns anything.</dd>
+    </div>
+  </dl>
+
+  <footer>
+    <strong>Informational only — not financial advice.</strong> Snapshots are dated and go stale;
+    prices, balances and rates move. Nothing here places, quotes or schedules an order, and no
+    trading is available from this site.
+    <br>Data captured 2026-11-27 pre-market via Pluang MCP.
+  </footer>
+
+</div>
+</body>
+</html>

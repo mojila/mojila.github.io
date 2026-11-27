@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The cash-plus book — Mojila Insights</title>
+<meta name="description" content="A conservative portfolio is mostly cash by design. What the 3.38% hurdle rate implies, and why the small equity sleeve has not earned its cost of capital.">
+<style>
+  :root{
+    --paper:#fbfaf7;
+    --sheet:#ffffff;
+    --ink:#15171b;
+    --muted:#6b7078;
+    --faint:#9aa0a8;
+    --line:#e2ded4;
+    --line-strong:#cfc9bb;
+    --green:#0b6b4f;
+    --green-soft:#e6f0ea;
+    --amber:#8a5700;
+    --amber-soft:#f8eeda;
+    --blue:#1e4c74;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{
+    margin:0;color:var(--ink);background:var(--paper);
+    font-family:var(--sans);font-size:16px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 28px 72px}
+  a{color:var(--blue);text-underline-offset:2px}
+
+  .back{
+    display:inline-block;margin-top:34px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;
+  }
+  .back:hover{color:var(--green)}
+
+  header.head{padding:24px 0 26px;border-bottom:1px solid var(--line-strong)}
+  .kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--green);margin-bottom:14px;
+  }
+  h1{font-family:var(--serif);font-weight:normal;font-size:42px;line-height:1.1;margin:0 0 14px;letter-spacing:-.012em}
+  .dek{font-family:var(--serif);font-size:19px;line-height:1.55;color:#3c4048;margin:0;max-width:640px}
+  .byline{
+    margin-top:18px;font-size:12px;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap;
+  }
+  .byline strong{color:var(--ink);font-weight:600}
+
+  h2{
+    font-family:var(--serif);font-weight:normal;font-size:26px;margin:40px 0 10px;
+    letter-spacing:-.005em;
+  }
+  h2 .num{
+    font-family:var(--mono);font-size:11px;color:var(--faint);display:block;
+    letter-spacing:.12em;margin-bottom:5px;
+  }
+  p{margin:0 0 16px}
+  .lead{font-size:17.5px;color:#2c2f35}
+  .lead strong{font-weight:600}
+  ul,ol{margin:0 0 18px;padding-left:20px}
+  li{margin-bottom:9px}
+  li strong{font-weight:600}
+  hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+
+  .callout{
+    border-left:3px solid var(--green);background:var(--green-soft);
+    padding:16px 20px;margin:24px 0;font-size:15px;color:#24463a;
+  }
+  .callout.warn{border-left-color:var(--amber);background:var(--amber-soft);color:#55401a}
+  .callout strong{font-weight:600}
+
+  .table-scroll{overflow-x:auto;margin:18px 0 22px;border:1px solid var(--line);background:var(--sheet)}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th{
+    font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+    text-align:left;color:var(--muted);font-weight:600;padding:11px 14px;
+    border-bottom:1px solid var(--line-strong);background:#f7f5f0;white-space:nowrap;
+  }
+  td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:#3a3f46}
+  tr:last-child td{border-bottom:0}
+  td strong{color:var(--ink);font-weight:600}
+  .pri{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+  .p-now{color:var(--amber)}
+  .p-high{color:var(--green)}
+  .p-med{color:var(--blue)}
+  .p-low{color:var(--faint)}
+
+  .alloc{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--sheet);margin:20px 0 24px}
+  .alloc div{padding:16px 18px;border-right:1px solid var(--line)}
+  .alloc div:last-child{border-right:0}
+  .alloc .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .alloc .v{font-family:var(--serif);font-size:26px;line-height:1.1}
+  .alloc .s{font-size:11.5px;color:var(--muted);margin-top:3px}
+
+  footer{
+    margin-top:52px;padding-top:20px;border-top:1px solid var(--line-strong);
+    font-size:12.5px;color:var(--muted);line-height:1.7;
+  }
+  footer strong{color:var(--ink);font-weight:600}
+
+  @media (max-width:640px){
+    .wrap{padding:0 20px 56px}
+    h1{font-size:34px}
+    .dek{font-size:17px}
+    .alloc{grid-template-columns:1fr}
+    .alloc div{border-right:0;border-bottom:1px solid var(--line)}
+    .alloc div:last-child{border-bottom:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../index.html">← Insights</a>
+
+  <header class="head">
+    <div class="kicker">Portfolio note · rev. 2</div>
+    <h1>The cash-plus book</h1>
+    <p class="dek">
+      A portfolio that is mostly cash is not an unfinished portfolio. It is a stance — and
+      once the cash pays a real rate, that stance has a price that every risk asset must beat.
+    </p>
+    <div class="byline">
+      <span>Capture <strong>27 November 2026</strong>, pre-market</span>
+      <span>Source <strong>Pluang MCP</strong></span>
+      <span>Basis <strong>USD, cash</strong></span>
+    </div>
+  </header>
+
+  <h2><span class="num">01</span>Verdict</h2>
+  <p class="lead">
+    <strong>The cash is the best-performing asset in the book.</strong> At 3.38% a year it earns
+    more than the entire unrealised loss on the equity sleeve, and it does so without a
+    drawdown. The portfolio is really a <em>cash-plus</em> structure: a large yielding cash
+    base and a small four-ETF risk sleeve that is underwater.
+  </p>
+  <p>
+    That is a conservative profile with a growth kicker — not a growth portfolio that happens
+    to hold idle cash. The distinction matters, because the two are judged against different
+    benchmarks. Measured against a growth benchmark, this book looks badly under-invested.
+    Measured against its own stated stance — preserve capital, earn something on the dry
+    powder, keep a small exposure to equities and metals — it is doing what it says.
+  </p>
+
+  <div class="callout">
+    <strong>The hurdle rate is 3.38%.</strong> Any dollar moved out of cash into an ETF must
+    clear that rate after fees and tax to have been worth moving. Before the rate was
+    confirmed, that number did not exist; now it does, and the risk sleeve has to justify
+    itself against it.
+  </div>
+
+  <h2><span class="num">02</span>Shape of the book</h2>
+  <div class="alloc">
+    <div>
+      <div class="k">Liquid assets</div>
+      <div class="v">79.2%</div>
+      <div class="s">yielding cash</div>
+    </div>
+    <div>
+      <div class="k">Of invested capital</div>
+      <div class="v">76.9 / 23.1</div>
+      <div class="s">equity / metals</div>
+    </div>
+    <div>
+      <div class="k">Concentration</div>
+      <div class="v">0.43</div>
+      <div class="s">HHI on investable weights</div>
+    </div>
+  </div>
+  <p>
+    Four holdings, one dominant US equity fund, and two precious-metal funds that are really
+    one correlated trade. Developed ex-US is a modest second leg; emerging markets and fixed
+    income are absent. The metals sleeve is nearly a quarter of <em>invested</em> capital,
+    which is a large allocation to a single macro bet for a portfolio this small.
+  </p>
+
+  <h2><span class="num">03</span>What is not working</h2>
+  <ol>
+    <li>
+      <strong>The equity sleeve has not beaten cash.</strong> It is down against a risk-free
+      alternative that is up. Nothing in the risk book has earned its cost of capital yet.
+    </li>
+    <li>
+      <strong>The metals sleeve is oversized.</strong> A third of the silver position is gone;
+      gold and silver moving together means the diversification is thinner than the holding
+      count suggests.
+    </li>
+    <li>
+      <strong>Averaging down into the worst position.</strong> Recent flow went into the
+      position already down the most — a mechanical reflex rather than a re-underwriting.
+    </li>
+    <li>
+      <strong>Momentum is negative across the book.</strong> Every holding reads bearish on
+      short-horizon indicators. That is not a sell signal on its own, but it is a reason not
+      to add indiscriminately.
+    </li>
+    <li>
+      <strong>Ticket friction is real.</strong> Visible purchases run roughly 0.3–0.4% all-in.
+      On small tickets that is about a month of the money's 3.38% yield spent before the
+      capital does any work.
+    </li>
+    <li>
+      <strong>Rate durability is unknown.</strong> 3.38% is competitive, but if it is
+      promotional it can reset. At ~1% the cash becomes a drag again and the whole read
+      changes.
+    </li>
+  </ol>
+
+  <h2><span class="num">04</span>What would change the read</h2>
+  <ul>
+    <li>
+      <strong>If the cash is earmarked for a near-term liability</strong>, the allocation is
+      correct and only the equity sleeve should be judged. The cash is not idle; it is
+      committed.
+    </li>
+    <li>
+      <strong>If the rate resets toward zero</strong>, the hurdle disappears and the case for
+      holding this much cash weakens sharply. The portfolio would need to be re-sized, not
+      just re-labelled.
+    </li>
+    <li>
+      <strong>If the goal is growth</strong>, the current investable share cannot move total
+      return meaningfully. It would need to rise in steps — deliberately, not by drift.
+    </li>
+  </ul>
+
+  <h2><span class="num">05</span>What to do about it</h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Priority</th><th>Action</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="pri p-now">Immediate</td>
+          <td>Reclassify the plan as <strong>capital preservation</strong>, not growth</td>
+          <td>Own the conservative stance or change it; do not judge it by the wrong benchmark</td>
+        </tr>
+        <tr>
+          <td class="pri p-high">High</td>
+          <td>Make <strong>3.38% the explicit hurdle</strong> for every new deployment</td>
+          <td>The risk-free alternative is now measurable, so the risk sleeve must justify itself</td>
+        </tr>
+        <tr>
+          <td class="pri p-high">High</td>
+          <td>Freeze new silver purchases; re-underwrite the position</td>
+          <td>Down a third and still being added to is a reflex, not a thesis</td>
+        </tr>
+        <tr>
+          <td class="pri p-high">High</td>
+          <td>Cap metals at <strong>10–15%</strong> of invested capital, trimming silver first</td>
+          <td>Two correlated funds at nearly a quarter of invested capital is a single macro bet</td>
+        </tr>
+        <tr>
+          <td class="pri p-med">Medium</td>
+          <td>Batch contributions into <strong>monthly buys</strong></td>
+          <td>Per-ticket friction of ~0.3–0.4% is roughly a month of the yield</td>
+        </tr>
+        <tr>
+          <td class="pri p-med">Medium</td>
+          <td>If growth is the goal, raise the investable share in steps (e.g. 40–60%)</td>
+          <td>A fifth of the book in risk assets cannot move total return much either way</td>
+        </tr>
+        <tr>
+          <td class="pri p-low">Low</td>
+          <td>Decide whether the dormant IDR wallets belong in the plan</td>
+          <td>They are inert and one of them cannot fund the account it sits beside</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <h2><span class="num">06</span>Bull, bear, and confidence</h2>
+  <p>
+    <strong>Bull case.</strong> A yielding cash base with a small ETF kicker is a genuinely
+    defensive, low-drawdown structure. Cash interest has already offset the equity loss more
+    than once on an annualised basis.
+  </p>
+  <p>
+    <strong>Bear case.</strong> The equity sleeve is a hobby allocation — too small to matter
+    if right, large enough to lose a third of a position if wrong. Four funds, a quarter in
+    metals, and mechanical averaging down.
+  </p>
+  <p>
+    <strong>Confidence.</strong> High on balances, weights and unrealised P&amp;L. Medium on
+    the 3.38% — it is assumed to apply to the USD cash balance, and there is no yield endpoint
+    to verify it. Low on historical return: only unrealised P&amp;L is knowable, with no
+    equity curve and no realised P&amp;L.
+  </p>
+
+  <footer>
+    <strong>Informational analysis only — not financial advice.</strong> Figures are a dated
+    snapshot and will go stale. No order was placed, quoted or scheduled. Account data beyond
+    these proportions is deliberately kept private.
+    <br>Capture 2026-11-27, pre-market · Pluang MCP · USD, cash basis.
+  </footer>
+
+</div>
+</body>
+</html>

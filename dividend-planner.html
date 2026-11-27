@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dividend Forecast &amp; DCA Planner</title>
+<style>
+  :root{
+    --paper:#fbfaf7;
+    --sheet:#ffffff;
+    --ink:#15171b;
+    --muted:#6b7078;
+    --faint:#9aa0a8;
+    --line:#e2ded4;
+    --line-strong:#cfc9bb;
+    --green:#0b6b4f;
+    --green-soft:#e6f0ea;
+    --amber:#8a5700;
+    --amber-soft:#f8eeda;
+    --red:#a02c2c;
+    --blue:#1e4c74;
+    --blue-soft:#e8eef4;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --radius:3px;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px 80px}
+  a{color:var(--blue);text-underline-offset:2px}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;padding:34px 0 18px;border-bottom:2px solid var(--ink);
+  }
+  .brand{font-family:var(--serif);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{
+    font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,46px);
+    line-height:1.02;margin:8px 0 0;letter-spacing:-.015em;max-width:15ch;
+  }
+  .mast-meta{text-align:right;font-size:12px;color:var(--muted);line-height:1.7;white-space:nowrap}
+  .mast-meta strong{color:var(--ink);font-weight:600}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+    gap:0;border-bottom:1px solid var(--line-strong);
+  }
+  .hero-main{padding:34px 40px 34px 0;border-right:1px solid var(--line)}
+  .eyebrow{
+    font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 10px;font-weight:600;
+  }
+  .big-number{
+    font-family:var(--serif);font-size:clamp(56px,7vw,84px);line-height:.92;
+    letter-spacing:-.03em;color:var(--green);font-variant-numeric:tabular-nums;
+    display:flex;align-items:baseline;gap:8px;
+  }
+  .big-number .cents{font-size:.42em;color:var(--muted);letter-spacing:0}
+  .hero-note{color:var(--muted);max-width:44ch;margin:18px 0 0;font-size:14px}
+  .hero-note strong{color:var(--ink);font-weight:600}
+  .hero-side{display:grid;grid-template-rows:repeat(3,1fr);padding-left:36px}
+  .mini{padding:16px 0;border-bottom:1px solid var(--line)}
+  .mini:last-child{border-bottom:0}
+  .mini dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;font-weight:600}
+  .mini dd{margin:0;display:flex;align-items:baseline;gap:8px;justify-content:space-between}
+  .mini .val{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums}
+  .mini .sub{font-size:12px;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:36px 0 8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+  h2{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:-.01em;margin:0}
+  .sec-head p{margin:0;color:var(--muted);font-size:13px;max-width:58ch}
+
+  /* ---------- calendar ---------- */
+  .calendar{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;
+    padding-bottom:6px;
+  }
+  .bar-col{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+  .bar-track{height:150px;width:100%;display:flex;align-items:flex-end;justify-content:center;position:relative}
+  .bar{
+    width:min(46px,100%);background:var(--green);border-radius:2px 2px 0 0;
+    min-height:2px;transition:height .25s ease;position:relative;
+  }
+  .bar-col.is-selected .bar{background:var(--amber)}
+  .bar-val{font-family:var(--mono);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bar-col.is-selected .bar-val{color:var(--ink);font-weight:700}
+  .bar-label{font-size:11px;color:var(--muted);letter-spacing:.02em}
+  .bar-col.is-selected .bar-label{color:var(--ink);font-weight:700}
+  .cal-note{display:flex;gap:26px;margin-top:16px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .swatch{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+  .ex-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line);background:var(--sheet);border-radius:var(--radius);
+  }
+  .ex-chip{padding:16px 18px 15px;border-right:1px solid var(--line);min-width:0}
+  .ex-chip:last-child{border-right:0}
+  .ex-chip .ex-sym{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .ex-chip .ex-date{font-family:var(--serif);font-size:21px;margin-top:3px;line-height:1.15;letter-spacing:-.01em}
+  .ex-chip .ex-meta{font-size:11.5px;color:var(--muted);margin-top:8px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .ex-chip .ex-drop{font-family:var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+  .ex-chip .ex-when{color:var(--green);font-weight:600}
+  .ex-chip .ex-when.past{color:var(--faint)}
+  .cal-btn{
+    margin-top:12px;display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--line-strong);background:transparent;color:var(--ink);
+    font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;
+    padding:6px 9px;border-radius:2px;cursor:pointer;font-family:var(--sans);
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .cal-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .cal-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .sec-side{display:flex;flex-direction:column;align-items:flex-end;gap:12px;max-width:60ch}
+  .sec-head .sec-side p{text-align:right}
+  .add-all{
+    border:1px solid var(--green);background:var(--green);color:#fff;
+    font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;
+    padding:8px 12px;border-radius:2px;cursor:pointer;font-family:var(--sans);
+    white-space:nowrap;
+  }
+  .add-all:hover{background:#08543e;border-color:#08543e}
+  .cal-status{display:block;margin-top:10px;min-height:17px;font-size:11.5px;color:var(--green)}
+  .ex-note{
+    margin-top:18px;padding:15px 18px;background:var(--green-soft);
+    border-left:3px solid var(--green);font-size:13px;line-height:1.6;color:#26463a;
+  }
+  .ex-note p{margin:0}
+  .ex-note strong{color:var(--ink)}
+  .ex-tag{
+    display:block;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--faint);font-weight:600;margin-top:3px;
+  }
+  .ex-conf{color:var(--green)}
+  @media (max-width:640px){
+    .ex-strip{grid-template-columns:1fr 1fr}
+    .ex-chip:nth-child(2n){border-right:0}
+    .ex-chip:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    .sec-side{align-items:flex-start;max-width:none}
+    .sec-head .sec-side p{text-align:left}
+  }
+
+  /* ---------- tables ---------- */
+  .table-scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{
+    text-align:right;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;padding:0 10px 9px;border-bottom:1px solid var(--line-strong);
+    white-space:nowrap;
+  }
+  th:first-child,td:first-child{text-align:left;padding-left:0}
+  th:last-child,td:last-child{padding-right:0}
+  td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  .num{font-family:var(--mono);font-size:13px}
+  .sym{font-weight:700;letter-spacing:.02em}
+  .sub-name{display:block;font-size:11.5px;color:var(--muted);font-weight:400;letter-spacing:0;margin-top:1px;font-family:var(--sans)}
+  .freq-tag{font-size:10.5px;color:var(--muted);white-space:nowrap}
+  .pay-yes{color:var(--green);font-weight:700}
+  .pay-no{color:var(--faint)}
+  tfoot td{border-top:1px solid var(--line-strong);font-weight:700;border-bottom:0;padding-top:14px}
+  .editable{
+    width:96px;padding:5px 6px;border:1px solid var(--line);background:var(--paper);
+    border-radius:var(--radius);font-family:var(--mono);font-size:12.5px;text-align:right;
+    color:var(--ink);font-variant-numeric:tabular-nums;
+  }
+  .editable:focus{outline:2px solid var(--blue);outline-offset:0;background:#fff}
+  .editable.wide{width:112px}
+
+  /* ---------- DCA ---------- */
+  .dca-top{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;flex-wrap:wrap;margin-bottom:24px}
+  .budget-box{display:flex;align-items:flex-end;gap:14px}
+  .budget-field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .money-input{display:flex;align-items:center;gap:6px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+  .money-input span{font-family:var(--mono);font-size:15px;color:var(--muted)}
+  .money-input input{
+    border:0;background:transparent;font-family:var(--serif);font-size:34px;width:150px;
+    color:var(--ink);font-variant-numeric:tabular-nums;padding:0;line-height:1;
+  }
+  .money-input input:focus{outline:none}
+  .budget-hint{font-size:12px;color:var(--muted);max-width:24ch;line-height:1.45;padding-bottom:2px}
+  .dca-summary{display:flex;gap:30px;flex-wrap:wrap}
+  .dca-stat .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+  .dca-stat .v{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums}
+  .dca-stat .v.green{color:var(--green)}
+
+  .verdict{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+  .v-add{background:var(--green-soft);color:var(--green)}
+  .v-hold{background:var(--blue-soft);color:var(--blue)}
+  .v-trim{background:var(--amber-soft);color:var(--amber)}
+  .v-avoid{background:#f7e3e3;color:var(--red)}
+  .v-income{background:var(--green-soft);color:var(--green)}
+
+  .plan-bar{height:7px;background:var(--line);border-radius:99px;overflow:hidden;min-width:70px}
+  .plan-bar i{display:block;height:100%;background:var(--green);border-radius:99px}
+
+  /* ---------- assumptions ---------- */
+  details.assumptions{border:1px solid var(--line);background:var(--sheet);border-radius:var(--radius);padding:0;margin-top:8px}
+  details.assumptions summary{
+    cursor:pointer;padding:14px 18px;font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;list-style:none;
+  }
+  details.assumptions summary::-webkit-details-marker{display:none}
+  details.assumptions summary::before{content:"+";display:inline-block;width:16px;font-family:var(--mono);color:var(--ink)}
+  details.assumptions[open] summary::before{content:"–"}
+  details.assumptions summary:hover{color:var(--ink)}
+  .assump-body{padding:4px 18px 22px;border-top:1px solid var(--line)}
+  .assump-body>p{margin:14px 0 18px;font-size:12.5px;color:var(--muted);max-width:74ch}
+  .months{display:flex;gap:3px}
+  .mbtn{
+    width:22px;height:22px;border:1px solid var(--line-strong);background:transparent;border-radius:2px;
+    font-family:var(--mono);font-size:10px;color:var(--faint);cursor:pointer;padding:0;line-height:1;
+  }
+  .mbtn.on{background:var(--green);border-color:var(--green);color:#fff}
+  .mbtn:hover{border-color:var(--ink)}
+  .assump-table td{padding:9px 8px}
+  .assump-table .editable{width:72px}
+
+  /* ---------- notes ---------- */
+  .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;padding-top:6px}
+  .notes h3{font-family:var(--serif);font-weight:500;font-size:16px;margin:0 0 8px}
+  .notes p{font-size:12.5px;color:var(--muted);line-height:1.6;margin:0 0 10px}
+  .notes p strong{color:var(--ink)}
+  footer{padding-top:28px;font-size:11.5px;color:var(--muted);line-height:1.65;max-width:92ch}
+  .reset{
+    border:1px solid var(--line-strong);background:transparent;color:var(--muted);
+    font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:7px 11px;
+    border-radius:var(--radius);cursor:pointer;font-weight:600;
+  }
+  .reset:hover{color:var(--ink);border-color:var(--ink)}
+  .saved{font-size:11px;color:var(--green);opacity:0;transition:opacity .3s;margin-left:10px}
+  .saved.show{opacity:1}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .hero-main{border-right:0;border-bottom:1px solid var(--line);padding-right:0}
+    .hero-side{padding-left:0;grid-template-columns:repeat(3,1fr);grid-template-rows:none;gap:16px}
+    .mini{border-bottom:0;border-right:1px solid var(--line);padding:14px 14px 14px 0}
+    .mini:last-child{border-right:0}
+    .notes{grid-template-columns:1fr;gap:22px}
+    .mast-meta{text-align:left}
+    .masthead{flex-direction:column;align-items:flex-start;gap:10px}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 18px 60px}
+    .calendar{grid-template-columns:repeat(6,1fr);row-gap:18px}
+    .mini dd{flex-direction:column;align-items:flex-start;gap:0}
+    .hero-side{grid-template-columns:1fr;gap:0}
+    .mini{border-right:0;border-bottom:1px solid var(--line)}
+    .budget-hint{max-width:none}
+    .dca-summary{gap:20px}
+    #forecastTable td:first-child{min-width:150px}
+    #forecastTable .sub-name{white-space:nowrap}
+    #forecastTable .sub-name[style]{white-space:nowrap}
+  }
+  @media print{
+    body{background:#fff;font-size:12px}
+    .reset,.editable{border:0}
+    details.assumptions{display:none}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <div class="brand">Pluang · Income Desk</div>
+      <h1>Dividend forecast &amp; DCA plan</h1>
+    </div>
+    <div class="mast-meta">
+      <div>Prices &amp; positions <strong>27 Nov 2026, pre-market</strong></div>
+      <div>Pluang MCP · USD · cash basis</div>
+      <div>Edits save to this browser</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-main">
+      <p class="eyebrow" id="heroEyebrow">Forecast cash received in December 2026</p>
+      <div class="big-number" id="heroNumber">$0<span class="cents">.00</span></div>
+      <p class="hero-note" id="heroNote"></p>
+    </div>
+    <dl class="hero-side">
+      <div class="mini">
+        <dt>Forward 12-month income</dt>
+        <dd><span class="val" id="kpiAnnual">–</span><span class="sub" id="kpiAnnualSub"></span></dd>
+      </div>
+      <div class="mini">
+        <dt>Yield on invested</dt>
+        <dd><span class="val" id="kpiYield">–</span><span class="sub">on market value</span></dd>
+      </div>
+      <div class="mini">
+        <dt>Idle cash · 3.38% p.a.</dt>
+        <dd><span class="val" id="kpiCash">–</span><span class="sub" id="kpiCashSub"></span></dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- CALENDAR -->
+  <section aria-labelledby="cal-title">
+    <div class="sec-head">
+      <h2 id="cal-title">Twelve-month income calendar</h2>
+      <p>Projected cash by payment month, using your current quantities and the editable yield assumptions below. A fund paying quarterly shows up in only four bars.</p>
+    </div>
+    <div class="calendar" id="calendar"></div>
+    <div class="cal-note">
+      <span><span class="swatch" style="background:var(--green)"></span>Projected dividend cash</span>
+      <span><span class="swatch" style="background:var(--amber)"></span>Selected month</span>
+      <span id="calTotal"></span>
+    </div>
+  </section>
+
+  <!-- FORECAST TABLE -->
+  <section aria-labelledby="fc-title">
+    <div class="sec-head">
+      <h2 id="fc-title">Position-by-position forecast</h2>
+      <p>Quantities and prices are live Pluang snapshots from 27 Nov 2026. Change a quantity or price and every figure on this page recalculates.</p>
+    </div>
+    <div class="table-scroll">
+      <table id="forecastTable">
+        <thead>
+          <tr>
+            <th>Holding</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Market value</th>
+            <th>Yield</th>
+            <th>Pays in month</th>
+            <th>Per payment</th>
+            <th>Month income</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- EX-DATE CALENDAR -->
+  <section aria-labelledby="ex-title">
+    <div class="sec-head">
+      <h2 id="ex-title">When to add: ex-dividend dates</h2>
+      <div class="sec-side">
+        <p>The ex-date is the first session a share trades without its next distribution. The price usually opens lower by roughly the payout — which is why it can look like a dip. Dates below are the December 2026 cycle; amounts are estimates until declared.</p>
+        <button class="add-all" id="addAllCal" type="button">Add all 3 DCA windows to calendar</button>
+      </div>
+    </div>
+
+    <div class="ex-strip" id="exStrip"></div>
+    <span class="cal-status" id="calStatus" role="status"></span>
+
+    <div class="table-scroll" style="margin-top:20px">
+      <table id="exTable">
+        <thead>
+          <tr>
+            <th>Holding</th>
+            <th>Next ex-date</th>
+            <th>Est. drop / share</th>
+            <th>Cash paid on</th>
+            <th>Recurring pattern</th>
+            <th>DCA window</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="ex-note">
+      <p><strong>Buy before the ex-date</strong> only if you specifically want the distribution. <strong>Buy on or after it</strong> if you are accumulating: the payout is already out of the price, so you avoid receiving — and being taxed at source on — a distribution you effectively paid for. For JPIN the December payout is unusually large, so this timing choice matters more than for the others. No ex-date dip is free money; it is the distribution leaving the price.</p>
+    </div>
+  </section>
+
+  <!-- DCA -->
+  <section aria-labelledby="dca-title">
+    <div class="sec-head">
+      <h2 id="dca-title">Where next month's contribution should go</h2>
+      <p>Allocation follows three rules: stop feeding the oversized metals sleeve, keep new US equity money in the cheaper share class, and lean toward the income and ex-US exposure the book is short of.</p>
+    </div>
+
+    <div class="dca-top">
+      <div class="budget-box">
+        <div class="budget-field">
+          <label for="budget">Monthly contribution</label>
+          <div class="money-input"><span>$</span><input id="budget" type="number" min="0" step="50" value="500" inputmode="decimal"></div>
+        </div>
+        <p class="budget-hint" id="budgetHint"></p>
+      </div>
+      <div class="dca-summary">
+        <div class="dca-stat">
+          <div class="k">Added annual income</div>
+          <div class="v green" id="dcaIncome">–</div>
+        </div>
+        <div class="dca-stat">
+          <div class="k">Income yield of the plan</div>
+          <div class="v" id="dcaYield">–</div>
+        </div>
+        <div class="dca-stat">
+          <div class="k">Cash after 12 months</div>
+          <div class="v" id="dcaCash">–</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table id="dcaTable">
+        <thead>
+          <tr>
+            <th>Holding</th>
+            <th>Current weight</th>
+            <th>Target</th>
+            <th>Gap</th>
+            <th>Verdict</th>
+            <th>This month</th>
+            <th>Shares</th>
+            <th>Income added / yr</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ASSUMPTIONS -->
+  <section aria-labelledby="as-title" style="border-bottom:0">
+    <div class="sec-head">
+      <h2 id="as-title">Assumptions</h2>
+      <p>Distribution amounts are estimates, not promises. Edit any yield or payment month to match the fund's latest declaration.</p>
+    </div>
+
+    <details class="assumptions" id="assumptions">
+      <summary>Distribution assumptions &amp; payment months</summary>
+      <div class="assump-body">
+        <p>Yields are annualised and applied to each holding's current market value. Each payment month carries a share of that annual figure — equal for the S&amp;P 500 funds and JEPQ, but deliberately December-weighted for JPIN, whose final quarter is its largest distribution. Toggle a month to change when cash lands; a month added back keeps an average share of the annual payout.</p>
+        <div class="table-scroll">
+          <table class="assump-table">
+            <thead>
+              <tr>
+                <th>Holding</th>
+                <th>Annual yield %</th>
+                <th>Frequency</th>
+                <th>Payment months</th>
+              </tr>
+            </thead>
+            <tbody id="assumpBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-top:16px">
+      <button class="reset" id="resetBtn" type="button">Reset to 27 Nov snapshot</button>
+      <span class="saved" id="savedMsg">Saved</span>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <section style="border-bottom:0;padding-top:26px">
+    <div class="notes">
+      <div>
+        <h3>What counts as “income”</h3>
+        <p>A distribution is only cash if the shares were held through the <strong>ex-dividend date</strong>. Your December figure uses each fund's typical payment month, not its declaration date, so a quarterly fund with a December ex-date but a January pay date lands in January here.</p>
+        <p>Covered-call funds like JEPQ can pay out of option premium and return of capital, so their headline yield is not equivalent to interest.</p>
+      </div>
+      <div>
+        <h3>Why the DCA split looks like this</h3>
+        <p><strong>VOO over SPY</strong> for new money: same index, lower expense ratio, fractional shares available. <strong>JPIN</strong> is the only developed ex-US exposure and is the most oversold position on Pluang's daily oscillators (RSI-12 ≈ 25). <strong>JEPQ</strong> is the income engine.</p>
+        <p><strong>No new GLD or SLV.</strong> Metals are already ~20% of invested capital; SLV is down a third and still the worst momentum in the book.</p>
+      </div>
+      <div>
+        <h3>The 3.38% hurdle</h3>
+        <p>Your USD cash yields ~3.38% p.a. Every dollar moved into equities has to beat that after fees and tax. This plan's blended distribution yield is shown above — income alone may clear the hurdle, but price risk is the reason to keep contributions modest and regular.</p>
+        <p>Ticket friction is real: a $500 ticket at ~0.3% all-in costs about $1.50, or roughly two weeks of that money's cash interest.</p>
+      </div>
+    </div>
+
+    <footer>
+      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital.
+    </footer>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Baseline: Pluang MCP snapshot, 27 Nov 2026 (USD).
+     yield = annual distribution yield estimate, %
+     payMonths = months in which cash is received (1 = Jan … 12 = Dec)
+     ------------------------------------------------------------------ */
+  const BASE = [
+    {sym:"SPY",  name:"SPDR S&P 500 ETF Trust",               qty:2.749680919, price:728.00, yld:1.04, freq:4,
+      payMonths:[1,4,7,10], weights:{1:.25,4:.25,7:.25,10:.25},
+      next:"ex 18 Dec · pays 29 Jan", role:"Core US equity", target:0.40},
+    {sym:"VOO",  name:"Vanguard S&P 500 ETF",                 qty:0.18,        price:669.37, yld:1.11, freq:4,
+      payMonths:[3,6,9,12], weights:{3:.25,6:.25,9:.25,12:.25},
+      next:"ex 21 Dec · pays 23 Dec", role:"Core US equity", target:0.20},
+    {sym:"JEPQ", name:"JPM Nasdaq Equity Premium Income ETF",  qty:8,          price:53.84,  yld:12.90, freq:12,
+      payMonths:[1,2,3,4,5,6,7,8,9,10,11,12],
+      weights:{1:1/12,2:1/12,3:1/12,4:1/12,5:1/12,6:1/12,7:1/12,8:1/12,9:1/12,10:1/12,11:1/12,12:1/12},
+      next:"ex 1 Dec · pays 3 Dec", role:"Covered-call income", target:0.15},
+    {sym:"JPIN", name:"JPM Diversified Return Intl Equity ETF",qty:6.70301773,price:72.43, yld:4.34, freq:4,
+      payMonths:[3,6,9,12], weights:{3:.0573,6:.2905,9:.1628,12:.4893},
+      next:"ex 22 Dec · pays 24 Dec", role:"Developed ex-US", target:0.25},
+    {sym:"GLD",  name:"SPDR Gold Shares",                     qty:1.17763236,  price:334.27, yld:0,    freq:0,
+      payMonths:[], weights:{}, next:"no distribution", role:"Gold", target:0.00},
+    {sym:"SLV",  name:"iShares Silver Trust",                 qty:8.932982606, price:39.54,  yld:0,    freq:0,
+      payMonths:[], weights:{}, next:"no distribution", role:"Silver", target:0.00}
+  ];
+  const BASE_CASH = 11782.89;
+  const CASH_RATE = 0.0338;
+
+  /* DCA plan: share of the monthly contribution, and the action label. */
+  const PLAN = {
+    VOO:  {weight:0.50, verdict:"Add",  cls:"v-add"},
+    JPIN: {weight:0.25, verdict:"Add",  cls:"v-add"},
+    JEPQ: {weight:0.25, verdict:"Income",cls:"v-income"},
+    SPY:  {weight:0,    verdict:"Hold", cls:"v-hold"},
+    GLD:  {weight:0,    verdict:"Trim", cls:"v-trim"},
+    SLV:  {weight:0,    verdict:"Avoid",cls:"v-avoid"}
+  };
+
+  const STORE_KEY = "pluang-dividend-planner-v1";
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const MONTH_TAGS = ["Ja","Fe","Mr","Ap","My","Jn","Jl","Au","Se","Oc","No","De"];
+  const MONTH_FULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  /* Next ex-dividend event per income fund, per the December 2026 issuer
+     calendars. Amounts are not declared yet, so the drop per share is
+     derived from the yield assumptions and marked as an estimate. */
+  const EX = {
+    JEPQ:{next:"2026-12-01", pay:"2026-12-03", pattern:"1st business day · monthly",       confirmed:true,  window:"1–3 Dec", dca:true},
+    SPY: {next:"2026-12-18", pay:"2027-01-29", pattern:"3rd Friday · Mar/Jun/Sep/Dec",      confirmed:true,  window:"hold — not adding", dca:false},
+    VOO: {next:"2026-12-21", pay:"2026-12-23", pattern:"Late Mar/Jun/Sep/Dec",              confirmed:false, window:"21–23 Dec", dca:true},
+    JPIN:{next:"2026-12-22", pay:"2026-12-24", pattern:"3rd–4th Tuesday · quarterly",       confirmed:false, window:"22–24 Dec", dca:true}
+  };
+  const DCA_SYMS = ["JEPQ","VOO","JPIN"];
+
+  const usd = new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2});
+  const usd0 = new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0});
+  const pct = (n,d=1)=> n.toFixed(d)+"%";
+
+  /* Start month = the next calendar month after the 27 Nov 2026 snapshot. */
+  const START_YEAR = 2026, START_MONTH = 12;
+  const HORIZON = 12;
+
+  let state = load();
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return clone(BASE);
+      const saved = JSON.parse(raw);
+      if(!Array.isArray(saved) || saved.length !== BASE.length) return clone(BASE);
+      return BASE.map((b,i)=>({
+        ...b,
+        qty: numOr(saved[i].qty, b.qty),
+        price: numOr(saved[i].price, b.price),
+        yld: numOr(saved[i].yld, b.yld),
+        payMonths: Array.isArray(saved[i].payMonths) ? saved[i].payMonths : b.payMonths,
+        weights: (saved[i].weights && typeof saved[i].weights === "object") ? saved[i].weights : b.weights
+      }));
+    }catch(e){ return clone(BASE); }
+  }
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  function numOr(v,fallback){ const n = Number(v); return Number.isFinite(n) && n >= 0 ? n : fallback; }
+
+  let saveTimer;
+  function persist(){
+    try{
+      localStorage.setItem(STORE_KEY, JSON.stringify(state.map(h=>({qty:h.qty,price:h.price,yld:h.yld,payMonths:h.payMonths,weights:h.weights}))));
+      const m = document.getElementById("savedMsg");
+      m.classList.add("show");
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(()=>m.classList.remove("show"), 1400);
+    }catch(e){}
+  }
+
+  function monthsOf(startMonth, count){
+    const out = [];
+    for(let i=0;i<count;i++){
+      const idx = (startMonth - 1 + i);
+      out.push({ month: (idx % 12) + 1, year: startYearFor(startMonth, i), offset:i });
+    }
+    return out;
+  }
+  function startYearFor(startMonth, i){
+    const total = (START_YEAR*12 + (startMonth-1)) + i;
+    return Math.floor(total/12);
+  }
+
+  /* Annual income per holding; each payment month carries a share of it,
+     which lets JPIN's lumpy December quarter be modelled honestly. */
+  function annualIncome(h){ return h.qty * h.price * (h.yld/100); }
+  function perPayment(h, month){
+    if(!h.yld || !h.weights) return 0;
+    return annualIncome(h) * (h.weights[month] || 0);
+  }
+  function incomeInMonth(h, month){ return h.payMonths.includes(month) ? perPayment(h, month) : 0; }
+
+  function totals(){
+    const invested = state.reduce((s,h)=> s + h.qty*h.price, 0);
+    const annual = state.reduce((s,h)=> s + annualIncome(h), 0);
+    return { invested, annual, cash: BASE_CASH };
+  }
+
+  /* ---------------- rendering ---------------- */
+  const selected = monthsOf(START_MONTH, HORIZON)[0];
+
+  function renderHero(){
+    const t = totals();
+    const inc = state.reduce((s,h)=> s + incomeInMonth(h, selected.month), 0);
+    const [dollars, cents] = usd.format(inc).split(".");
+    document.getElementById("heroEyebrow").textContent =
+      "Forecast cash received in " + MONTH_FULL[selected.month-1] + " " + START_YEAR;
+    document.getElementById("heroNumber").innerHTML = dollars + '<span class="cents">.' + (cents||"00") + "</span>";
+    document.getElementById("heroNote").innerHTML =
+      "<strong>" + state.filter(h=>h.payMonths.includes(selected.month) && h.yld>0).map(h=>h.sym).join(", ") +
+      "</strong> pay this month. That is " + usd.format(inc/30) + " a day on average — before the " +
+      usd.format(t.annual/12) + " monthly average across the book.";
+
+    document.getElementById("kpiAnnual").textContent = usd.format(t.annual);
+    document.getElementById("kpiAnnualSub").textContent = usd.format(t.annual/12)+" / mo avg";
+    document.getElementById("kpiYield").textContent = t.invested > 0 ? pct(t.annual/t.invested*100, 2) : "–";
+    document.getElementById("kpiCash").textContent = usd0.format(t.cash);
+    document.getElementById("kpiCashSub").textContent = usd0.format(t.cash*CASH_RATE)+" / yr";
+  }
+
+  function renderCalendar(){
+    const el = document.getElementById("calendar");
+    const t = totals();
+    const rows = monthsOf(START_MONTH, HORIZON).map(m=>{
+      const inc = state.reduce((s,h)=> s + incomeInMonth(h, m.month), 0);
+      return {...m, inc};
+    });
+    const max = Math.max(...rows.map(r=>r.inc), 1);
+    el.innerHTML = rows.map(r=>{
+      const sel = r.month === selected.month;
+      const h = Math.max(2, Math.round(r.inc/max*132));
+      return '<div class="bar-col'+(sel?' is-selected':'')+'">' +
+        '<div class="bar-val">'+(r.inc>0?usd0.format(r.inc):"–")+'</div>' +
+        '<div class="bar-track"><div class="bar" style="height:'+h+'px"></div></div>' +
+        '<div class="bar-label">'+MONTHS[r.month-1]+(r.month===1?'<span style="font-size:9px"> ’'+String(r.year).slice(2)+'</span>':'')+'</div>' +
+        '</div>';
+    }).join("");
+    const total = rows.reduce((s,r)=>s+r.inc,0);
+    document.getElementById("calTotal").textContent =
+      "12-month total " + usd.format(total) + " · average " + usd.format(total/12) + " / month";
+  }
+
+  function renderForecast(){
+    const tbody = document.querySelector("#forecastTable tbody");
+    const tfoot = document.querySelector("#forecastTable tfoot");
+    const t = totals();
+
+    tbody.innerHTML = state.map((h,i)=>{
+      const value = h.qty*h.price;
+      const pays = h.payMonths.includes(selected.month);
+      const pp = perPayment(h, selected.month);
+      const inc = pays ? pp : 0;
+      return '<tr>' +
+        '<td><span class="sym">'+h.sym+'</span><span class="sub-name">'+h.name+'</span><span class="sub-name" style="color:var(--faint)">'+h.next+'</span></td>' +
+        '<td><input class="editable" data-i="'+i+'" data-k="qty" type="number" min="0" step="any" value="'+fmtQty(h.qty)+'" aria-label="'+h.sym+' quantity"></td>' +
+        '<td><input class="editable" data-i="'+i+'" data-k="price" type="number" min="0" step="0.01" value="'+trimNum(h.price)+'" aria-label="'+h.sym+' price"></td>' +
+        '<td class="num">'+usd.format(value)+'</td>' +
+        '<td class="num">'+(h.yld?pct(h.yld,2):"—")+'</td>' +
+        '<td class="'+(pays?'pay-yes':'pay-no')+'">'+(pays?'Yes':'No')+' <span class="freq-tag">'+(h.freq===12?'monthly':h.freq===4?'quarterly':"")+'</span></td>' +
+        '<td class="num">'+(pp?usd.format(pp):"—")+'</td>' +
+        '<td class="num" style="font-weight:700">'+(inc?usd.format(inc):"—")+'</td>' +
+        '</tr>';
+    }).join("");
+
+    const monthTotal = state.reduce((s,h)=> s + incomeInMonth(h, selected.month), 0);
+    tfoot.innerHTML = '<tr>' +
+      '<td>Total</td><td></td><td></td>' +
+      '<td class="num">'+usd.format(t.invested)+'</td>' +
+      '<td class="num">'+pct(t.annual/t.invested*100,2)+'</td>' +
+      '<td></td><td></td>' +
+      '<td class="num">'+usd.format(monthTotal)+'</td></tr>';
+  }
+
+  function renderAssumptions(){
+    const body = document.getElementById("assumpBody");
+    body.innerHTML = state.map((h,i)=>{
+      return '<tr>' +
+        '<td><span class="sym">'+h.sym+'</span></td>' +
+        '<td><input class="editable" data-i="'+i+'" data-k="yld" type="number" min="0" step="0.05" value="'+trimNum(h.yld)+'" aria-label="'+h.sym+' annual yield percent"></td>' +
+        '<td class="num" style="font-family:var(--sans);font-size:12px">'+(h.freq===12?'Monthly':h.freq===4?'Quarterly':"None")+'</td>' +
+        '<td><div class="months">'+MONTHS.map((m,mi)=>{
+          const on = h.payMonths.includes(mi+1);
+          return '<button type="button" class="mbtn'+(on?' on':'')+'" data-i="'+i+'" data-m="'+(mi+1)+'" aria-pressed="'+on+'" title="'+MONTH_FULL[mi]+'">'+MONTH_TAGS[mi]+'</button>';
+        }).join("")+'</div></td>' +
+        '</tr>';
+    }).join("");
+  }
+
+  function renderDCA(){
+    const budget = numOr(document.getElementById("budget").value, 500);
+    const t = totals();
+    const equity = state.reduce((s,h)=> s + h.qty*h.price, 0);
+    const tbody = document.querySelector("#dcaTable tbody");
+
+    // Current weights are measured inside the equity sleeve, which is what a contribution changes.
+    const active = state.filter(h=>PLAN[h.sym]);
+    let allocated = 0, addedIncome = 0;
+    const rows = active.map(h=>{
+      const curW = equity ? (h.qty*h.price)/equity : 0;
+      const cfg = PLAN[h.sym];
+      const dollars = budget * cfg.weight;
+      const shares = h.price ? dollars/h.price : 0;
+      const inc = dollars * (h.yld/100);
+      allocated += dollars; addedIncome += inc;
+      return {h, curW, cfg, dollars, shares, inc};
+    });
+
+    tbody.innerHTML = rows.map(r=>{
+      const gap = r.h.target - r.curW;
+      return '<tr>' +
+        '<td><span class="sym">'+r.h.sym+'</span><span class="sub-name">'+r.h.role+'</span></td>' +
+        '<td><div style="display:flex;align-items:center;gap:9px;justify-content:flex-end">' +
+          '<span class="num">'+pct(r.curW*100)+'</span>' +
+          '<span class="plan-bar" style="width:64px"><i style="width:'+Math.min(100,r.curW*100)+'%"></i></span></div></td>' +
+        '<td class="num">'+pct(r.h.target*100,0)+'</td>' +
+        '<td class="num" style="color:'+(gap>0.005?'var(--green)':gap<-0.005?'var(--red)':'var(--muted)')+'">'+(gap>0?'+':'')+pct(gap*100,1)+'</td>' +
+        '<td><span class="verdict '+r.cfg.cls+'">'+r.cfg.verdict+'</span></td>' +
+        '<td class="num" style="font-weight:700">'+(r.dollars?usd0.format(r.dollars):"—")+'</td>' +
+        '<td class="num">'+(r.shares?r.shares.toFixed(4):"—")+'</td>' +
+        '<td class="num">'+(r.inc?usd.format(r.inc):"—")+'</td>' +
+        '</tr>';
+    }).join("");
+
+    document.getElementById("dcaIncome").textContent = usd.format(addedIncome);
+    document.getElementById("dcaYield").textContent = budget ? pct(addedIncome/budget*100, 2) : "–";
+    document.getElementById("dcaCash").textContent = usd0.format(Math.max(0, t.cash - budget*12));
+    document.getElementById("budgetHint").innerHTML =
+      "That is <strong>"+pct(budget/t.cash*100,1)+"</strong> of your "+usd0.format(t.cash)+
+      " cash. After a year of contributions you keep "+usd0.format(Math.max(0,t.cash-budget*12))+" in reserve.";
+  }
+
+  function trimNum(n){
+    return String(Math.round(Number(n)*1e8)/1e8);
+  }
+  function fmtQty(n){
+    return String(Math.round(Number(n)*1e6)/1e6);
+  }
+
+  /* ---------------- ex-date / DCA timing ---------------- */
+  function parseLocal(s){
+    const p = s.split("-").map(Number);
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+  function fmtDate(s, withYear){
+    const d = parseLocal(s);
+    const opts = {weekday:"short", day:"numeric", month:"short"};
+    if(withYear) opts.year = "numeric";
+    return d.toLocaleDateString("en-GB", opts);
+  }
+  function daysUntil(s){
+    const today = new Date(); today.setHours(0,0,0,0);
+    return Math.round((parseLocal(s) - today) / 86400000);
+  }
+  function whenLabel(d){
+    if(d === 0) return "today";
+    if(d === 1) return "tomorrow";
+    if(d > 1) return "in " + d + " days";
+    return "passed";
+  }
+
+  function renderEx(){
+    const rows = Object.keys(EX).map(sym=>{
+      const h = state.find(x=>x.sym===sym);
+      if(!h) return null;
+      const cfg = EX[sym];
+      const month = parseLocal(cfg.pay).getMonth() + 1;
+      const drop = h.price * (h.yld/100) * (h.weights[month] || 0);
+      return { h, cfg, drop, days: daysUntil(cfg.next) };
+    }).filter(Boolean).sort((a,b)=> parseLocal(a.cfg.next) - parseLocal(b.cfg.next));
+
+    document.getElementById("exStrip").innerHTML = rows.map(r=>{
+      const btn = r.cfg.dca
+        ? '<button class="cal-btn" type="button" data-cal="'+r.h.sym+'" aria-label="Add '+r.h.sym+' DCA window to calendar">+ Add to calendar</button>'
+        : '';
+      return '<div class="ex-chip">' +
+        '<div class="ex-sym">'+r.h.sym+'</div>' +
+        '<div class="ex-date">'+fmtDate(r.cfg.next)+'</div>' +
+        '<div class="ex-meta">' +
+          '<span class="ex-drop">'+usd.format(r.drop)+' / sh</span>' +
+          '<span class="ex-when'+(r.days<0?' past':'')+'">'+whenLabel(r.days)+'</span>' +
+        '</div>' +
+        btn +
+      '</div>';
+    }).join("");
+
+    document.querySelector("#exTable tbody").innerHTML = rows.map(r=>{
+      return '<tr>' +
+        '<td><span class="sym">'+r.h.sym+'</span><span class="sub-name">'+r.h.role+'</span></td>' +
+        '<td><span class="num">'+fmtDate(r.cfg.next)+'</span>' +
+          '<span class="ex-tag '+(r.cfg.confirmed?'ex-conf':'')+'">'+(r.cfg.confirmed?'date confirmed':'issuer date · amount est.')+'</span></td>' +
+        '<td class="num">'+usd.format(r.drop)+'</td>' +
+        '<td><span class="num">'+fmtDate(r.cfg.pay, parseLocal(r.cfg.pay).getFullYear() !== START_YEAR)+'</span></td>' +
+        '<td style="text-align:left;font-size:12px;color:var(--muted);padding-left:10px">'+r.cfg.pattern+'</td>' +
+        '<td class="num" style="white-space:nowrap">'+r.cfg.window+'</td>' +
+      '</tr>';
+    }).join("");
+  }
+
+  /* ---------------- calendar export (.ics) ---------------- */
+  function icsPad(n){ return String(n).padStart(2,"0"); }
+  function icsDate(d){ return d.getFullYear() + icsPad(d.getMonth()+1) + icsPad(d.getDate()); }
+  function icsEsc(s){
+    return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");
+  }
+  function icsFold(line){
+    if(line.length <= 74) return line;
+    let out = line.slice(0,74), rest = line.slice(74);
+    while(rest.length){
+      out += "\r\n " + rest.slice(0,73);
+      rest = rest.slice(73);
+    }
+    return out;
+  }
+  function icsStamp(){
+    return new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
+  }
+  function icsEvent(sym){
+    const h = state.find(x=>x.sym===sym);
+    const cfg = EX[sym];
+    if(!h || !cfg) return "";
+    const start = parseLocal(cfg.next);
+    const end = parseLocal(cfg.pay);
+    end.setDate(end.getDate()+1); // DTEND is exclusive for all-day events
+    const month = parseLocal(cfg.pay).getMonth()+1;
+    const drop = h.price * (h.yld/100) * (h.weights[month] || 0);
+    const budget = numOr(document.getElementById("budget").value, 500);
+    const planned = PLAN[sym] ? budget * PLAN[sym].weight : 0;
+    const title = "DCA: " + sym + " ex-dividend window";
+    const desc = "Pluang DCA reminder. Buy window " + cfg.window.replace(/[^\x20-\x7E]/g,"-") +
+      ". Ex-date " + fmtDate(cfg.next, true) + ", cash paid " + fmtDate(cfg.pay, true) +
+      ". Estimated drop " + usd.format(drop) + " per share. Planned amount " + usd.format(planned) +
+      " this month. Buying on or after the ex-date avoids " +
+      "paying the distribution inside the price; buying before it captures the payout. " +
+      "Estimate only, not financial advice.";
+    return [
+      "BEGIN:VEVENT",
+      "UID:" + sym + "-" + icsDate(start) + "@pluang-dividend-planner",
+      "DTSTAMP:" + icsStamp(),
+      "DTSTART;VALUE=DATE:" + icsDate(start),
+      "DTEND;VALUE=DATE:" + icsDate(end),
+      "SUMMARY:" + icsEsc(title),
+      "DESCRIPTION:" + icsEsc(desc),
+      "TRANSP:TRANSPARENT",
+      "BEGIN:VALARM",
+      "TRIGGER;RELATED=START:-P1D",
+      "ACTION:DISPLAY",
+      "DESCRIPTION:" + icsEsc(title),
+      "END:VALARM",
+      "END:VEVENT"
+    ].map(icsFold).join("\r\n");
+  }
+  function downloadICS(syms){
+    const lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Pluang Income Desk//Dividend DCA Planner//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "X-WR-CALNAME:Pluang DCA windows"
+    ];
+    syms.forEach(s=>{ const ev = icsEvent(s); if(ev) lines.push(ev); });
+    lines.push("END:VCALENDAR");
+    const blob = new Blob([lines.join("\r\n") + "\r\n"], {type:"text/calendar;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = syms.length === 1 ? "dca-" + syms[0].toLowerCase() + ".ics" : "pluang-dca-windows.ics";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+    const el = document.getElementById("calStatus");
+    el.textContent = syms.length === 1
+      ? syms[0] + " window downloaded — open the .ics file to add it to your calendar."
+      : "All three DCA windows downloaded — open the .ics file to add them to your calendar.";
+    clearTimeout(downloadICS.timer);
+    downloadICS.timer = setTimeout(()=>{ el.textContent = ""; }, 6000);
+  }
+
+  function renderAll(){
+    renderHero();
+    renderCalendar();
+    renderForecast();
+    renderEx();
+    renderAssumptions();
+    renderDCA();
+  }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener("input", (e)=>{
+    const el = e.target;
+    if(el.matches("#budget")){ renderDCA(); return; }
+    if(el.matches(".editable")){
+      const i = Number(el.dataset.i), k = el.dataset.k;
+      const v = Number(el.value);
+      if(!Number.isFinite(v) || v < 0) return;
+      state[i][k] = v;
+      persist();
+      // Re-render everything except the table the user is typing in,
+      // so decimals and caret position survive the edit.
+      const inAssump = !!el.closest("#assumpBody");
+      const inForecast = !!el.closest("#forecastTable");
+      renderHero();
+      renderCalendar();
+      if(!inForecast) renderForecast();
+      renderEx();
+      if(!inAssump) renderAssumptions();
+      renderDCA();
+    }
+  });
+
+  // Commit the edited table once the field loses focus.
+  document.addEventListener("change", (e)=>{
+    if(e.target.matches(".editable")) renderAll();
+  });
+
+  document.addEventListener("click", (e)=>{
+    const calBtn = e.target.closest("[data-cal]");
+    if(calBtn){ downloadICS([calBtn.dataset.cal]); return; }
+    const btn = e.target.closest(".mbtn");
+    if(!btn) return;
+    const i = Number(btn.dataset.i), m = Number(btn.dataset.m);
+    const h = state[i];
+    if(h.payMonths.includes(m)){
+      h.payMonths = h.payMonths.filter(x=>x!==m);
+    }else{
+      h.payMonths = h.payMonths.concat(m).sort((a,b)=>a-b);
+      const shares = h.payMonths.map(x=>h.weights[x]||0);
+      const avg = shares.reduce((s,x)=>s+x,0) / (shares.length || 1);
+      h.weights[m] = avg || (h.freq === 12 ? 1/12 : 0.25);
+    }
+    persist();
+    renderAll();
+  });
+
+  document.getElementById("addAllCal").addEventListener("click", ()=> downloadICS(DCA_SYMS));
+
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    state = clone(BASE);
+    document.getElementById("budget").value = 500;
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    renderAll();
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
