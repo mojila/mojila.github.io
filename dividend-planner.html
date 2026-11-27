@@ -265,6 +265,55 @@
     #forecastTable .sub-name{white-space:nowrap}
     #forecastTable .sub-name[style]{white-space:nowrap}
   }
+  /* ---------- IDR sleeve ---------- */
+  .curr-tag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:none;
+    border:1px solid var(--line-strong);border-radius:2px;padding:1px 5px;
+    color:var(--muted);margin-left:8px;vertical-align:3px;font-weight:400;
+  }
+  .curr-tag.idr{color:var(--amber);border-color:#dcc79c}
+  .idr-strip{
+    display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);
+    background:var(--sheet);border-radius:var(--radius);margin-bottom:22px;
+  }
+  .idr-cell{padding:14px 16px 15px;border-right:1px solid var(--line);min-width:0}
+  .idr-cell:last-child{border-right:0}
+  .idr-cell .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+  .idr-cell .v{font-family:var(--mono);font-size:17px;margin-top:4px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .idr-cell .s{font-size:11px;color:var(--muted);margin-top:3px}
+  .ex-note.warn{background:var(--amber-soft);border-left-color:var(--amber);color:#5c4200}
+  @media (max-width:900px){ .idr-strip{grid-template-columns:repeat(3,1fr)} .idr-cell:nth-child(3n){border-right:0} .idr-cell:nth-child(-n+3){border-bottom:1px solid var(--line)} }
+  @media (max-width:640px){ .idr-strip{grid-template-columns:1fr 1fr} .idr-cell:nth-child(3n){border-right:1px solid var(--line)} .idr-cell:nth-child(2n){border-right:0} .idr-cell:nth-child(-n+4){border-bottom:1px solid var(--line)} }
+
+  /* ---------- combined trend ---------- */
+  .combined-top{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap;margin-bottom:26px}
+  .total-block .k{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .total-block .big{
+    font-family:var(--serif);font-size:clamp(38px,5vw,56px);line-height:1.02;
+    letter-spacing:-.02em;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;
+  }
+  .total-block .s{font-size:12px;color:var(--muted);margin-top:6px}
+  .fx-box{text-align:right}
+  .fx-box label{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .fx-row{display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+  .fx-row span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .fx-row input{
+    border:0;background:transparent;font-family:var(--mono);font-size:20px;width:96px;
+    text-align:right;color:var(--ink);font-variant-numeric:tabular-nums;padding:0;
+  }
+  .fx-row input:focus{outline:none}
+  .fx-box .s{font-size:11px;color:var(--muted);margin-top:6px}
+
+  .duo-calendar{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end}
+  .duo-col{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+  .duo-track{height:150px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+  .duo-bar{width:min(46px,100%);display:flex;flex-direction:column;justify-content:flex-end;border-radius:2px 2px 0 0;overflow:hidden}
+  .duo-bar .seg{display:block;width:100%}
+  .seg-usd{background:var(--green)}
+  .seg-idr{background:var(--amber)}
+  .duo-val{font-family:var(--mono);font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  @media (max-width:640px){ .duo-calendar{grid-template-columns:repeat(6,1fr);row-gap:16px} .duo-val{font-size:9px} }
+
   @media print{
     body{background:#fff;font-size:12px}
     .reset,.editable{border:0}
@@ -283,8 +332,8 @@
       <h1>Dividend forecast &amp; DCA plan</h1>
     </div>
     <div class="mast-meta">
-      <div>Prices &amp; positions <strong>27 Nov 2026, pre-market</strong></div>
-      <div>Pluang MCP · USD · cash basis</div>
+      <div>Prices &amp; positions <strong>27 Nov 2026</strong></div>
+      <div>Pluang MCP · USD book · IDR sleeve</div>
       <div>Edits save to this browser</div>
     </div>
   </header>
@@ -435,6 +484,197 @@
     </div>
   </section>
 
+  <!-- IDR SLEEVE -->
+  <section id="bbri" aria-labelledby="bbri-title">
+    <div class="sec-head">
+      <div>
+        <h2 id="bbri-title">Indonesia sleeve — BBRI <span class="curr-tag idr">IDR</span></h2>
+        <p style="margin-top:8px">Bank Rakyat Indonesia, held in a <strong>separate portfolio account outside Pluang</strong>. Priced and paid in rupiah, so it is kept out of every USD total above and below — a Rp figure is never added to a $ figure.</p>
+      </div>
+      <div class="sec-side">
+        <p>Pluang MCP, last session 27 Nov 2026 · <strong>not sellable here</strong>: it is not in the Pluang account.</p>
+      </div>
+    </div>
+
+    <div class="idr-strip">
+      <div class="idr-cell">
+        <div class="k">Position</div>
+        <div class="v"><input class="editable" id="bbriLots" type="number" min="0" step="1" value="357" inputmode="numeric" aria-label="BBRI lots"> lots</div>
+        <div class="s" id="bbriShares">35,700 shares</div>
+      </div>
+      <div class="idr-cell">
+        <div class="k">Last price</div>
+        <div class="v"><input class="editable wide" id="bbriPrice" type="number" min="0" step="10" value="3100" inputmode="numeric" aria-label="BBRI price in rupiah"></div>
+        <div class="s">Rp per share · prev close Rp3,080</div>
+      </div>
+      <div class="idr-cell">
+        <div class="k">Market value</div>
+        <div class="v" id="bbriMv">Rp110,670,000</div>
+        <div class="s">357 lots × 100 shares</div>
+      </div>
+      <div class="idr-cell">
+        <div class="k">Trailing 12m DPS</div>
+        <div class="v">Rp346</div>
+        <div class="s">Rp137 interim + Rp209 final</div>
+      </div>
+      <div class="idr-cell">
+        <div class="k">Trailing yield</div>
+        <div class="v" id="bbriYield">11.16%</div>
+        <div class="s" id="bbriAnnual">Rp12,352,200 gross / yr</div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table id="bbriTable">
+        <thead>
+          <tr>
+            <th>Payment (est.)</th>
+            <th>Ex-date (est.)</th>
+            <th>DPS (IDR)</th>
+            <th>Gross (IDR)</th>
+            <th>Net after 10% tax (IDR)</th>
+            <th>Basis</th>
+          </tr>
+        </thead>
+        <tbody id="bbriBody">
+          <tr>
+            <td>~15 Jan 2027</td>
+            <td>~30 Dec 2026</td>
+            <td class="num">138</td>
+            <td class="num">4,926,600</td>
+            <td class="num">4,433,940</td>
+            <td class="freq-tag">FY26 interim — held near Rp137 last cycle</td>
+          </tr>
+          <tr>
+            <td>~May 2027</td>
+            <td>~Apr 2027</td>
+            <td class="num">208</td>
+            <td class="num">7,425,600</td>
+            <td class="num">6,683,040</td>
+            <td class="freq-tag">FY26 final — held near Rp209 last cycle</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Next 12 months</td>
+            <td></td>
+            <td class="num">346</td>
+            <td class="num">12,352,200</td>
+            <td class="num">11,116,980</td>
+            <td class="freq-tag">≈ 11.2% of today's market value</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="table-scroll" style="margin-top:26px">
+      <table id="bbriScen">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>FY2026 total DPS (IDR)</th>
+            <th>Yield on today's price</th>
+            <th>Gross income (IDR)</th>
+            <th>Net after 10% tax (IDR)</th>
+            <th>What would have to be true</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="verdict v-avoid">Bear</span></td>
+            <td class="num">300</td>
+            <td class="num">9.68%</td>
+            <td class="num">10,710,000</td>
+            <td class="num">9,639,000</td>
+            <td class="freq-tag">Earnings slip and payout is trimmed toward a safer ratio</td>
+          </tr>
+          <tr>
+            <td><span class="verdict v-hold">Base</span></td>
+            <td class="num">346</td>
+            <td class="num">11.16%</td>
+            <td class="num">12,352,200</td>
+            <td class="num">11,116,980</td>
+            <td class="freq-tag">Both payments held flat vs the last cycle</td>
+          </tr>
+          <tr>
+            <td><span class="verdict v-add">Bull</span></td>
+            <td class="num">365</td>
+            <td class="num">11.77%</td>
+            <td class="num">13,030,500</td>
+            <td class="num">11,727,450</td>
+            <td class="freq-tag">Profit grows and the payout is lifted ~5%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ex-note">
+      <p><strong>How the prediction is built.</strong> BBRI pays twice a year: an interim declared in December and paid mid-January, then a final declared after the AGM and paid around May. The last cycle was Rp137 + Rp209 = <strong>Rp346</strong> per share, which is also the trailing-12-month figure Pluang reports as an 11.16% yield. The forecast simply carries that forward — interim near 40% of the annual total, final near 60% — and brackets it by Rp46 either side. That is a distribution assumption, not a company forecast.</p>
+    </div>
+
+    <div class="ex-note warn">
+      <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was not supplied, so yield-on-cost cannot be shown — only yield on today's price. (2) <strong>Tax:</strong> 10% final withholding is assumed, which is the rate for an Indonesian resident individual; a different tax status changes every net figure. (3) The EPS series Pluang returns for BBRI is internally inconsistent (quarterly figures near Rp400 against a P/E of 8.2 at Rp3,100, which implies annual EPS near Rp378), so no payout-ratio maths was used to derive the forecast — it rests on declared dividends only. Verify the numbers before acting.</p>
+    </div>
+  </section>
+
+  <!-- COMBINED -->
+  <section id="combined" aria-labelledby="cb-title">
+    <div class="sec-head">
+      <div>
+        <h2 id="cb-title">Combined income trend — both sleeves <span class="curr-tag idr">total in IDR</span></h2>
+        <p style="margin-top:8px">One total, expressed in rupiah at the current rate. Each sleeve's own currency stays visible beside it, because the IDR total moves when the rupiah moves — even on a day when no dividend is paid.</p>
+      </div>
+      <div class="sec-side">
+        <p>Rate used: mid-market, 27 Nov 2026. Change it below and every box recalculates.</p>
+      </div>
+    </div>
+
+    <div class="combined-top">
+      <div class="total-block">
+        <div class="k">Forecast income, next 12 months, both sleeves</div>
+        <div class="big" id="cbTotal">Rp14,164,946</div>
+        <div class="s" id="cbSub">≈ $771.93 at Rp18,350 · average Rp1,180,412 / month</div>
+      </div>
+      <div class="fx-box">
+        <label for="fxRate">USD/IDR rate</label>
+        <div class="fx-row"><span>Rp</span><input id="fxRate" type="number" min="1" step="1" value="18350" inputmode="numeric" aria-label="USD to IDR rate"></div>
+        <div class="s">mid-market 27 Nov 2026 (18,350.06)<br>ECB reference 26 Nov 2026: 18,394</div>
+      </div>
+    </div>
+
+    <div class="calendar duo-calendar" id="duoCalendar" aria-label="Combined monthly income, IDR"></div>
+    <div class="cal-note">
+      <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — Rp85k–Rp280k a month</span>
+      <span><span class="swatch" style="background:var(--amber)"></span>BBRI, paid as rupiah, twice a year</span>
+      <span id="cbSplit"></span>
+    </div>
+
+    <div class="table-scroll" style="margin-top:24px">
+      <table id="combinedTable">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>USD sleeve (USD)</th>
+            <th>USD sleeve (IDR)</th>
+            <th>BBRI (IDR)</th>
+            <th>Total (IDR)</th>
+            <th>Total (USD)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+
+    <div class="ex-note">
+      <p><strong>Read the split, not just the total.</strong> BBRI supplies roughly <strong>87%</strong> of combined income from about <strong>61%</strong> of combined invested capital — its 11.16% yield against the USD sleeve's ~2.6%. Two payments a year also make the IDR line lumpy: January and May carry it, the other ten months are almost entirely JEPQ. The total is a translation at a stated rate, not a valuation, and no FX gain or loss is modelled.</p>
+    </div>
+
+    <div class="ex-note warn">
+      <p><strong>What this total is not.</strong> It is not a bank balance, not reinvested, and not net of the USD sleeve's own distribution composition (JEPQ can include return of capital). BBRI net figures assume 10% final withholding for a resident individual; the total above is <strong>gross</strong> — withholdings are applied in the sleeve tables. Pluang converts IDR↔USD for trades but pays no FX on dividends here; if you actually repatriate, a spread applies.</p>
+    </div>
+  </section>
+
   <!-- ASSUMPTIONS -->
   <section aria-labelledby="as-title" style="border-bottom:0">
     <div class="sec-head">
@@ -489,7 +729,7 @@
     </div>
 
     <footer>
-      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital.
+      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>BBRI is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. BBRI price Rp3,100 and dividend history (Rp137 interim paid 15 Jan 2026, Rp209 final paid 08 May 2026) are Pluang MCP data as of 27 Nov 2026; FY2026 amounts are an assumption, not a declaration, and the 10% final withholding is assumed for a resident individual.
     </footer>
   </section>
 
@@ -662,6 +902,10 @@
     const total = rows.reduce((s,r)=>s+r.inc,0);
     document.getElementById("calTotal").textContent =
       "12-month total " + usd.format(total) + " · average " + usd.format(total/12) + " / month";
+
+    /* Publish to the combined IDR section so it tracks edits made above. */
+    window.PLANNER_MONTHLY = rows;
+    window.dispatchEvent(new CustomEvent("planner-monthly", {detail:rows}));
   }
 
   function renderForecast(){
@@ -967,6 +1211,146 @@
   });
 
   renderAll();
+})();
+</script>
+<script>
+/* BBRI (IDR) sleeve — independent of the USD model above. */
+(function(){
+  "use strict";
+  const lotsEl  = document.getElementById("bbriLots");
+  const priceEl = document.getElementById("bbriPrice");
+  if(!lotsEl || !priceEl) return;
+
+  const nf = n => Math.round(n).toLocaleString("en-US");
+  const INTERIM = 138, FINAL = 208, ANNUAL = INTERIM + FINAL;
+  const SCEN = [300, 346, 365];
+
+  function render(){
+    const lots  = Math.max(0, Number(lotsEl.value)  || 0);
+    const price = Math.max(0, Number(priceEl.value) || 0);
+    const shares = lots * 100;
+    const mv = shares * price;
+
+    document.getElementById("bbriShares").textContent = nf(shares) + " shares";
+    document.getElementById("bbriMv").textContent = "Rp" + nf(mv);
+    document.getElementById("bbriYield").textContent = price ? ((ANNUAL / price) * 100).toFixed(2) + "%" : "–";
+    document.getElementById("bbriAnnual").textContent = "Rp" + nf(shares * ANNUAL) + " gross / yr";
+
+    document.querySelectorAll("#bbriBody tr").forEach((tr, i) => {
+      const dps = i === 0 ? INTERIM : FINAL;
+      tr.cells[3].textContent = nf(shares * dps);
+      tr.cells[4].textContent = nf(shares * dps * 0.9);
+    });
+
+    const foot = document.querySelectorAll("#bbriTable tfoot td");
+    if(foot.length >= 5){
+      foot[3].textContent = nf(shares * ANNUAL);
+      foot[4].textContent = nf(shares * ANNUAL * 0.9);
+    }
+
+    document.querySelectorAll("#bbriScen tbody tr").forEach((tr, i) => {
+      const dps = SCEN[i];
+      tr.cells[2].textContent = price ? ((dps / price) * 100).toFixed(2) + "%" : "–";
+      tr.cells[3].textContent = nf(shares * dps);
+      tr.cells[4].textContent = nf(shares * dps * 0.9);
+    });
+  }
+
+  lotsEl.addEventListener("input", render);
+  priceEl.addEventListener("input", render);
+  render();
+})();
+</script>
+<script>
+/* Combined trend: USD sleeve (converted) + BBRI, total in IDR. */
+(function(){
+  "use strict";
+  const calEl  = document.getElementById("duoCalendar");
+  const fxEl   = document.getElementById("fxRate");
+  const tbody  = document.querySelector("#combinedTable tbody");
+  const tfoot  = document.querySelector("#combinedTable tfoot");
+  if(!calEl || !fxEl) return;
+
+  /* Snapshot fallback, used until the planner above publishes its own rows. */
+  const FALLBACK = [
+    {month:12,year:2026,inc:15.27},{month:1,year:2027,inc:9.83},
+    {month:2,year:2027,inc:4.63},{month:3,year:2027,inc:6.17},
+    {month:4,year:2027,inc:9.83},{month:5,year:2027,inc:4.63},
+    {month:6,year:2027,inc:11.09},{month:7,year:2027,inc:9.83},
+    {month:8,year:2027,inc:4.63},{month:9,year:2027,inc:8.39},
+    {month:10,year:2027,inc:9.83},{month:11,year:2027,inc:4.63}
+  ];
+  const MN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const BBRI = {1:138, 5:208};            /* window index → IDR per share */
+  const rp   = n => "Rp" + Math.round(n).toLocaleString("en-US");
+  const rpM  = n => n >= 1e6 ? "Rp" + (n/1e6).toFixed(1) + "m" : "Rp" + Math.round(n/1e3) + "k";
+  const usd  = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+
+  function render(){
+    const fx = Math.max(1, Number(fxEl.value) || 18350);
+    const rows = window.PLANNER_MONTHLY || FALLBACK;
+    const lots = Number(document.getElementById("bbriLots") && document.getElementById("bbriLots").value) || 357;
+    const shares = lots * 100;
+
+    const data = rows.map((r,i) => {
+      const usdInc = r.inc || 0;
+      const idrInc = (BBRI[i] || 0) * shares;
+      return {r, i, usdInc, idrInc, total: usdInc * fx + idrInc};
+    });
+
+    const max = Math.max(...data.map(d => d.total), 1);
+    calEl.innerHTML = data.map(d => {
+      const hTotal = Math.max(2, Math.round(d.total / max * 132));
+      const hIdr = d.idrInc ? Math.max(3, Math.round(d.idrInc / max * 132)) : 0;
+      const hUsd = Math.max(d.usdInc ? 3 : 0, hTotal - hIdr);
+      return '<div class="duo-col">' +
+        '<div class="duo-val">' + rpM(d.total) + '</div>' +
+        '<div class="duo-track"><div class="duo-bar" style="height:' + hTotal + 'px">' +
+          '<span class="seg seg-idr" style="height:' + hIdr + 'px"></span>' +
+          '<span class="seg seg-usd" style="height:' + hUsd + 'px"></span>' +
+        '</div></div>' +
+        '<div class="bar-label">' + MN[d.r.month - 1] + (d.r.month === 1 ? '<span style="font-size:9px"> ’' + String(d.r.year).slice(2) + '</span>' : '') + '</div>' +
+        '</div>';
+    }).join("");
+
+    tbody.innerHTML = data.map(d =>
+      '<tr>' +
+        '<td>' + MN[d.r.month - 1] + ' ' + d.r.year + '</td>' +
+        '<td class="num">' + usd(d.usdInc) + '</td>' +
+        '<td class="num">' + rp(d.usdInc * fx) + '</td>' +
+        '<td class="num">' + (d.idrInc ? rp(d.idrInc) : '—') + '</td>' +
+        '<td class="num" style="font-weight:700">' + rp(d.total) + '</td>' +
+        '<td class="num">' + usd(d.total / fx) + '</td>' +
+      '</tr>').join("");
+
+    const usdTot = data.reduce((s,d) => s + d.usdInc, 0);
+    const idrTot = data.reduce((s,d) => s + d.idrInc, 0);
+    const total = usdTot * fx + idrTot;
+
+    tfoot.innerHTML =
+      '<tr>' +
+        '<td>12 months</td>' +
+        '<td class="num">' + usd(usdTot) + '</td>' +
+        '<td class="num">' + rp(usdTot * fx) + '</td>' +
+        '<td class="num">' + rp(idrTot) + '</td>' +
+        '<td class="num">' + rp(total) + '</td>' +
+        '<td class="num">' + usd(total / fx) + '</td>' +
+      '</tr>';
+
+    document.getElementById("cbTotal").textContent = rp(total);
+    document.getElementById("cbSub").textContent =
+      "≈ " + usd(total / fx) + " at Rp" + Math.round(fx).toLocaleString("en-US") +
+      " · average " + rp(total / 12) + " / month";
+    document.getElementById("cbSplit").textContent =
+      "BBRI " + (total ? Math.round(idrTot / total * 100) : 0) + "% of the total · USD sleeve " +
+      (total ? Math.round(usdTot * fx / total * 100) : 0) + "%";
+  }
+
+  fxEl.addEventListener("input", render);
+  window.addEventListener("planner-monthly", render);
+  const lotsEl = document.getElementById("bbriLots");
+  if(lotsEl) lotsEl.addEventListener("input", render);
+  render();
 })();
 </script>
 </body>
