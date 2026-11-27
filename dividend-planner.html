@@ -272,6 +272,18 @@
     #forecastTable .sub-name{white-space:nowrap}
     #forecastTable .sub-name[style]{white-space:nowrap}
   }
+  /* ---------- sleeve tabs ---------- */
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line-strong);margin:0 0 4px}
+  .tab{
+    appearance:none;border:0;background:transparent;cursor:pointer;
+    font-family:var(--sans);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+    font-weight:600;color:var(--muted);padding:12px 18px 11px;
+    border-bottom:2px solid transparent;margin-bottom:-1px;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--ink)}
+  .tab:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
   /* ---------- IDR sleeve ---------- */
   .curr-tag{
     font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:none;
@@ -325,6 +337,8 @@
     body{background:#fff;font-size:12px}
     .reset,.editable{border:0}
     details.assumptions{display:none}
+    #panel-idr[hidden]{display:block !important}
+    .tabs{display:none}
     section{break-inside:avoid}
   }
 </style>
@@ -367,6 +381,71 @@
     </dl>
   </div>
 
+  <!-- COMBINED -->
+  <section id="combined" aria-labelledby="cb-title">
+    <div class="sec-head">
+      <div>
+        <h2 id="cb-title">Combined income trend — both sleeves <span class="curr-tag idr">total in IDR</span></h2>
+        <p style="margin-top:8px">One total, expressed in rupiah at the current rate. Each sleeve's own currency stays visible beside it, because the IDR total moves when the rupiah moves — even on a day when no dividend is paid.</p>
+      </div>
+      <div class="sec-side">
+        <p>Rate used: mid-market, 27 Nov 2026. Change it below and every box recalculates.</p>
+      </div>
+    </div>
+
+    <div class="combined-top">
+      <div class="total-block">
+        <div class="k">Forecast income, next 12 months, both sleeves</div>
+        <div class="big" id="cbTotal">Rp14,164,946</div>
+        <div class="s" id="cbSub">≈ $771.93 at Rp18,350 · average Rp1,180,412 / month</div>
+      </div>
+      <div class="fx-box">
+        <label for="fxRate">USD/IDR rate</label>
+        <div class="fx-row"><span>Rp</span><input id="fxRate" type="number" min="1" step="1" value="18350" inputmode="numeric" aria-label="USD to IDR rate"></div>
+        <div class="s">mid-market 27 Nov 2026 (18,350.06)<br>ECB reference 26 Nov 2026: 18,394</div>
+      </div>
+    </div>
+
+    <div class="calendar duo-calendar" id="duoCalendar" aria-label="Combined monthly income, IDR"></div>
+    <div class="cal-note">
+      <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — Rp85k–Rp280k a month</span>
+      <span><span class="swatch" style="background:var(--amber)"></span>IDX sleeve, paid as rupiah — Jan · May · Jun · Jul</span>
+      <span id="cbSplit"></span>
+    </div>
+
+    <div class="table-scroll" style="margin-top:24px">
+      <table id="combinedTable">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>USD sleeve (USD)</th>
+            <th>USD sleeve (IDR)</th>
+            <th>IDX sleeve (IDR)</th>
+            <th>Total (IDR)</th>
+            <th>Total (USD)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+
+    <div class="ex-note">
+      <p><strong>Read the split, not just the total.</strong> The IDX sleeve now supplies roughly <strong>90%</strong> of combined forecast income — six rupiah payers yielding 11.4% blended against the USD sleeve's ~2.6%. Payments cluster into four months: January (BBRI interim), May (BBRI final, LPPF, CUAN), June (CITA) and July (BIRD, PANI). The other eight months are almost entirely the USD funds, so the IDR line stays lumpy. The total is a translation at a stated rate, not a valuation, and no FX gain or loss is modelled.</p>
+    </div>
+
+    <div class="ex-note warn">
+      <p><strong>What this total is not.</strong> It is not a bank balance, not reinvested, and not net of the USD sleeve's own distribution composition (JEPQ can include return of capital). IDX net figures assume 10% final withholding for a resident individual; the total above is <strong>gross</strong> — withholdings are applied in the sleeve tables. Pluang converts IDR↔USD for trades but pays no FX on dividends here; if you actually repatriate, a spread applies.</p>
+    </div>
+  </section>
+
+
+  <!-- SLEEVE TABS -->
+  <div class="tabs" role="tablist" aria-label="Portfolio sleeve">
+    <button class="tab on" role="tab" id="tab-usd" data-tab="usd" aria-selected="true" aria-controls="panel-usd">USD book</button>
+    <button class="tab" role="tab" id="tab-idr" data-tab="idr" aria-selected="false" aria-controls="panel-idr">IDR sleeve — IDX</button>
+  </div>
+  <div id="panel-usd" role="tabpanel" aria-labelledby="tab-usd">
   <!-- CALENDAR -->
   <section aria-labelledby="cal-title">
     <div class="sec-head">
@@ -380,6 +459,7 @@
       <span id="calTotal"></span>
     </div>
   </section>
+
 
   <!-- FORECAST TABLE -->
   <section aria-labelledby="fc-title">
@@ -406,6 +486,7 @@
       </table>
     </div>
   </section>
+
 
   <!-- EX-DATE CALENDAR -->
   <section aria-labelledby="ex-title">
@@ -440,6 +521,7 @@
       <p><strong>Buy before the ex-date</strong> only if you specifically want the distribution. <strong>Buy on or after it</strong> if you are accumulating: the payout is already out of the price, so you avoid receiving — and being taxed at source on — a distribution you effectively paid for. For JPIN the December payout is unusually large, so this timing choice matters more than for the others. No ex-date dip is free money; it is the distribution leaving the price.</p>
     </div>
   </section>
+
 
   <!-- DCA -->
   <section aria-labelledby="dca-title">
@@ -490,7 +572,8 @@
       </table>
     </div>
   </section>
-
+  </div>
+  <div id="panel-idr" role="tabpanel" aria-labelledby="tab-idr" hidden>
   <!-- IDR SLEEVE -->
   <section id="idx" aria-labelledby="idx-title">
     <div class="sec-head">
@@ -660,64 +743,8 @@
       <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was never supplied, so only yield on today's price is shown, not yield on cost. (2) <strong>Tax:</strong> 10% final withholding is assumed — the rate for a resident individual; any other status changes every net figure. (3) Two of these names barely pay: CUAN's last dividend was Rp3 in May 2025 with nothing declared in 2026 (0.8% at Rp368), and PANI pays Rp5 on a Rp3,430 price (0.15%). They are in the book for capital exposure, not income, and they contribute Rp3,600 a year between them. Verify every figure against the latest IDX announcement before acting.</p>
     </div>
   </section>
+  </div>
 
-  <!-- COMBINED -->
-  <section id="combined" aria-labelledby="cb-title">
-    <div class="sec-head">
-      <div>
-        <h2 id="cb-title">Combined income trend — both sleeves <span class="curr-tag idr">total in IDR</span></h2>
-        <p style="margin-top:8px">One total, expressed in rupiah at the current rate. Each sleeve's own currency stays visible beside it, because the IDR total moves when the rupiah moves — even on a day when no dividend is paid.</p>
-      </div>
-      <div class="sec-side">
-        <p>Rate used: mid-market, 27 Nov 2026. Change it below and every box recalculates.</p>
-      </div>
-    </div>
-
-    <div class="combined-top">
-      <div class="total-block">
-        <div class="k">Forecast income, next 12 months, both sleeves</div>
-        <div class="big" id="cbTotal">Rp14,164,946</div>
-        <div class="s" id="cbSub">≈ $771.93 at Rp18,350 · average Rp1,180,412 / month</div>
-      </div>
-      <div class="fx-box">
-        <label for="fxRate">USD/IDR rate</label>
-        <div class="fx-row"><span>Rp</span><input id="fxRate" type="number" min="1" step="1" value="18350" inputmode="numeric" aria-label="USD to IDR rate"></div>
-        <div class="s">mid-market 27 Nov 2026 (18,350.06)<br>ECB reference 26 Nov 2026: 18,394</div>
-      </div>
-    </div>
-
-    <div class="calendar duo-calendar" id="duoCalendar" aria-label="Combined monthly income, IDR"></div>
-    <div class="cal-note">
-      <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — Rp85k–Rp280k a month</span>
-      <span><span class="swatch" style="background:var(--amber)"></span>IDX sleeve, paid as rupiah — Jan · May · Jun · Jul</span>
-      <span id="cbSplit"></span>
-    </div>
-
-    <div class="table-scroll" style="margin-top:24px">
-      <table id="combinedTable">
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>USD sleeve (USD)</th>
-            <th>USD sleeve (IDR)</th>
-            <th>IDX sleeve (IDR)</th>
-            <th>Total (IDR)</th>
-            <th>Total (USD)</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot></tfoot>
-      </table>
-    </div>
-
-    <div class="ex-note">
-      <p><strong>Read the split, not just the total.</strong> The IDX sleeve now supplies roughly <strong>90%</strong> of combined forecast income — six rupiah payers yielding 11.4% blended against the USD sleeve's ~2.6%. Payments cluster into four months: January (BBRI interim), May (BBRI final, LPPF, CUAN), June (CITA) and July (BIRD, PANI). The other eight months are almost entirely the USD funds, so the IDR line stays lumpy. The total is a translation at a stated rate, not a valuation, and no FX gain or loss is modelled.</p>
-    </div>
-
-    <div class="ex-note warn">
-      <p><strong>What this total is not.</strong> It is not a bank balance, not reinvested, and not net of the USD sleeve's own distribution composition (JEPQ can include return of capital). IDX net figures assume 10% final withholding for a resident individual; the total above is <strong>gross</strong> — withholdings are applied in the sleeve tables. Pluang converts IDR↔USD for trades but pays no FX on dividends here; if you actually repatriate, a spread applies.</p>
-    </div>
-  </section>
 
   <!-- ASSUMPTIONS -->
   <section aria-labelledby="as-title" style="border-bottom:0">
@@ -1543,6 +1570,36 @@
   window.addEventListener("planner-monthly", render);
   window.addEventListener("idr-updated", render);
   render();
+})();
+</script>
+<script>
+/* Sleeve tabs — USD book / IDR sleeve */
+(function(){
+  "use strict";
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  if(!tabs.length) return;
+
+  function show(name){
+    tabs.forEach(t => {
+      const on = t.dataset.tab === name;
+      t.classList.toggle("on", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    ["usd","idr"].forEach(n => {
+      const p = document.getElementById("panel-" + n);
+      if(p) p.hidden = n !== name;
+    });
+  }
+
+  tabs.forEach(t => t.addEventListener("click", () => show(t.dataset.tab)));
+
+  document.querySelector(".tabs").addEventListener("keydown", e => {
+    if(e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const i = tabs.findIndex(t => t.classList.contains("on"));
+    const next = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+    show(next.dataset.tab);
+    next.focus();
+  });
 })();
 </script>
 </body>
