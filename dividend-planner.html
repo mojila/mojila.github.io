@@ -409,7 +409,7 @@
     <div class="calendar duo-calendar" id="duoCalendar" aria-label="Combined monthly income, IDR"></div>
     <div class="cal-note">
       <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — Rp85k–Rp280k a month</span>
-      <span><span class="swatch" style="background:var(--amber)"></span>IDX sleeve, paid as rupiah — Jan · May · Jun · Jul</span>
+      <span><span class="swatch" style="background:var(--amber)"></span>IDX sleeve, paid as rupiah — Jan · May · Jun · Jul · Nov</span>
       <span id="cbSplit"></span>
     </div>
 
@@ -431,7 +431,7 @@
     </div>
 
     <div class="ex-note">
-      <p><strong>Read the split, not just the total.</strong> The IDX sleeve now supplies roughly <strong>90%</strong> of combined forecast income — six rupiah payers yielding 11.4% blended against the USD sleeve's ~2.6%. Payments cluster into four months: January (BBRI interim), May (BBRI final, LPPF, CUAN), June (CITA) and July (BIRD, PANI). The other eight months are almost entirely the USD funds, so the IDR line stays lumpy. The total is a translation at a stated rate, not a valuation, and no FX gain or loss is modelled.</p>
+      <p><strong>Read the split, not just the total.</strong> The IDX sleeve now supplies roughly <strong>90%</strong> of combined forecast income — seven rupiah payers (MBMA pays none) yielding 11.3% blended against the USD sleeve's ~2.6%. Payments cluster into five months: January (BBRI interim), May (BBRI final, LPPF, CUAN, SIDO final), June (CITA), July (BIRD, PANI) and November (SIDO interim). The other seven months are almost entirely the USD funds, so the IDR line stays lumpy. The total is a translation at a stated rate, not a valuation, and no FX gain or loss is modelled.</p>
     </div>
 
     <div class="ex-note warn">
@@ -579,7 +579,7 @@
     <div class="sec-head">
       <div>
         <h2 id="idx-title">Indonesia sleeve — IDX holdings <span class="curr-tag idr">IDR</span></h2>
-        <p style="margin-top:8px">Six rupiah-denominated IDX names held in a <strong>separate portfolio account outside Pluang</strong>. Priced and paid in rupiah, so the sleeve is kept out of every USD total above and below — a Rp figure is never added to a $ figure.</p>
+        <p style="margin-top:8px">Eight rupiah-denominated IDX names held in a <strong>separate portfolio account outside Pluang</strong>. Priced and paid in rupiah, so the sleeve is kept out of every USD total above and below — a Rp figure is never added to a $ figure.</p>
       </div>
       <div class="sec-side">
         <p>Pluang MCP, last session 27 Nov 2026 · <strong>not sellable here</strong>: these are not in the Pluang account.</p>
@@ -589,22 +589,22 @@
     <div class="idr-strip">
       <div class="idr-cell">
         <div class="k">Holdings</div>
-        <div class="v">6 names</div>
-        <div class="s"><span id="idxLots">562</span> lots · <span id="idxShares">56,200</span> shares</div>
+        <div class="v">8 names</div>
+        <div class="s"><span id="idxLots">636</span> lots · <span id="idxShares">63,600</span> shares</div>
       </div>
       <div class="idr-cell">
         <div class="k">Market value</div>
-        <div class="v" id="idxMv">Rp144,866,600</div>
+        <div class="v" id="idxMv">Rp147,380,200</div>
         <div class="s">last prices, 27 Nov 2026</div>
       </div>
       <div class="idr-cell">
         <div class="k">Trailing 12m DPS income</div>
-        <div class="v" id="idxGross">Rp16,559,300</div>
-        <div class="s" id="idxNet">Rp14,903,370 after 10% tax</div>
+        <div class="v" id="idxGross">Rp16,701,800</div>
+        <div class="s" id="idxNet">Rp15,031,620 after 10% tax</div>
       </div>
       <div class="idr-cell">
         <div class="k">Blended trailing yield</div>
-        <div class="v" id="idxYield">11.43%</div>
+        <div class="v" id="idxYield">11.33%</div>
         <div class="s">gross, on today's market value</div>
       </div>
       <div class="idr-cell">
@@ -691,6 +691,18 @@
             <td class="num net">1,350,000</td>
             <td class="freq-tag">May</td>
           </tr>
+          <tr data-sym="MBMA" data-dps="0" data-pays="">
+            <td><span class="sym">MBMA</span><span class="sub-name">Merdeka Battery Materials</span></td>
+            <td><input class="editable lots" type="number" min="0" step="1" value="17" inputmode="numeric" aria-label="MBMA lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="2" value="352" inputmode="numeric" aria-label="MBMA price in rupiah"></td>
+            <td class="num shares">1,700</td>
+            <td class="num mv">598,400</td>
+            <td class="num dps">0</td>
+            <td class="num yld">0.00%</td>
+            <td class="num gross">0</td>
+            <td class="num net">0</td>
+            <td class="freq-tag">—</td>
+          </tr>
           <tr data-sym="PANI" data-dps="5" data-pays="7:5">
             <td><span class="sym">PANI</span><span class="sub-name">Pantai Indah Kapuk Dua</span></td>
             <td><input class="editable lots" type="number" min="0" step="1" value="3" inputmode="numeric" aria-label="PANI lots"></td>
@@ -703,18 +715,30 @@
             <td class="num net">1,350</td>
             <td class="freq-tag">Jul</td>
           </tr>
+          <tr data-sym="SIDO" data-dps="25" data-pays="5:15,11:10">
+            <td><span class="sym">SIDO</span><span class="sub-name">Sido Muncul</span></td>
+            <td><input class="editable lots" type="number" min="0" step="1" value="57" inputmode="numeric" aria-label="SIDO lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="2" value="336" inputmode="numeric" aria-label="SIDO price in rupiah"></td>
+            <td class="num shares">5,700</td>
+            <td class="num mv">1,915,200</td>
+            <td class="num dps">25</td>
+            <td class="num yld">7.44%</td>
+            <td class="num gross">142,500</td>
+            <td class="num net">128,250</td>
+            <td class="freq-tag">May · Nov</td>
+          </tr>
         </tbody>
         <tfoot>
           <tr>
             <td>Total</td>
-            <td class="num" id="idxTotalLots">562</td>
+            <td class="num" id="idxTotalLots">636</td>
             <td></td>
-            <td class="num" id="idxTotalShares">56,200</td>
-            <td class="num" id="idxTotalMv">144,866,600</td>
+            <td class="num" id="idxTotalShares">63,600</td>
+            <td class="num" id="idxTotalMv">147,380,200</td>
             <td></td>
-            <td class="num" id="idxTotalYld">11.43%</td>
-            <td class="num" id="idxTotalGross">16,559,300</td>
-            <td class="num" id="idxTotalNet">14,903,370</td>
+            <td class="num" id="idxTotalYld">11.33%</td>
+            <td class="num" id="idxTotalGross">16,701,800</td>
+            <td class="num" id="idxTotalNet">15,031,620</td>
             <td></td>
           </tr>
         </tfoot>
@@ -736,11 +760,11 @@
     </div>
 
     <div class="ex-note">
-      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its declared Rp346 into Rp137 paid in January and Rp209 paid in May; the other five pay once a year in the month shown. BRI has not yet declared an FY2026 interim, so the January figure is the last cycle's Rp137 carried forward, not an announcement. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one.</p>
+      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its declared Rp346 into Rp137 paid in January and Rp209 paid in May; SIDO splits Rp25 into Rp15 in May and Rp10 in November; BIRD, CITA, CUAN, LPPF and PANI pay once a year in the month shown; MBMA pays nothing (no dividend declared to date). BRI has not yet declared an FY2026 interim, so the January figure is the last cycle's Rp137 carried forward, not an announcement. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one. SIDO's Rp25 is deliberately <em>not</em> the last full cycle (FY2025: Rp22 interim + Rp15 final = Rp37) but the current run-rate — the FY2026 interim declared in November was cut to Rp10 from Rp22, so the older, higher figure would overstate income by Rp2.7m on 57 lots. If the May final also falls, Rp25 is still too high.</p>
     </div>
 
     <div class="ex-note warn">
-      <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was never supplied, so only yield on today's price is shown, not yield on cost. (2) <strong>Tax:</strong> 10% final withholding is assumed — the rate for a resident individual; any other status changes every net figure. (3) Two of these names barely pay: CUAN's last dividend was Rp3 in May 2025 with nothing declared in 2026 (0.8% at Rp368), and PANI pays Rp5 on a Rp3,430 price (0.15%). They are in the book for capital exposure, not income, and they contribute Rp3,600 a year between them. Verify every figure against the latest IDX announcement before acting.</p>
+      <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was never supplied, so only yield on today's price is shown, not yield on cost. (2) <strong>Tax:</strong> 10% final withholding is assumed — the rate for a resident individual; any other status changes every net figure. (3) Three of these names barely pay or don't pay: CUAN's last dividend was Rp3 in May 2025 with nothing declared in 2026 (0.8% at Rp368), PANI pays Rp5 on a Rp3,430 price (0.15%), and MBMA has never declared a dividend — it is 0.4% of sleeve value and 0% of sleeve income. They are in the book for capital exposure, not income, and the first two contribute Rp3,600 a year between them. Verify every figure against the latest IDX announcement before acting.</p>
     </div>
   </section>
   </div>
@@ -816,7 +840,7 @@
     </div>
 
     <footer>
-      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: BBRI 357, BIRD 110, CITA 25, CUAN 7, LPPF 60, PANI 3 (user-supplied). Prices (Rp3,100 / 1,460 / 2,780 / 368 / 1,650 / 3,430) are Pluang MCP last-session data as of 27 Nov 2026. Trailing DPS follows the last declared payment for each name — BBRI Rp137 interim + Rp209 final, BIRD Rp166, CITA Rp351, LPPF Rp250, PANI Rp5 — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
+      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 27 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: BBRI 357, BIRD 110, CITA 25, CUAN 7, LPPF 60, PANI 3, MBMA 17, SIDO 57 (user-supplied). Prices (Rp3,100 / 1,460 / 2,780 / 368 / 1,650 / 3,430 / 352 / 336) are Pluang MCP last-session data as of 27 Nov 2026. Trailing DPS follows the last declared payment for each name — BBRI Rp137 interim + Rp209 final, BIRD Rp166, CITA Rp351, LPPF Rp250, PANI Rp5, SIDO Rp10 interim (Nov 2026) + Rp15 final (May 2026) — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration, and MBMA, which has never paid a dividend. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
     </footer>
   </section>
 
@@ -1321,7 +1345,9 @@
     CITA: { dps:351, w:{"6":1} },
     CUAN: { dps:3,   w:{"5":1} },
     LPPF: { dps:250, w:{"5":1} },
-    PANI: { dps:5,   w:{"7":1} }
+    PANI: { dps:5,   w:{"7":1} },
+    MBMA: { dps:0,   w:{} },
+    SIDO: { dps:25,  w:{"5":15/25, "11":10/25} }
   };
 
   const clone = o => JSON.parse(JSON.stringify(o));
