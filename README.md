@@ -28,11 +28,10 @@ ciphertext and are decrypted in the browser only after the gate unlocks. Until t
 marked element renders `***` and the page body is hidden.
 
 - Plaintext source: `tools/vault-source.json` (repo root, not inside `site/`, never published).
-- Build: `node tools/build-vault.mjs` writes `site/assets/vault.js`.
-- Key derivation: PBKDF2-SHA256 (210k iterations) over the current session unlock secret,
-  so the existing password keeps working and no extra secret is stored in the page.
-- Stronger mode: `VAULT_PASSWORD='…' node tools/build-vault.mjs` derives the key from a
-  separate vault password instead; the gate then verifies it by decrypting the ciphertext.
+- Build: `VAULT_PASSWORD='…' node tools/build-vault.mjs` writes `site/assets/vault.js`.
+- Key derivation: PBKDF2-SHA256 (210k iterations) over the vault password. The gate verifies
+  the password by decrypting the ciphertext, so no password hash is stored in the page.
+- Session reloads reuse a key exported to `sessionStorage`; the password itself is never stored.
 
 Pages mark values with `data-vault="key"` (text), `data-vault-html="key"` (markup) or
 `data-vault-value="key"` (form input). `window.MojilaVault.get("planner")` resolves with
