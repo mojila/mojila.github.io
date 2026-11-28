@@ -101,6 +101,56 @@
   .totals .s{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
   .totals .main{background:#f7f5f0}
   .totals-note{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.6}
+
+  .treemap-block{
+    border:1px solid var(--line-strong);background:var(--sheet);
+    margin:26px 0 8px;padding:20px 22px 16px;
+  }
+  .treemap-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:16px;flex-wrap:wrap;margin-bottom:14px;
+  }
+  .treemap-head .k{
+    font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--faint);
+  }
+  .treemap-head .meta{font-size:11.5px;color:var(--muted)}
+  .treemap{
+    position:relative;width:100%;height:320px;background:#f7f5f0;
+    overflow:hidden;border:1px solid var(--line);
+  }
+  .tm-placeholder{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--faint);
+  }
+  .tm-tile{
+    position:absolute;overflow:hidden;padding:11px 12px;
+    border:2px solid var(--sheet);color:#fff;
+    transition:filter .15s ease;
+  }
+  .tm-tile:hover{filter:brightness(1.07)}
+  .tm-label{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+    text-transform:uppercase;opacity:.82;line-height:1.35;
+  }
+  .tm-value{
+    font-family:var(--serif);font-size:23px;line-height:1.1;
+    margin-top:5px;letter-spacing:-.01em;
+  }
+  .tm-meta{font-size:10.5px;opacity:.8;margin-top:3px;line-height:1.4}
+  .tm-tile.small{padding:8px 9px}
+  .tm-tile.small .tm-label{font-size:8.5px}
+  .tm-tile.small .tm-value{font-size:15px;margin-top:2px}
+  .tm-tile.small .tm-meta{font-size:9.5px;margin-top:1px}
+  .tm-tile.tiny .tm-label{display:none}
+  .tm-tile.tiny .tm-value{font-size:12px;margin-top:0}
+  .tm-tile.tiny .tm-meta{display:none}
+  .tm-legend{
+    display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;
+    font-size:11.5px;color:var(--muted);
+  }
+  .tm-legend span{display:inline-flex;align-items:center;gap:6px}
+  .tm-swatch{width:9px;height:9px;border-radius:1px;display:inline-block}
   .principle dt{
     font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--faint);margin-bottom:8px;
@@ -128,6 +178,8 @@
     .totals{grid-template-columns:1fr}
     .totals > div{border-right:0;border-bottom:1px solid var(--line)}
     .totals > div:last-child{border-bottom:0}
+    .treemap{height:260px}
+    .treemap-block{padding:16px 16px 12px}
   }
 </style>
 <script src="assets/vault.js"></script>
@@ -176,6 +228,17 @@
     at the stated rate, so it moves when the currency moves even on a day nothing is bought
     or sold. Balances are dated snapshots, not live.
   </p>
+
+  <div class="treemap-block">
+    <div class="treemap-head">
+      <div class="k">Where the book sits</div>
+      <div class="meta" id="allocNote">***</div>
+    </div>
+    <div id="allocChart" class="treemap" role="img" aria-label="Portfolio allocation">
+      <div class="tm-placeholder">***</div>
+    </div>
+    <div class="tm-legend" id="allocLegend" aria-hidden="true"></div>
+  </div>
 
   <h2 class="sec">Tools</h2>
 
@@ -255,5 +318,134 @@
   </footer>
 
 </div>
+
+<script>
+/* Allocation treemap. Values arrive decrypted from assets/vault.js; nothing
+   here embeds a balance or a conversion rate. */
+(function () {
+  "use strict";
+
+  var el = document.getElementById("allocChart");
+  var noteEl = document.getElementById("allocNote");
+  var legendEl = document.getElementById("allocLegend");
+  if (!el || !window.MojilaVault) return;
+
+  var COLORS = ["#0b6b4f", "#1e4c74", "#8a5700", "#5f7d6a"];
+
+  function rp(n) {
+    if (n >= 1e9) return "Rp" + (n / 1e9).toFixed(2) + "b";
+    if (n >= 1e7) return "Rp" + (n / 1e6).toFixed(1) + "m";
+    if (n >= 1e6) return "Rp" + (n / 1e6).toFixed(2) + "m";
+    return "Rp" + Math.round(n / 1e3) + "k";
+  }
+  function rpFull(n) { return "Rp" + Math.round(n).toLocaleString("en-US"); }
+
+  function worst(row, sum, side) {
+    var max = 0, min = Infinity;
+    for (var i = 0; i < row.length; i++) {
+      if (row[i].area > max) max = row[i].area;
+      if (row[i].area < min) min = row[i].area;
+    }
+    return Math.max((side * side * max) / (sum * sum), (sum * sum) / (side * side * min));
+  }
+
+  function squarify(items, W, H) {
+    var total = 0;
+    for (var i = 0; i < items.length; i++) total += items[i].idr;
+    if (!total) return [];
+    var scale = (W * H) / total;
+    var rest = items.map(function (it) { return { item: it, area: it.idr * scale }; });
+    var out = [], x = 0, y = 0, w = W, h = H;
+
+    while (rest.length) {
+      var short = Math.min(w, h);
+      var row = [rest[0]], sum = rest[0].area;
+      var best = worst(row, sum, short), k = 1;
+      while (k < rest.length) {
+        var nr = row.concat(rest[k]), ns = sum + rest[k].area;
+        var nw = worst(nr, ns, short);
+        if (nw > best) break;
+        row = nr; sum = ns; best = nw; k++;
+      }
+
+      if (w >= h) {
+        var stripW = sum / h, yy = y;
+        row.forEach(function (r) {
+          var hh = r.area / stripW;
+          out.push({ item: r.item, x: x, y: yy, w: stripW, h: hh });
+          yy += hh;
+        });
+        x += stripW; w -= stripW;
+      } else {
+        var stripH = sum / w, xx = x;
+        row.forEach(function (r) {
+          var ww = r.area / stripH;
+          out.push({ item: r.item, x: xx, y: y, w: ww, h: stripH });
+          xx += ww;
+        });
+        y += stripH; h -= stripH;
+      }
+      rest = rest.slice(k);
+    }
+    return out;
+  }
+
+  MojilaVault.get("treemap").then(function (D) {
+    var items = (D.items || []).map(function (it, i) {
+      var idr = it.unit === "USD" ? it.value * D.fx : it.value;
+      return { label: it.label, role: it.role, idr: idr, color: COLORS[i % COLORS.length] };
+    }).filter(function (it) { return it.idr > 0; });
+
+    if (!items.length) return;
+    if (noteEl) noteEl.textContent = D.note || "";
+    if (legendEl) {
+      legendEl.innerHTML = items.map(function (it) {
+        return '<span><i class="tm-swatch" style="background:' + it.color + '"></i>' +
+          it.label + "</span>";
+      }).join("");
+    }
+
+    var summary = items.map(function (it) { return it.label + " " + rp(it.idr); }).join(", ");
+    el.setAttribute("aria-label", "Portfolio allocation treemap: " + summary);
+
+    function render() {
+      var W = el.clientWidth, H = el.clientHeight;
+      if (!W || !H) return;
+
+      var sorted = items.slice().sort(function (a, b) { return b.idr - a.idr; });
+      var total = sorted.reduce(function (s, it) { return s + it.idr; }, 0);
+      var rects = squarify(sorted, W, H);
+
+      el.innerHTML = "";
+      rects.forEach(function (r) {
+        var pct = (r.item.idr / total) * 100;
+        var t = document.createElement("div");
+        t.className = "tm-tile" +
+          ((r.w < 180 || r.h < 82) ? " small" : "") +
+          ((r.w < 104 || r.h < 48) ? " tiny" : "");
+        t.style.left = r.x + "px";
+        t.style.top = r.y + "px";
+        t.style.width = r.w + "px";
+        t.style.height = r.h + "px";
+        t.style.background = r.item.color;
+        t.title = r.item.label + " · " + rpFull(r.item.idr) + " · " +
+          pct.toFixed(1) + "% · " + r.item.role;
+        t.innerHTML =
+          '<div class="tm-label">' + r.item.label + "</div>" +
+          '<div class="tm-value">' + rp(r.item.idr) + "</div>" +
+          '<div class="tm-meta">' + pct.toFixed(1) + "% · " + r.item.role + "</div>";
+        el.appendChild(t);
+      });
+    }
+
+    render();
+    if (window.ResizeObserver) {
+      new ResizeObserver(render).observe(el);
+    } else {
+      window.addEventListener("resize", render);
+    }
+  }).catch(function () { /* locked or unavailable: leave the placeholder */ });
+})();
+</script>
 </body>
 </html>
