@@ -142,15 +142,42 @@
   .tm-tile.small .tm-label{font-size:8.5px}
   .tm-tile.small .tm-value{font-size:15px;margin-top:2px}
   .tm-tile.small .tm-meta{font-size:9.5px;margin-top:1px}
-  .tm-tile.tiny .tm-label{display:none}
-  .tm-tile.tiny .tm-value{font-size:12px;margin-top:0}
+  .tm-tile.tiny{padding:4px 5px}
+  .tm-tile.tiny .tm-label{display:block;font-size:7px;letter-spacing:.06em}
+  .tm-tile.tiny .tm-value{font-size:10px;margin-top:1px}
   .tm-tile.tiny .tm-meta{display:none}
+  .tm-tile.micro{padding:3px}
+  .tm-tile.micro .tm-label{display:block;font-size:7.5px}
+  .tm-tile.micro .tm-value{display:none}
+  .tm-tile.nano .tm-label,
+  .tm-tile.nano .tm-value,
+  .tm-tile.nano .tm-meta{display:none}
   .tm-legend{
     display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;
     font-size:11.5px;color:var(--muted);
   }
   .tm-legend span{display:inline-flex;align-items:center;gap:6px}
   .tm-swatch{width:9px;height:9px;border-radius:1px;display:inline-block}
+  .tm-crumbs{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin:-4px 0 12px;font-size:11.5px;color:var(--muted);
+  }
+  .tm-crumbs[hidden]{display:none}
+  .tm-crumb{
+    font-family:var(--mono);font-size:10px;letter-spacing:.09em;
+    text-transform:uppercase;background:none;border:0;padding:0;
+    color:var(--muted);cursor:pointer;text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .tm-crumb:hover{color:var(--ink)}
+  .tm-crumb[aria-current]{color:var(--ink);text-decoration:none;cursor:default}
+  .tm-sep{color:var(--faint)}
+  .tm-tile.drill{cursor:pointer}
+  .tm-tile .tm-more{
+    font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+    text-transform:uppercase;opacity:.65;margin-top:6px;
+  }
+  .tm-tile:focus-visible{outline:2px solid #fff;outline-offset:-4px}
   .principle dt{
     font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--faint);margin-bottom:8px;
@@ -234,7 +261,8 @@
       <div class="k">Where the book sits</div>
       <div class="meta" id="allocNote">***</div>
     </div>
-    <div id="allocChart" class="treemap" role="img" aria-label="Portfolio allocation">
+    <div class="tm-crumbs" id="allocCrumbs" hidden></div>
+    <div id="allocChart" class="treemap" role="group" aria-label="Portfolio allocation">
       <div class="tm-placeholder">***</div>
     </div>
     <div class="tm-legend" id="allocLegend" aria-hidden="true"></div>
@@ -339,6 +367,16 @@
     return "Rp" + Math.round(n / 1e3) + "k";
   }
   function rpFull(n) { return "Rp" + Math.round(n).toLocaleString("en-US"); }
+  function usd(n) { return "$" + (n >= 100 ? Math.round(n).toLocaleString("en-US") : n.toFixed(2)); }
+
+  function shade(hex, i, n) {
+    var amt = 0.4 * (n > 1 ? i / (n - 1) : 0);
+    var c = parseInt(hex.slice(1), 16);
+    var r = Math.round(((c >> 16) & 255) * (1 - amt));
+    var g = Math.round(((c >> 8) & 255) * (1 - amt));
+    var b = Math.round((c & 255) * (1 - amt));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
 
   function worst(row, sum, side) {
     var max = 0, min = Infinity;
@@ -391,51 +429,128 @@
   }
 
   MojilaVault.get("treemap").then(function (D) {
-    var items = (D.items || []).map(function (it, i) {
-      var idr = it.unit === "USD" ? it.value * D.fx : it.value;
-      return { label: it.label, role: it.role, idr: idr, color: COLORS[i % COLORS.length] };
-    }).filter(function (it) { return it.idr > 0; });
+    var crumbsEl = document.getElementById("allocCrumbs");
+    var view = null;
 
-    if (!items.length) return;
-    if (noteEl) noteEl.textContent = D.note || "";
-    if (legendEl) {
-      legendEl.innerHTML = items.map(function (it) {
-        return '<span><i class="tm-swatch" style="background:' + it.color + '"></i>' +
-          it.label + "</span>";
-      }).join("");
+    function node(it, color) {
+      var idr = it.unit === "USD" ? it.value * D.fx : it.value;
+      var kids = null;
+      if (it.children && it.children.length) {
+        kids = it.children.map(function (c, k) {
+          return node(c, shade(color, k, it.children.length));
+        }).filter(function (c) { return c.idr > 0; });
+        if (!kids.length) kids = null;
+      }
+      return { label: it.label, role: it.role || "", unit: it.unit || "IDR", idr: idr, color: color, children: kids };
     }
 
-    var summary = items.map(function (it) { return it.label + " " + rp(it.idr); }).join(", ");
-    el.setAttribute("aria-label", "Portfolio allocation treemap: " + summary);
+    var roots = (D.items || []).map(function (it, i) {
+      return node(it, COLORS[i % COLORS.length]);
+    }).filter(function (it) { return it.idr > 0; });
+
+    if (!roots.length) return;
+    if (noteEl) noteEl.textContent = D.note || "";
+
+    function native(n) { return n.unit === "USD" ? usd(n.idr / D.fx) : rp(n.idr); }
+
+    function crumbs() {
+      if (!crumbsEl) return;
+      crumbsEl.innerHTML = "";
+      if (!view) { crumbsEl.hidden = true; return; }
+      crumbsEl.hidden = false;
+
+      var back = document.createElement("button");
+      back.type = "button";
+      back.className = "tm-crumb";
+      back.textContent = "All books";
+      back.addEventListener("click", function () { view = null; render(); });
+
+      var sep = document.createElement("span");
+      sep.className = "tm-sep";
+      sep.textContent = "/";
+
+      var cur = document.createElement("span");
+      cur.className = "tm-crumb";
+      cur.setAttribute("aria-current", "page");
+      cur.textContent = view.label;
+
+      crumbsEl.appendChild(back);
+      crumbsEl.appendChild(sep);
+      crumbsEl.appendChild(cur);
+    }
+
+    function open(n) {
+      if (!n.children) return;
+      view = n;
+      render();
+    }
 
     function render() {
+      var list = view ? view.children : roots;
+      if (!list || !list.length) return;
+
       var W = el.clientWidth, H = el.clientHeight;
       if (!W || !H) return;
 
-      var sorted = items.slice().sort(function (a, b) { return b.idr - a.idr; });
+      var sorted = list.slice().sort(function (a, b) { return b.idr - a.idr; });
       var total = sorted.reduce(function (s, it) { return s + it.idr; }, 0);
       var rects = squarify(sorted, W, H);
 
       el.innerHTML = "";
       rects.forEach(function (r) {
-        var pct = (r.item.idr / total) * 100;
+        var it = r.item;
+        var pct = (it.idr / total) * 100;
+        var drillable = !!it.children;
         var t = document.createElement("div");
         t.className = "tm-tile" +
+          (drillable ? " drill" : "") +
           ((r.w < 180 || r.h < 82) ? " small" : "") +
-          ((r.w < 104 || r.h < 48) ? " tiny" : "");
+          ((r.w < 104 || r.h < 48) ? " tiny" : "") +
+          ((r.w < 72 || r.h < 40) ? " micro" : "") +
+          ((r.w < 40 || r.h < 22) ? " nano" : "");
         t.style.left = r.x + "px";
         t.style.top = r.y + "px";
         t.style.width = r.w + "px";
         t.style.height = r.h + "px";
-        t.style.background = r.item.color;
-        t.title = r.item.label + " · " + rpFull(r.item.idr) + " · " +
-          pct.toFixed(1) + "% · " + r.item.role;
+        t.style.background = it.color;
+        t.title = it.label + " · " + rpFull(it.idr) +
+          (it.unit === "USD" ? " (" + usd(it.idr / D.fx) + ")" : "") +
+          " · " + pct.toFixed(1) + "% · " + it.role;
+
         t.innerHTML =
-          '<div class="tm-label">' + r.item.label + "</div>" +
-          '<div class="tm-value">' + rp(r.item.idr) + "</div>" +
-          '<div class="tm-meta">' + pct.toFixed(1) + "% · " + r.item.role + "</div>";
+          '<div class="tm-label">' + it.label + "</div>" +
+          '<div class="tm-value">' + (view ? native(it) : rp(it.idr)) + "</div>" +
+          '<div class="tm-meta">' + pct.toFixed(1) + "% · " + it.role + "</div>" +
+          (drillable && r.w > 150 && r.h > 96 ? '<div class="tm-more">Drill down ›</div>' : "");
+
+        if (drillable) {
+          t.tabIndex = 0;
+          t.setAttribute("role", "button");
+          t.setAttribute("aria-label", "Show " + it.label + " holdings");
+          t.addEventListener("click", function () { open(it); });
+          t.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(it); }
+          });
+        }
         el.appendChild(t);
       });
+
+      crumbs();
+
+      if (legendEl) {
+        legendEl.hidden = false;
+        var legendItems = view ? sorted : roots;
+        legendEl.innerHTML = legendItems.map(function (it) {
+          return '<span><i class="tm-swatch" style="background:' + it.color + '"></i>' +
+            it.label + (view ? " <b>" + native(it) + "</b>" : "") + "</span>";
+        }).join("");
+      }
+
+      el.setAttribute("aria-label", "Portfolio allocation treemap" +
+        (view ? " — " + view.label + " holdings" : "") + ": " +
+        sorted.map(function (it) {
+          return it.label + " " + Math.round(it.idr).toLocaleString("en-US") + " rupiah";
+        }).join(", ") + ".");
     }
 
     render();
