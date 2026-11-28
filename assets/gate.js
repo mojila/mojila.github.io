@@ -151,7 +151,8 @@
     root.classList.remove("gate-locked");
     var gate = document.getElementById("gate");
     if (gate) gate.remove();
-    document.body.style.visibility = "";
+    /* May run from <head> before <body> exists during a fast decrypt. */
+    if (document.body) document.body.style.visibility = "";
   }
 
   async function sha256(text) {
@@ -166,26 +167,28 @@
 
   root.classList.add("vault-loading");
 
+  /* Hide the page while placeholders are being filled, including on the
+     session-key path where mountGate() is never called. */
+  try {
+    var bootCss = document.createElement("style");
+    bootCss.textContent = "html.vault-loading body{visibility:hidden!important}";
+    (document.head || root).appendChild(bootCss);
+  } catch (e) { /* non-fatal */ }
+
   (async function boot() {
     var sessionKey = await keyFromSession();
     if (sessionKey) {
-      try {
-        await startWithKey(sessionKey);
-        unlockSession();
-        return;
-      } catch (e) {
-        try { sessionStorage.removeItem("insights-vault-key"); } catch (err) {}
-      }
+      var keyOk = false;
+      try { await startWithKey(sessionKey); keyOk = true; }
+      catch (e) { try { sessionStorage.removeItem("insights-vault-key"); } catch (err) {} }
+      if (keyOk) { unlockSession(); return; }
     }
 
     if (VAULT && VAULT.kdf.mode === "session" && unlocked()) {
-      try {
-        await start(EXPECTED);
-        unlockSession();
-        return;
-      } catch (e) {
-        try { sessionStorage.removeItem(KEY); } catch (err) {}
-      }
+      var secretOk = false;
+      try { await start(EXPECTED); secretOk = true; }
+      catch (e) { try { sessionStorage.removeItem(KEY); } catch (err) {} }
+      if (secretOk) { unlockSession(); return; }
     }
 
     root.classList.remove("vault-loading");
@@ -232,7 +235,14 @@
     document.head.appendChild(css);
 
     function build() {
-      if (document.getElementById("gate") || decrypted) return;
+      if (document.getElementById("gate")) return;
+      /* If values already decrypted, never leave the page locked with no dialog. */
+      if (decrypted) {
+        fill();
+        root.classList.remove("gate-locked");
+        root.classList.remove("vault-loading");
+        return;
+      }
       var gate = document.createElement("div");
       gate.id = "gate";
       gate.setAttribute("role", "dialog");
