@@ -130,6 +130,7 @@
     .totals > div:last-child{border-bottom:0}
   }
 </style>
+<script src="assets/vault.js"></script>
 <script src="assets/gate.js"></script>
 </head>
 <body>
@@ -156,18 +157,18 @@
   <div class="totals">
     <div class="main">
       <div class="k">Total assets · 27 Nov 2026</div>
-      <div class="v">Rp461.1m</div>
-      <div class="s">≈ $25,129 at Rp18,350/USD · two currencies, one translated total</div>
+      <div class="v" data-vault="index.totalAssets">***</div>
+      <div class="s" data-vault="index.totalSub">***</div>
     </div>
     <div>
       <div class="k">USD book</div>
-      <div class="v small">$15,572.67</div>
-      <div class="s">Pluang cash + four ETFs<br>≈ Rp285.8m · 62%</div>
+      <div class="v small" data-vault="index.usdBook">***</div>
+      <div class="s" data-vault-html="index.usdBookSub">***</div>
     </div>
     <div>
       <div class="k">IDR book</div>
-      <div class="v small">Rp175.4m</div>
-      <div class="s">IDX sleeve + money market<br>≈ $9,557 · 38%</div>
+      <div class="v small" data-vault="index.idrBook">***</div>
+      <div class="s" data-vault-html="index.idrBookSub">***</div>
     </div>
   </div>
   <p class="totals-note">
@@ -206,9 +207,7 @@
     <div>
       <h3><a href="notes/money-market.html">The rupiah money market sleeve</a></h3>
       <p>
-        Two IDR money market funds hold roughly Rp28 million of short-term liquidity — about
-        16% of external rupiah assets. Where it sits in total assets, why it is kept out of
-        every dollar total, and why the smallest balance is really a consolidation question.
+        <span data-vault="index.mmNote">***</span>
       </p>
       <a class="go" href="notes/money-market.html">Read the note →</a>
     </div>
@@ -224,7 +223,7 @@
       <h3><a href="notes/cash-plus-book.html">The cash-plus book</a></h3>
       <p>
         Why an overwhelming cash position is the portfolio's engine rather than a failure
-        to invest, what the 3.38% hurdle rate implies for every dollar moved into risk, and
+        to invest, what the <span data-vault="index.hurdle">***</span> hurdle rate implies for every dollar moved into risk, and
         the four flags that make the equity sleeve look like a hobby allocation.
       </p>
       <a class="go" href="notes/cash-plus-book.html">Read the note →</a>
@@ -236,7 +235,7 @@
   <dl class="principles">
     <div class="principle">
       <dt>Hurdle</dt>
-      <dd><strong>3.38%</strong> is the bar. Cash pays it without drawdown; any risk asset must beat it net of fees and tax to have been worth the move.</dd>
+      <dd><strong data-vault="index.hurdle">***</strong> is the bar. Cash pays it without drawdown; any risk asset must beat it net of fees and tax to have been worth the move.</dd>
     </div>
     <div class="principle">
       <dt>Structure</dt>
@@ -244,7 +243,7 @@
     </div>
     <div class="principle">
       <dt>Friction</dt>
-      <dd>Small tickets cost roughly <strong>0.3–0.4%</strong> all-in. Batch purchases; a ticket can spend a month of the money's yield before it earns anything.</dd>
+      <dd>Small tickets cost roughly <strong data-vault="index.friction">***</strong> all-in. Batch purchases; a ticket can spend a month of the money's yield before it earns anything.</dd>
     </div>
   </dl>
 

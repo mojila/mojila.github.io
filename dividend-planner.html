@@ -348,6 +348,7 @@
     section{break-inside:avoid}
   }
 </style>
+<script src="assets/vault.js"></script>
 <script src="assets/gate.js"></script>
 </head>
 <body>
@@ -370,7 +371,7 @@
   <div class="hero">
     <div class="hero-main">
       <p class="eyebrow" id="heroEyebrow">Forecast cash received in December 2026</p>
-      <div class="big-number" id="heroNumber">$15<span class="cents">.34</span></div>
+      <div class="big-number" id="heroNumber">***</div>
       <p class="hero-note" id="heroNote"></p>
     </div>
     <dl class="hero-side">
@@ -404,19 +405,19 @@
     <div class="combined-top">
       <div class="total-block">
         <div class="k">Forecast income, next 12 months, both sleeves</div>
-        <div class="big" id="cbTotal">Rp18,521,858</div>
-        <div class="s" id="cbSub">≈ $1,007.77 at Rp18,379 · average Rp1,543,488 / month</div>
+        <div class="big" id="cbTotal">***</div>
+        <div class="s" id="cbSub">***</div>
       </div>
       <div class="fx-box">
         <label for="fxRate">USD/IDR rate</label>
-        <div class="fx-row"><span>Rp</span><input id="fxRate" type="number" min="1" step="1" value="18379" inputmode="numeric" aria-label="USD to IDR rate"></div>
-        <div class="s">ECB reference 27 Nov 2026: 18,379<br>Xe/Wise mid-market 27 Nov: 18,367–18,370</div>
+        <div class="fx-row"><span>Rp</span><input id="fxRate" type="number" min="1" step="1" inputmode="numeric" aria-label="USD to IDR rate"></div>
+        <div class="s" data-vault="planner.fxInfo">***</div>
       </div>
     </div>
 
     <div class="calendar duo-calendar" id="duoCalendar" aria-label="Combined monthly income, IDR"></div>
     <div class="cal-note">
-      <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — Rp85k–Rp280k a month</span>
+      <span><span class="swatch" style="background:var(--green)"></span>USD sleeve, converted at the rate above — <span data-vault="planner.usdMonthlyRange">***</span> a month</span>
       <span><span class="swatch" style="background:var(--amber)"></span>IDX sleeve, paid as rupiah — Jan · May · Jun · Jul · Nov</span>
       <span id="cbSplit"></span>
     </div>
@@ -598,27 +599,27 @@
       <div class="idr-cell">
         <div class="k">Holdings</div>
         <div class="v">8 names</div>
-        <div class="s"><span id="idxLots">636</span> lots · <span id="idxShares">63,600</span> shares</div>
+        <div class="s"><span id="idxLots">***</span> lots · <span id="idxShares">***</span> shares</div>
       </div>
       <div class="idr-cell">
         <div class="k">Market value</div>
-        <div class="v" id="idxMv">Rp147,380,200</div>
+        <div class="v" id="idxMv">***</div>
         <div class="s">last prices, 28 Nov 2026</div>
       </div>
       <div class="idr-cell">
         <div class="k">Income / yr at declared DPS</div>
-        <div class="v" id="idxGross">Rp16,701,800</div>
-        <div class="s" id="idxNet">Rp15,031,620 after 10% tax</div>
+        <div class="v" id="idxGross">***</div>
+        <div class="s" id="idxNet">***</div>
       </div>
       <div class="idr-cell">
         <div class="k">Blended yield</div>
-        <div class="v" id="idxYield">11.33%</div>
+        <div class="v" id="idxYield">***</div>
         <div class="s">gross, at declared DPS on today's value</div>
       </div>
       <div class="idr-cell">
         <div class="k">Next payment</div>
-        <div class="v" id="idxNext">Jan 2027</div>
-        <div class="s" id="idxNextSub">BBRI interim 137/sh · ~Rp4.89m gross</div>
+        <div class="v" id="idxNext">***</div>
+        <div class="s" id="idxNextSub">***</div>
       </div>
     </div>
 
@@ -639,114 +640,114 @@
           </tr>
         </thead>
         <tbody id="idxBody">
-          <tr data-sym="BBRI" data-dps="346" data-pays="1:137,5:209">
+          <tr data-sym="BBRI">
             <td><span class="sym">BBRI</span><span class="sub-name">Bank Rakyat Indonesia</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="357" inputmode="numeric" aria-label="BBRI lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="3100" inputmode="numeric" aria-label="BBRI price in rupiah"></td>
-            <td class="num shares">35,700</td>
-            <td class="num mv">110,670,000</td>
-            <td class="num dps">346</td>
-            <td class="num yld">11.16%</td>
-            <td class="num gross">12,352,200</td>
-            <td class="num net">11,116,980</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="BBRI lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="BBRI price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">Jan · May</td>
           </tr>
-          <tr data-sym="BIRD" data-dps="166" data-pays="7:166">
+          <tr data-sym="BIRD">
             <td><span class="sym">BIRD</span><span class="sub-name">Blue Bird</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="110" inputmode="numeric" aria-label="BIRD lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="1460" inputmode="numeric" aria-label="BIRD price in rupiah"></td>
-            <td class="num shares">11,000</td>
-            <td class="num mv">16,060,000</td>
-            <td class="num dps">166</td>
-            <td class="num yld">11.37%</td>
-            <td class="num gross">1,826,000</td>
-            <td class="num net">1,643,400</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="BIRD lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="BIRD price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">Jul</td>
           </tr>
-          <tr data-sym="CITA" data-dps="351" data-pays="6:351">
+          <tr data-sym="CITA">
             <td><span class="sym">CITA</span><span class="sub-name">Cita Mineral Investindo</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="25" inputmode="numeric" aria-label="CITA lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="2780" inputmode="numeric" aria-label="CITA price in rupiah"></td>
-            <td class="num shares">2,500</td>
-            <td class="num mv">6,950,000</td>
-            <td class="num dps">351</td>
-            <td class="num yld">12.63%</td>
-            <td class="num gross">877,500</td>
-            <td class="num net">789,750</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="CITA lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="CITA price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">Jun</td>
           </tr>
-          <tr data-sym="CUAN" data-dps="3" data-pays="5:3">
+          <tr data-sym="CUAN">
             <td><span class="sym">CUAN</span><span class="sub-name">Petrindo Jaya Kreasi</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="7" inputmode="numeric" aria-label="CUAN lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="368" inputmode="numeric" aria-label="CUAN price in rupiah"></td>
-            <td class="num shares">700</td>
-            <td class="num mv">257,600</td>
-            <td class="num dps">3</td>
-            <td class="num yld">0.82%</td>
-            <td class="num gross">2,100</td>
-            <td class="num net">1,890</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="CUAN lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="CUAN price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">May</td>
           </tr>
-          <tr data-sym="LPPF" data-dps="250" data-pays="5:250">
+          <tr data-sym="LPPF">
             <td><span class="sym">LPPF</span><span class="sub-name">Matahari Department Store</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="60" inputmode="numeric" aria-label="LPPF lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="1650" inputmode="numeric" aria-label="LPPF price in rupiah"></td>
-            <td class="num shares">6,000</td>
-            <td class="num mv">9,900,000</td>
-            <td class="num dps">250</td>
-            <td class="num yld">15.15%</td>
-            <td class="num gross">1,500,000</td>
-            <td class="num net">1,350,000</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="LPPF lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="LPPF price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">May</td>
           </tr>
-          <tr data-sym="MBMA" data-dps="0" data-pays="">
+          <tr data-sym="MBMA">
             <td><span class="sym">MBMA</span><span class="sub-name">Merdeka Battery Materials</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="17" inputmode="numeric" aria-label="MBMA lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="2" value="352" inputmode="numeric" aria-label="MBMA price in rupiah"></td>
-            <td class="num shares">1,700</td>
-            <td class="num mv">598,400</td>
-            <td class="num dps">0</td>
-            <td class="num yld">0.00%</td>
-            <td class="num gross">0</td>
-            <td class="num net">0</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="MBMA lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="2" inputmode="numeric" aria-label="MBMA price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">—</td>
           </tr>
-          <tr data-sym="PANI" data-dps="5" data-pays="7:5">
+          <tr data-sym="PANI">
             <td><span class="sym">PANI</span><span class="sub-name">Pantai Indah Kapuk Dua</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="3" inputmode="numeric" aria-label="PANI lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="10" value="3430" inputmode="numeric" aria-label="PANI price in rupiah"></td>
-            <td class="num shares">300</td>
-            <td class="num mv">1,029,000</td>
-            <td class="num dps">5</td>
-            <td class="num yld">0.15%</td>
-            <td class="num gross">1,500</td>
-            <td class="num net">1,350</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="PANI lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="10" inputmode="numeric" aria-label="PANI price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">Jul</td>
           </tr>
-          <tr data-sym="SIDO" data-dps="25" data-pays="5:15,11:10">
+          <tr data-sym="SIDO">
             <td><span class="sym">SIDO</span><span class="sub-name">Sido Muncul</span></td>
-            <td><input class="editable lots" type="number" min="0" step="1" value="57" inputmode="numeric" aria-label="SIDO lots"></td>
-            <td><input class="editable wide price" type="number" min="0" step="2" value="336" inputmode="numeric" aria-label="SIDO price in rupiah"></td>
-            <td class="num shares">5,700</td>
-            <td class="num mv">1,915,200</td>
-            <td class="num dps">25</td>
-            <td class="num yld">7.44%</td>
-            <td class="num gross">142,500</td>
-            <td class="num net">128,250</td>
+            <td><input class="editable lots" type="number" min="0" step="1" inputmode="numeric" aria-label="SIDO lots"></td>
+            <td><input class="editable wide price" type="number" min="0" step="2" inputmode="numeric" aria-label="SIDO price in rupiah"></td>
+            <td class="num shares">***</td>
+            <td class="num mv">***</td>
+            <td class="num dps">***</td>
+            <td class="num yld">***</td>
+            <td class="num gross">***</td>
+            <td class="num net">***</td>
             <td class="freq-tag">May · Nov</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td>Total</td>
-            <td class="num" id="idxTotalLots">636</td>
+            <td class="num" id="idxTotalLots">***</td>
             <td></td>
-            <td class="num" id="idxTotalShares">63,600</td>
-            <td class="num" id="idxTotalMv">147,380,200</td>
+            <td class="num" id="idxTotalShares">***</td>
+            <td class="num" id="idxTotalMv">***</td>
             <td></td>
-            <td class="num" id="idxTotalYld">11.33%</td>
-            <td class="num" id="idxTotalGross">16,701,800</td>
-            <td class="num" id="idxTotalNet">15,031,620</td>
+            <td class="num" id="idxTotalYld">***</td>
+            <td class="num" id="idxTotalGross">***</td>
+            <td class="num" id="idxTotalNet">***</td>
             <td></td>
           </tr>
         </tfoot>
@@ -768,11 +769,11 @@
     </div>
 
     <div class="ex-note">
-      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its declared Rp346 into Rp137 paid in January and Rp209 paid in May; SIDO splits Rp25 into Rp15 in May and Rp10 in November; BIRD, CITA, CUAN, LPPF and PANI pay once a year in the month shown; MBMA pays nothing (no dividend declared to date). BRI has not yet declared an FY2026 interim, so the January figure is the last cycle's Rp137 carried forward, not an announcement. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one. SIDO's Rp25 is deliberately <em>not</em> the last full cycle (FY2025: Rp22 interim + Rp15 final = Rp37) but the current run-rate — the FY2026 interim declared in November was cut to Rp10 from Rp22, so the older, higher figure would overstate income by Rp2.7m on 57 lots. If the May final also falls, Rp25 is still too high.</p>
+      <p><strong>How the forecast is built.</strong> Each row carries forward the last declared annual dividend per share — BBRI splits its declared Rp346 into Rp137 paid in January and Rp209 paid in May; SIDO splits Rp25 into Rp15 in May and Rp10 in November; BIRD, CITA, CUAN, LPPF and PANI pay once a year in the month shown; MBMA pays nothing (no dividend declared to date). BRI has not yet declared an FY2026 interim, so the January figure is the last cycle's Rp137 carried forward, not an announcement. No growth is assumed and no payout ratio is derived: these are declared amounts restated at today's lot counts, not company guidance. CITA's Rp351 is the June 2026 declaration, LPPF's Rp250 the May 2026 one, BIRD's Rp166 the July 2026 one, PANI's Rp5 the July 2026 one. SIDO's Rp25 is deliberately <em>not</em> the last full cycle (FY2025: Rp22 interim + Rp15 final = Rp37) but the current run-rate — the FY2026 interim declared in November was cut to Rp10 from Rp22, so the older, higher figure would overstate income by <span data-vault="planner.sidoOverstate">***</span> on <span data-vault="planner.sidoLots">***</span> lots. If the May final also falls, Rp25 is still too high.</p>
     </div>
 
     <div class="ex-note warn">
-      <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was never supplied, so only yield on today's price is shown, not yield on cost. (2) <strong>Tax:</strong> 10% final withholding is assumed — the rate for a resident individual; any other status changes every net figure. (3) Three of these names barely pay or don't pay: CUAN's last dividend was Rp3 in May 2025 with nothing declared in 2026 (0.8% at Rp368), PANI pays Rp5 on a Rp3,430 price (0.15%), and MBMA has never declared a dividend — it is 0.4% of sleeve value and 0% of sleeve income. They are in the book for capital exposure, not income, and the first two contribute Rp3,600 a year between them. Verify every figure against the latest IDX announcement before acting.</p>
+      <p><strong>Three things this does not know.</strong> (1) <strong>Cost basis</strong> was never supplied, so only yield on today's price is shown, not yield on cost. (2) <strong>Tax:</strong> 10% final withholding is assumed — the rate for a resident individual; any other status changes every net figure. (3) Three of these names barely pay or don't pay: CUAN's last dividend was Rp3 in May 2025 with nothing declared in 2026 (0.8% at <span data-vault="planner.cuanPrice">***</span>), PANI pays Rp5 on a <span data-vault="planner.paniPrice">***</span> price (0.15%), and MBMA has never declared a dividend — it is 0.4% of sleeve value and 0% of sleeve income. They are in the book for capital exposure, not income, and the first two contribute <span data-vault="planner.smallIncome">***</span> a year between them. Verify every figure against the latest IDX announcement before acting.</p>
     </div>
   </section>
   </div>
@@ -848,42 +849,20 @@
     </div>
 
     <footer>
-      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 28 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: BBRI 357, BIRD 110, CITA 25, CUAN 7, LPPF 60, PANI 3, MBMA 17, SIDO 57 (user-supplied). Prices (Rp3,100 / 1,460 / 2,780 / 368 / 1,650 / 3,430 / 352 / 336) are Pluang MCP last-session data as of 28 Nov 2026. DPS carried forward follows the last declared payment for each name — BBRI Rp137 interim + Rp209 final, BIRD Rp166, CITA Rp351, LPPF Rp250, PANI Rp5, SIDO Rp10 interim (Nov 2026) + Rp15 final (May 2026) — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration, and MBMA, which has never paid a dividend. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
+      <strong>Informational only — not financial advice.</strong> No order was placed, quoted or scheduled. Positions, prices and technicals from Pluang MCP captured 28 Nov 2026; distribution yields and payment months are estimates and must be verified against the fund's latest declaration before acting. Cash rate of 3.38% p.a. is user-supplied and unverified. Past distributions do not guarantee future payments; covered-call and international funds may include return of capital. <strong>The IDX sleeve is rupiah-denominated, sits in a separate portfolio account outside Pluang, and is reported in IDR only</strong> — it is excluded from every USD total on this page. Lots held: <span data-vault="planner.footerLots">***</span> (user-supplied). Prices (<span data-vault="planner.footerPrices">***</span>) are Pluang MCP last-session data as of 28 Nov 2026. DPS carried forward follows the last declared payment for each name — <span data-vault="planner.footerDps">***</span> — except CUAN, whose last dividend was Rp3 in May 2025 with no 2026 declaration, and MBMA, which has never paid a dividend. Next-cycle amounts are assumptions, not declarations, and the 10% final withholding is assumed for a resident individual.
     </footer>
   </section>
 
 </div>
 
 <script>
-(function(){
+MojilaVault.get("planner").then(function(P){
   "use strict";
 
-  /* ------------------------------------------------------------------
-     Baseline: Pluang MCP snapshot, 28 Nov 2026 (USD).
-     yield = annual distribution yield estimate, %
-     payMonths = months in which cash is received (1 = Jan … 12 = Dec)
-     ------------------------------------------------------------------ */
-  const BASE = [
-    {sym:"SPY",  name:"SPDR S&P 500 ETF Trust",               qty:2.749680919, price:728.32, yld:1.04, freq:4,
-      payMonths:[1,4,7,10], weights:{1:.25,4:.25,7:.25,10:.25},
-      next:"ex 18 Dec · pays 29 Jan", role:"Core US equity", target:0.40},
-    {sym:"VOO",  name:"Vanguard S&P 500 ETF",                 qty:0.18,        price:669.79, yld:1.11, freq:4,
-      payMonths:[3,6,9,12], weights:{3:.25,6:.25,9:.25,12:.25},
-      next:"ex 21 Dec · pays 23 Dec", role:"Core US equity", target:0.20},
-    {sym:"JEPQ", name:"JPM Nasdaq Equity Premium Income ETF",  qty:8,          price:53.95,  yld:12.90, freq:12,
-      payMonths:[1,2,3,4,5,6,7,8,9,10,11,12],
-      weights:{1:1/12,2:1/12,3:1/12,4:1/12,5:1/12,6:1/12,7:1/12,8:1/12,9:1/12,10:1/12,11:1/12,12:1/12},
-      next:"ex 1 Dec · pays 3 Dec", role:"Covered-call income", target:0.15},
-    {sym:"JPIN", name:"JPM Diversified Return Intl Equity ETF",qty:6.70301773,price:72.83, yld:4.34, freq:4,
-      payMonths:[3,6,9,12], weights:{3:.0573,6:.2905,9:.1628,12:.4893},
-      next:"ex 22 Dec · pays 24 Dec", role:"Developed ex-US", target:0.25},
-    {sym:"GLD",  name:"SPDR Gold Shares",                     qty:1.17763236,  price:334.40, yld:0,    freq:0,
-      payMonths:[], weights:{}, next:"no distribution", role:"Gold", target:0.00},
-    {sym:"SLV",  name:"iShares Silver Trust",                 qty:8.932982606, price:39.40,  yld:0,    freq:0,
-      payMonths:[], weights:{}, next:"no distribution", role:"Silver", target:0.00}
-  ];
-  const BASE_CASH = 11782.89;
-  const CASH_RATE = 0.0338;
+  /* Positions, prices and cash now arrive decrypted from assets/vault.js. */
+  const BASE = P.base;
+  const BASE_CASH = P.baseCash;
+  const CASH_RATE = P.cashRate;
 
   /* DCA plan: share of the monthly contribution, and the action label. */
   const PLAN = {
@@ -1354,12 +1333,12 @@
   });
 
   renderAll();
-})();
+});
 </script>
 <script>
 /* IDX (IDR) sleeve — independent of the USD model above, but its
    assumptions live in the same Assumptions panel. */
-(function(){
+MojilaVault.get("planner").then(function(P){
   "use strict";
   const body = document.getElementById("idxBody");
   if(!body) return;
@@ -1371,16 +1350,7 @@
   const KEY = "pluang-idx-assump-v3";
 
   /* Defaults: last declared cycle. Weight = share of the annual DPS paid in that month. */
-  const DEFAULTS = {
-    BBRI: { dps:346, w:{"1":137/346, "5":209/346} },
-    BIRD: { dps:166, w:{"7":1} },
-    CITA: { dps:351, w:{"6":1} },
-    CUAN: { dps:3,   w:{"5":1} },
-    LPPF: { dps:250, w:{"5":1} },
-    PANI: { dps:5,   w:{"7":1} },
-    MBMA: { dps:0,   w:{} },
-    SIDO: { dps:25,  w:{"5":15/25, "11":10/25} }
-  };
+  const DEFAULTS = P.idxDefaults;
 
   const clone = o => JSON.parse(JSON.stringify(o));
   let S = clone(DEFAULTS);
@@ -1546,12 +1516,20 @@
     render();
   });
 
+  /* Positions and prices arrive from the encrypted vault, not the HTML. */
+  rows().forEach(tr => {
+    const r = P.idxRows && P.idxRows[tr.dataset.sym];
+    if(!r) return;
+    tr.querySelector(".lots").value = r.lots;
+    tr.querySelector(".price").value = r.price;
+  });
+
   render();
-})();
+});
 </script>
 <script>
 /* Combined trend: USD sleeve (converted) + IDX sleeve, total in IDR. */
-(function(){
+MojilaVault.get("planner").then(function(P){
   "use strict";
   const calEl  = document.getElementById("duoCalendar");
   const fxEl   = document.getElementById("fxRate");
@@ -1560,14 +1538,7 @@
   if(!calEl || !fxEl) return;
 
   /* Snapshot fallback, used until the planner above publishes its own rows. */
-  const FALLBACK = [
-    {month:12,year:2026,inc:15.27},{month:1,year:2027,inc:9.83},
-    {month:2,year:2027,inc:4.63},{month:3,year:2027,inc:6.17},
-    {month:4,year:2027,inc:9.83},{month:5,year:2027,inc:4.63},
-    {month:6,year:2027,inc:11.09},{month:7,year:2027,inc:9.83},
-    {month:8,year:2027,inc:4.63},{month:9,year:2027,inc:8.39},
-    {month:10,year:2027,inc:9.83},{month:11,year:2027,inc:4.63}
-  ];
+  const FALLBACK = P.fallbackMonthly;
   const MN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   /* Month → gross IDR, published by the IDX sleeve script above. */
   const idrFor = m => (window.IDR_INCOME || {})[m] || 0;
@@ -1576,7 +1547,7 @@
   const usd  = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
 
   function render(){
-    const fx = Math.max(1, Number(fxEl.value) || 18379);
+    const fx = Math.max(1, Number(fxEl.value) || P.fx);
     const rows = window.PLANNER_MONTHLY || FALLBACK;
     const data = rows.map((r,i) => {
       const usdInc = r.inc || 0;
@@ -1632,11 +1603,12 @@
       (total ? Math.round(usdTot * fx / total * 100) : 0) + "%";
   }
 
+  if(!fxEl.value) fxEl.value = P.fx;
   fxEl.addEventListener("input", render);
   window.addEventListener("planner-monthly", render);
   window.addEventListener("idr-updated", render);
   render();
-})();
+});
 </script>
 <script>
 /* Sleeve tabs — USD book / IDR sleeve */

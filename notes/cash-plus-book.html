@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The cash-plus book — Mojila Insights</title>
-<meta name="description" content="A conservative portfolio is mostly cash by design. What the 3.38% hurdle rate implies, and why the small equity sleeve has not earned its cost of capital.">
+<meta name="description" content="A conservative portfolio is mostly cash by design. What the cash hurdle rate implies, and why the small equity sleeve has not earned its cost of capital.">
 <style>
   :root{
     --paper:#fbfaf7;
@@ -112,6 +112,7 @@
     .alloc div:last-child{border-bottom:0}
   }
 </style>
+<script src="../assets/vault.js"></script>
 <script src="../assets/gate.js"></script>
 </head>
 <body>
@@ -135,7 +136,7 @@
 
   <h2><span class="num">01</span>Verdict</h2>
   <p class="lead">
-    <strong>The cash is the best-performing asset in the book.</strong> At 3.38% a year it earns
+    <strong>The cash is the best-performing asset in the book.</strong> At <span data-vault="cp.hurdle">***</span> a year it earns
     more than the entire unrealised loss on the equity sleeve, and it does so without a
     drawdown. The portfolio is really a <em>cash-plus</em> structure: a large yielding cash
     base and a small four-ETF risk sleeve that is underwater.
@@ -149,7 +150,7 @@
   </p>
 
   <div class="callout">
-    <strong>The hurdle rate is 3.38%.</strong> Any dollar moved out of cash into an ETF must
+    <strong>The hurdle rate is <span data-vault="cp.hurdle">***</span>.</strong> Any dollar moved out of cash into an ETF must
     clear that rate after fees and tax to have been worth moving. Before the rate was
     confirmed, that number did not exist; now it does, and the risk sleeve has to justify
     itself against it.
@@ -159,17 +160,17 @@
   <div class="alloc">
     <div>
       <div class="k">Liquid assets</div>
-      <div class="v">79.2%</div>
+      <div class="v" data-vault="cp.allocCash">***</div>
       <div class="s">yielding cash</div>
     </div>
     <div>
       <div class="k">Of invested capital</div>
-      <div class="v">76.9 / 23.1</div>
+      <div class="v" data-vault="cp.allocSplit">***</div>
       <div class="s">equity / metals</div>
     </div>
     <div>
       <div class="k">Concentration</div>
-      <div class="v">0.43</div>
+      <div class="v" data-vault="cp.allocHhi">***</div>
       <div class="s">HHI on investable weights</div>
     </div>
   </div>
@@ -201,12 +202,12 @@
       to add indiscriminately.
     </li>
     <li>
-      <strong>Ticket friction is real.</strong> Visible purchases run roughly 0.3–0.4% all-in.
-      On small tickets that is about a month of the money's 3.38% yield spent before the
+      <strong>Ticket friction is real.</strong> Visible purchases run roughly <span data-vault="cp.friction">***</span> all-in.
+      On small tickets that is about a month of the money's <span data-vault="cp.hurdle">***</span> yield spent before the
       capital does any work.
     </li>
     <li>
-      <strong>Rate durability is unknown.</strong> 3.38% is competitive, but if it is
+      <strong>Rate durability is unknown.</strong> <span data-vault="cp.hurdle">***</span> is competitive, but if it is
       promotional it can reset. At ~1% the cash becomes a drag again and the whole read
       changes.
     </li>
@@ -244,7 +245,7 @@
         </tr>
         <tr>
           <td class="pri p-high">High</td>
-          <td>Make <strong>3.38% the explicit hurdle</strong> for every new deployment</td>
+          <td>Make <strong><span data-vault="cp.hurdle">***</span> the explicit hurdle</strong> for every new deployment</td>
           <td>The risk-free alternative is now measurable, so the risk sleeve must justify itself</td>
         </tr>
         <tr>
@@ -254,13 +255,13 @@
         </tr>
         <tr>
           <td class="pri p-high">High</td>
-          <td>Cap metals at <strong>10–15%</strong> of invested capital, trimming silver first</td>
+          <td>Cap metals at <strong data-vault="cp.metalsCap">***</strong> of invested capital, trimming silver first</td>
           <td>Two correlated funds at nearly a quarter of invested capital is a single macro bet</td>
         </tr>
         <tr>
           <td class="pri p-med">Medium</td>
           <td>Batch contributions into <strong>monthly buys</strong></td>
-          <td>Per-ticket friction of ~0.3–0.4% is roughly a month of the yield</td>
+          <td>Per-ticket friction of ~<span data-vault="cp.friction">***</span> is roughly a month of the yield</td>
         </tr>
         <tr>
           <td class="pri p-med">Medium</td>
@@ -291,7 +292,7 @@
   </p>
   <p>
     <strong>Confidence.</strong> High on balances, weights and unrealised P&amp;L. Medium on
-    the 3.38% — it is assumed to apply to the USD cash balance, and there is no yield endpoint
+    the <span data-vault="cp.hurdle">***</span> — it is assumed to apply to the USD cash balance, and there is no yield endpoint
     to verify it. Low on historical return: only unrealised P&amp;L is knowable, with no
     equity curve and no realised P&amp;L.
   </p>

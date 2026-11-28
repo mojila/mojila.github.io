@@ -110,6 +110,7 @@
     .alloc div:last-child{border-bottom:0}
   }
 </style>
+<script src="../assets/vault.js"></script>
 <script src="../assets/gate.js"></script>
 </head>
 <body>
@@ -121,9 +122,7 @@
     <div class="kicker">Note · IDR sleeve</div>
     <h1>The rupiah money market sleeve</h1>
     <p class="dek">
-      Two rupiah money market funds hold about Rp28 million of short-term liquidity.
-      They are reported in rupiah, kept out of every dollar total, and are the closest
-      thing this book has to a rupiah cash account.
+      <span data-vault="mm.dek">***</span>
     </p>
     <div class="byline">
       <span>27 November 2026</span>
@@ -146,17 +145,15 @@
         <tr><th>Fund</th><th>Type</th><th class="num">Balance (IDR)</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>Bahana Likuid Plus</strong></td><td>Money market fund</td><td class="num">27,943,533</td></tr>
-        <tr><td><strong>BRI Seruni Pasar Uang III</strong></td><td>Money market fund</td><td class="num">40,545</td></tr>
-        <tr class="sum"><td>Total</td><td></td><td class="num">27,984,078</td></tr>
+        <tr><td><strong>Bahana Likuid Plus</strong></td><td>Money market fund</td><td class="num" data-vault="mm.bahana">***</td></tr>
+        <tr><td><strong>BRI Seruni Pasar Uang III</strong></td><td>Money market fund</td><td class="num" data-vault="mm.seruni">***</td></tr>
+        <tr class="sum"><td>Total</td><td></td><td class="num" data-vault="mm.mmTotal">***</td></tr>
       </tbody>
     </table>
   </div>
 
   <div class="callout warn">
-    <strong>The BRI Seruni balance is a residual.</strong> At Rp40,545 it is not a
-    position so much as a leftover — worth consolidating or closing rather than
-    managing. The policy question is really about the Bahana balance.
+    <strong>The BRI Seruni balance is a residual.</strong> <span data-vault="mm.seruniText">***</span>
   </div>
 
   <h2><span class="num">02</span>Where it sits in total assets</h2>
@@ -173,35 +170,33 @@
         <tr><th>Bucket</th><th>Currency</th><th class="num">Value</th></tr>
       </thead>
       <tbody>
-        <tr><td>Pluang — USD cash</td><td>USD</td><td class="num">12,335.28</td></tr>
-        <tr><td>Pluang — US stocks &amp; ETFs</td><td>USD</td><td class="num">3,237.39</td></tr>
-        <tr class="sum"><td>Pluang subtotal</td><td>USD</td><td class="num">15,572.67</td></tr>
-        <tr><td>IDX dividend sleeve (8 names)</td><td>IDR</td><td class="num">147,380,200</td></tr>
-        <tr><td>IDR money market funds</td><td>IDR</td><td class="num">27,984,078</td></tr>
-        <tr class="sum"><td>External IDR subtotal</td><td>IDR</td><td class="num">175,364,278</td></tr>
+        <tr><td>Pluang — USD cash</td><td>USD</td><td class="num" data-vault="mm.pluangCash">***</td></tr>
+        <tr><td>Pluang — US stocks &amp; ETFs</td><td>USD</td><td class="num" data-vault="mm.pluangInvested">***</td></tr>
+        <tr class="sum"><td>Pluang subtotal</td><td>USD</td><td class="num" data-vault="mm.pluangSubtotal">***</td></tr>
+        <tr><td>IDX dividend sleeve (8 names)</td><td>IDR</td><td class="num" data-vault="mm.idxSleeve">***</td></tr>
+        <tr><td>IDR money market funds</td><td>IDR</td><td class="num" data-vault="mm.mmBalance">***</td></tr>
+        <tr class="sum"><td>External IDR subtotal</td><td>IDR</td><td class="num" data-vault="mm.extSubtotal">***</td></tr>
       </tbody>
     </table>
   </div>
   <p class="fx">
-    At the 27 Nov 2026 mid-market rate of Rp18,350/USD, the money market funds are about
-    $1,525 and the external rupiah subtotal about $9,557. These are translations for
-    context, not valuations, and they are not added into the USD subtotal.
+    <span data-vault="mm.fxText">***</span>
   </p>
 
   <div class="alloc">
     <div>
       <div class="k">Money market share</div>
-      <div class="v">16.0%</div>
+      <div class="v" data-vault="mm.share">***</div>
       <div class="s">of external IDR assets</div>
     </div>
     <div>
       <div class="k">Rupiah liquidity</div>
-      <div class="v">Rp28.0m</div>
+      <div class="v" data-vault="mm.liquidity">***</div>
       <div class="s">same-day access, typically</div>
     </div>
     <div>
       <div class="k">Hurdle to beat</div>
-      <div class="v">3.38%</div>
+      <div class="v" data-vault="mm.hurdle">***</div>
       <div class="s">USD cash, per annum</div>
     </div>
   </div>
@@ -215,8 +210,8 @@
     <li><strong>It is the least volatile rupiah asset in the book.</strong> Money market funds
       aim at stable NAV with same-day or next-day redemption, which is the closest local
       substitute for a rupiah savings balance.</li>
-    <li><strong>It is small enough to be optional.</strong> At roughly 16% of external IDR
-      assets and under 6% of the combined book by translation, it neither drives nor
+    <li><strong>It is small enough to be optional.</strong> At roughly <span data-vault="mm.shareProse">***</span> of external IDR
+      assets and <span data-vault="mm.under6">***</span> of the combined book by translation, it neither drives nor
       rescues total return.</li>
   </ul>
 
@@ -226,14 +221,14 @@
     Money market funds accrue return through NAV rather than paying distributions, so these
     balances are <strong>excluded from the dividend forecast</strong> on the planner. They are
     also not a yield play by the standard used here: Indonesian money market funds have
-    historically run below the 3.38% USD cash hurdle, and no current rate was captured for
+    historically run below the <span data-vault="mm.hurdle">***</span> USD cash hurdle, and no current rate was captured for
     either fund. Treat the sleeve as <em>liquidity</em>, not as income.
   </p>
 
   <div class="callout">
     <strong>The open question is the Bahana balance.</strong> If it is an emergency buffer,
-    Rp27.9m is reasonable and needs no action. If it is idle cash waiting for a decision,
-    it is competing with a 3.38% dollar alternative — and the currency mismatch, not the
+    <span data-vault="mm.bahanaProse">***</span> is reasonable and needs no action. If it is idle cash waiting for a decision,
+    it is competing with a <span data-vault="mm.hurdle">***</span> dollar alternative — and the currency mismatch, not the
     fund, is the real choice.
   </div>
 
@@ -250,7 +245,7 @@
   <footer>
     <strong>Informational only — not financial advice.</strong> Balances are user-reported
     snapshots dated 27 November 2026 and will drift with NAV and contributions; they are not
-    live. The USD figures come from Pluang MCP on the same date. The Rp18,350/USD rate is a
+    live. The USD figures come from Pluang MCP on the same date. The <span data-vault="mm.footerRate">***</span> rate is a
     mid-market translation used only for context. Nothing here places, quotes or schedules
     an order. Past fund performance does not guarantee future returns; money market funds
     are not deposits and are not guaranteed.
